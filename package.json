@@ -1,0 +1,122 @@
+{
+  "name": "nextjs-seo-manager",
+  "version": "0.0.1-beta.93",
+  "description": "",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "outputDir": "./dist",
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "storybook:docker": "cross-env NODE_OPTIONS='--openssl-legacy-provider' start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "lint:fix": "eslint src/**/*.ts src/**/*.tsx --fix",
+    "prebuild": "rimraf dist",
+    "build": "rollup -c",
+    "postbuild": "node scripts/resolveTsPaths",
+    "build:local": "npm run build && npm pack",
+    "build:publish": "npm run build && npm publish",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:pre:alpha": "standard-version --prerelease alpha"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngwessels/seo-manager"
+  },
+  "keywords": [
+    "nextjs",
+    "next",
+    "gatsby",
+    "ssr",
+    "seo",
+    "sitemaps",
+    "robots.txt",
+    "file management",
+    "structured data"
+  ],
+  "bugs": {
+    "url": "https://github.com/ngwessels/seo-manager/issues"
+  },
+  "author": "Nate Wessels (https://natewessels.dev)",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/ngwessels/seo-manager#readme",
+  "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "@rollup/plugin-commonjs": "17.1.0",
+    "@rollup/plugin-node-resolve": "11.2.0",
+    "@rollup/plugin-typescript": "8.3.0",
+    "@rollup/pluginutils": "^4.2.0",
+    "@types/bootstrap": "^5.1.9",
+    "@types/jquery": "^3.5.14",
+    "@types/lodash-es": "4.17.5",
+    "@types/react-bootstrap": "^0.32.29",
+    "@types/react-helmet": "^6.1.5",
+    "@types/react-tag-autocomplete": "^6.1.1",
+    "@types/styled-components": "5.1.7",
+    "@typescript-eslint/eslint-plugin": "4.17.0",
+    "@typescript-eslint/parser": "4.4.0",
+    "cross-env": "7.0.3",
+    "css-loader": "4.3.0",
+    "eslint": "7.10.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-airbnb-typescript": "12.3.1",
+    "eslint-import-resolver-typescript": "2.3.0",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-react": "7.21.3",
+    "eslint-plugin-react-hooks": "4.1.2",
+    "eslint-plugin-storybook": "0.5.7",
+    "file-loader": "6.1.0",
+    "husky": "4.3.0",
+    "lodash-es": "4.17.21",
+    "postcss": "8.1.1",
+    "rimraf": "3.0.2",
+    "rollup": "2.40.0",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "rollup-plugin-postcss": "4.0.0",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-visualizer": "4.2.0",
+    "sass": "1.26.11",
+    "sass-loader": "10.0.2",
+    "standard-version": "9.3.2",
+    "style-loader": "1.3.0",
+    "styled-components": "5.2.1",
+    "ts-loader": "8.0.7",
+    "tslib": "2.1.0",
+    "typescript": "4.0.3",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.1.3",
+    "firebase": ">=9.0.0",
+    "lodash-es": ">=4",
+    "react": ">=16.8.0",
+    "react-bootstrap": "^2.2.1",
+    "react-dom": ">=16.8.0",
+    "react-helmet": ">=6.0.0",
+    "styled-components": ">=3"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.4",
+    "axios": "^0.26.1",
+    "crypto-js": "^4.1.1",
+    "encoding": "^0.1.13",
+    "node-cache": "^5.1.2",
+    "react-tag-autocomplete": "^6.3.0"
+  }
+}

@@ -1,0 +1,281 @@
+.react-tags {
+  position: relative;
+  padding: 6px 0 0 6px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+
+  /* shared font styles */
+  font-size: 1em;
+  line-height: 1.2;
+
+  /* clicking anywhere will focus the input */
+  cursor: text;
+  margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.react-tags.is-focused {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.react-tags__selected {
+  display: inline;
+}
+
+.react-tags__selected-tag {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0 6px 6px 0;
+  padding: 6px 8px;
+  border: 1px solid #d1d1d1;
+  border-radius: 2px;
+  background: #f1f1f1;
+
+  /* match the font styles */
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.react-tags__selected-tag:after {
+  content: "\2715";
+  color: #aaa;
+  margin-left: 8px;
+}
+
+.react-tags__selected-tag:hover,
+.react-tags__selected-tag:focus {
+  border-color: #b1b1b1;
+}
+
+.react-tags__search {
+  display: inline-block;
+
+  /* match tag layout */
+  padding: 7px 2px;
+  margin-bottom: 6px;
+
+  /* prevent autoresize overflowing the container */
+  max-width: 100%;
+  outline: 0;
+  min-width: 50%;
+}
+
+.react-tags__search:focus {
+  outline: 0;
+}
+
+@media screen and (min-width: 30em) {
+  .react-tags__search {
+    /* this will become the offsetParent for suggestions */
+    position: relative;
+  }
+}
+
+.react-tags__search-input {
+  /* prevent autoresize overflowing the container */
+  max-width: 100%;
+  min-width: 100%;
+  /* remove styles and layout from this element */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+
+  /* match the font styles */
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.react-tags__search-input:focus {
+  outline: none;
+}
+
+.react-tags__search-input::-ms-clear {
+  display: none;
+}
+
+.react-tags__suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+  .react-tags__suggestions {
+    width: 240px;
+  }
+}
+
+.react-tags__suggestions ul {
+  margin: 4px -1px;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #d1d1d1;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.react-tags__suggestions li {
+  border-bottom: 1px solid #ddd;
+  padding: 6px 8px;
+}
+
+.react-tags__suggestions li mark {
+  text-decoration: underline;
+  background: none;
+  font-weight: 600;
+}
+
+.react-tags__suggestions li:hover {
+  cursor: pointer;
+  background: #eee;
+}
+
+.react-tags__suggestions li.is-active {
+  background: #b7cfe0;
+}
+
+.react-tags__suggestions li.is-disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+/* Photos */
+
+.file-upload {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 4rem 1.5rem;
+  margin-top: 2rem;
+  border: 2px dashed #ced4da;
+  border-radius: 0.5rem;
+  transition: background-color 0.25s ease-out, border 0.25s ease-out,
+    box-shadow 0.25s ease-out;
+  height: 300px;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0);
+}
+.file-upload:hover {
+  border: none;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
+}
+.file-upload .file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.file-input {
+  z-index: 2;
+}
+
+.file-upload .overlay {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.5s ease-out;
+}
+
+.file-upload:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.icon {
+  width: 75px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .icon {
+    width: 50px;
+  }
+}
+
+a {
+  color: #fafafa;
+  display: block;
+  text-decoration: none;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  transition: 0.5s;
+}
+
+.delete-btn-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+}
+
+.delete-btn {
+  background: #2d3039;
+  margin: 20px auto;
+  width: 200px;
+  height: 50px;
+  overflow: hidden;
+  text-align: center;
+  transition: 0.4s;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+}
+
+.delete-btnText {
+  color: white;
+  transition: 0.3s;
+}
+.delete-btn:hover .delete-hoverBtn {
+  left: 0px;
+}
+.delete-btn:hover a {
+  margin-left: 65px;
+}
+.delete-hoverBtn {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  margin-top: -100px;
+  padding-top: 2px;
+  background: #ed5565;
+  left: -250px;
+  transition: 0.3s;
+}
+.delete-hoverText {
+  margin-top: 55px;
+  margin-right: 0px;
+  text-align: center;
+  color: #fafafa;
+}
+.delete-hoverBtn:active {
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.3);
+  background-color: #da4453;
+}

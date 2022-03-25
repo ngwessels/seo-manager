@@ -1,0 +1,2 @@
+import e from"../node_modules/axios/lib/cancel/isCancel.js";export{default}from"../node_modules/axios/lib/cancel/isCancel.js";
+//# sourceMappingURL=isCancel.js_commonjs-proxy.map

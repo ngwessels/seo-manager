@@ -1,0 +1,2 @@
+import o from"../node_modules/axios/lib/defaults/transitional.js";export{default}from"../node_modules/axios/lib/defaults/transitional.js";
+//# sourceMappingURL=transitional.js_commonjs-proxy.map

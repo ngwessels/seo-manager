@@ -1,0 +1,2 @@
+import o from"../node_modules/axios/lib/core/transformData.js";export{default}from"../node_modules/axios/lib/core/transformData.js";
+//# sourceMappingURL=transformData.js_commonjs-proxy.map

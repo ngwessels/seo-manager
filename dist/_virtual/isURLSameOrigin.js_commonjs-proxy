@@ -1,0 +1,2 @@
+import e from"../node_modules/axios/lib/helpers/isURLSameOrigin.js";export{default}from"../node_modules/axios/lib/helpers/isURLSameOrigin.js";
+//# sourceMappingURL=isURLSameOrigin.js_commonjs-proxy.map

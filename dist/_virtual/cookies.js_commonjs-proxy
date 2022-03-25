@@ -1,0 +1,2 @@
+import o from"../node_modules/axios/lib/helpers/cookies.js";export{default}from"../node_modules/axios/lib/helpers/cookies.js";
+//# sourceMappingURL=cookies.js_commonjs-proxy.map

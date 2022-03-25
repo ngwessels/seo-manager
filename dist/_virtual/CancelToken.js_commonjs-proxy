@@ -1,0 +1,2 @@
+import e from"../node_modules/axios/lib/cancel/CancelToken.js";export{default}from"../node_modules/axios/lib/cancel/CancelToken.js";
+//# sourceMappingURL=CancelToken.js_commonjs-proxy.map

@@ -1,0 +1,2 @@
+import e from"../node_modules/axios/lib/helpers/buildURL.js";export{default}from"../node_modules/axios/lib/helpers/buildURL.js";
+//# sourceMappingURL=buildURL.js_commonjs-proxy.map

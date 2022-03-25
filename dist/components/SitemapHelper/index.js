@@ -1,0 +1,2 @@
+import{__awaiter as t}from"../../node_modules/tslib/tslib.es6.js";import e from"react";import{serverCall as r}from"../../utils/call.js";class o extends e.Component{static getInitialProps({res:e,req:o}){return t(this,void 0,void 0,(function*(){e.setHeader("Content-Type","text/xml");try{const{results:t}=yield r("/sitemap/","put",{path:o.url});e.write(t)}catch(t){console.error(t.error)}e.end()}))}}export default o;
+//# sourceMappingURL=index.js.map
