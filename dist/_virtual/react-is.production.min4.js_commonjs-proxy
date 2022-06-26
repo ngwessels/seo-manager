@@ -1,0 +1,2 @@
+import o from"../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js";export{default}from"../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js";
+//# sourceMappingURL=react-is.production.min4.js_commonjs-proxy.map

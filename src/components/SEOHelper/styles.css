@@ -158,19 +158,14 @@
   flex-direction: column;
   padding: 4rem 1.5rem;
   margin-top: 2rem;
-  border: 2px dashed #ced4da;
-  border-radius: 0.5rem;
-  transition: background-color 0.25s ease-out, border 0.25s ease-out,
-    box-shadow 0.25s ease-out;
+  border: none;
+  transition: background-color 0.1s ease-out, border 0.1s ease-out,
+    box-shadow 0.1s ease-out;
   height: 300px;
   overflow: hidden;
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0);
-  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0);
 }
 .file-upload:hover {
-  border: none;
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.4);
+  border: 2px dashed #ced4da;
 }
 .file-upload .file-input {
   position: absolute;
@@ -199,7 +194,6 @@
 }
 
 .file-upload:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .icon {

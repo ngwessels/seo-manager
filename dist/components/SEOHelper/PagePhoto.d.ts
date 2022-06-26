@@ -1,6 +1,6 @@
 import React from "react";
 declare type PhotoObject = {
-    image: string;
+    image: any;
     newImage?: string;
     onChange: any;
     addPerformActionOnUpdate: any;
@@ -19,10 +19,12 @@ declare class PagePhotos extends React.Component<{
 }> {
     state: {
         fileError: string;
+        photoManager: boolean;
     };
     constructor(object: PhotoObject);
     uploadNewFile: () => Promise<unknown>;
     addFile: (e: any) => void;
+    deleteFileAction: (fileId: string) => Promise<unknown>;
     deleteFile: () => void;
     render(): JSX.Element;
 }

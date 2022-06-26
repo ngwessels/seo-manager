@@ -14,6 +14,22 @@ import ReactTags from "react-tag-autocomplete";
 
 //Components
 import PagePhotos from "./PagePhoto";
+import Photos from "./Photos";
+
+import {
+  Button,
+  TextField,
+  Grid,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+  Typography
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 //Utils
 import {
@@ -49,6 +65,7 @@ class Manager extends React.Component<{
     newImage: "";
     file: any;
     performActionOnUpdate: any;
+    photoManager: boolean;
   };
   reactTags: any;
 
@@ -59,7 +76,8 @@ class Manager extends React.Component<{
       saving: false,
       newImage: "",
       file: null,
-      performActionOnUpdate: {}
+      performActionOnUpdate: {},
+      photoManager: true
     };
     this.reactTags = React.createRef();
   }
@@ -167,184 +185,238 @@ class Manager extends React.Component<{
               alignItems: "center"
             }}
           >
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            <CircularProgress />
           </div>
         ) : (
           <>
-            <div className="form-floating mb-3">
-              <PagePhotos
-                onChange={this.onChange}
-                image={this.props.data.image}
-                newImage={this.state.newImage}
-                addPerformActionOnUpdate={this.addPerformAction}
-                data={this.props.data}
-                file={this.state.file}
-                user={this.props.user}
-              />
-            </div>
+            <DialogContent dividers>
+              {/* <Photos
+                open={this.state.photoManager}
+                onChangeComplete={(e) => {
+                  console.log(e);
+                }}
+                onClose={() => {
+                  this.setState({ photoManager: false });
+                }}
+                multiple={false}
+                selected={[]}
+              /> */}
+              <Grid item xs={12}>
+                <Typography variant={"h4"} textAlign={"center"}>
+                  Basic SEO
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <div className="form-floating mb-3">
+                  <PagePhotos
+                    onChange={this.onChange}
+                    image={this.props.data.image}
+                    newImage={this.state.newImage}
+                    addPerformActionOnUpdate={this.addPerformAction}
+                    data={this.props.data}
+                    file={this.state.file}
+                    user={this.props.user}
+                  />
+                </div>
+              </Grid>
 
-            <div className="form-floating mb-3">
-              <input
-                className="form-control"
-                id="title"
-                placeholder="Home - Stark Industries"
-                onChange={(e) => {
-                  this.onChange(e.target.value, "title");
-                }}
-                value={this.props.data.title}
+              <Grid item mb={1}>
+                <TextField
+                  id="title"
+                  label="Title"
+                  variant="standard"
+                  placeholder="Home - Stark Industries"
+                  onChange={(e) => {
+                    this.onChange(e.target.value, "title");
+                  }}
+                  value={this.props.data.title}
+                  style={{ width: "100%" }}
+                  helperText={`${this.props.data?.title.length || 0} of 60`}
+                />
+              </Grid>
+              <Grid item mb={1}>
+                <TextField
+                  id="description"
+                  label="Description"
+                  variant="standard"
+                  placeholder=""
+                  onChange={(e) => {
+                    this.onChange(e.target.value, "description");
+                  }}
+                  value={this.props.data?.description}
+                  style={{ width: "100%" }}
+                  multiline
+                  helperText={`${
+                    this.props.data?.description.length || 0
+                  } of 160`}
+                />
+              </Grid>
+              <ReactTags
+                ref={this.reactTags}
+                tags={this.props.data.keywordsArray}
+                onDelete={this.onDelete}
+                onAddition={this.onAddition}
+                placeholderText={"Add Page Keywords"}
+                allowNew={true}
+                allowBackspace={true}
               />
-              <label htmlFor="floatingInput">Title</label>
-            </div>
-            <div className="form-floating mb-3">
-              <textarea
-                className="form-control"
-                placeholder="Page Description"
-                id="description"
-                onChange={(e) => {
-                  this.onChange(e.target.value, "description");
-                }}
-                value={this.props.data.description}
-                style={{ minHeight: 200 }}
-              />
-              <label htmlFor="description">Page Description</label>
-            </div>
-            <ReactTags
-              ref={this.reactTags}
-              tags={this.props.data.keywordsArray}
-              onDelete={this.onDelete}
-              onAddition={this.onAddition}
-              placeholderText={"Add Page Keywords"}
-              allowNew={true}
-              allowBackspace={true}
-            />
-            <div className="form-floating mb-3">
-              <select
-                className="form-select"
-                id="follow"
-                aria-label="Should search engines follow the page?"
-                value={this.props.data.follow}
-                onChange={(e) => {
-                  this.onChange(e.target.value, "follow");
-                }}
-              >
-                <option>Open this select menu</option>
-                <option value="follow">Follow</option>
-                <option value="nofollow">No Following</option>
-              </select>
-              <label htmlFor="follow">
-                Should search engines follow the page?
-              </label>
-            </div>
-            <div className="form-floating mb-3">
-              <select
-                className="form-select"
-                id="index"
-                aria-label="Should search engines index the page?"
-                value={this.props.data.index}
-                onChange={(e) => {
-                  this.onChange(e.target.value, "index");
-                }}
-              >
-                <option>Open this select menu</option>
-                <option value="index">Index</option>
-                <option value="noindex">No Index</option>
-              </select>
-              <label htmlFor="index">
-                Should search engines index the page?
-              </label>
-            </div>
-            <div className="form-floating mb-3">
-              <select
-                className="form-select"
-                id="changeFreq"
-                aria-label="How often will the content change?"
-                value={this.props.data.changeFreq}
-                onChange={(e) => {
-                  this.onChange(e.target.value, "changeFreq");
-                }}
-              >
-                <option>Open this select menu</option>
-                <option value="always">Always</option>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-                <option value="never">Never</option>
-              </select>
-              <label htmlFor="changeFreq">
-                How often will the content change?
-              </label>
-            </div>
+              <Grid item mb={1}>
+                <FormControl variant="standard" sx={{ minWidth: "100%" }}>
+                  <InputLabel id="follow">
+                    Should search engines follow the page?
+                  </InputLabel>
+                  <Select
+                    labelId="follow"
+                    id="follow-select"
+                    value={this.props.data.follow}
+                    onChange={(e) => {
+                      this.onChange(e.target.value, "follow");
+                    }}
+                    label="Should search engines follow the page?"
+                    style={{ zIndex: 10 }}
+                  >
+                    <MenuItem value="">Open this Select Menu</MenuItem>
+                    <MenuItem value={"follow"}>Follow</MenuItem>
+                    <MenuItem value={"nofollow"}>No Follow</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
 
-            <div className="form-floating mb-3">
-              <select
-                className="form-select"
-                id="priority"
-                aria-label="Page Priority"
-                value={this.props.data.priority}
-                onChange={(e) => {
-                  this.onChange(e.target.value, "priority");
-                }}
-              >
-                <option>Open this select menu</option>
-                <option value={0.1}>1</option>
-                <option value={0.2}>2</option>
-                <option value={0.3}>3</option>
-                <option value={0.4}>4</option>
-                <option value={0.5}>5</option>
-                <option value={0.6}>6</option>
-                <option value={0.7}>7</option>
-                <option value={0.8}>8</option>
-                <option value={0.9}>9</option>
-                <option value={1.0}>10</option>
-              </select>
-              <label htmlFor="priority">
-                Page Priority (10 being the highest)
-              </label>
-            </div>
-            <div className="modal-footer">
-              <div
+              <Grid item mb={1}>
+                <FormControl variant="standard" sx={{ minWidth: "100%" }}>
+                  <InputLabel id="index">
+                    Should search engines index the page?
+                  </InputLabel>
+                  <Select
+                    labelId="index"
+                    id="index-select"
+                    value={this.props.data.index}
+                    onChange={(e) => {
+                      this.onChange(e.target.value, "index");
+                    }}
+                    label="Should search engines index the page?"
+                  >
+                    <MenuItem value="">Open this Select Menu</MenuItem>
+                    <MenuItem value={"index"}>Index</MenuItem>
+                    <MenuItem value={"noindex"}>No Index</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item mb={1}>
+                <FormControl variant="standard" sx={{ minWidth: "100%" }}>
+                  <InputLabel id="changeFreq">
+                    How often will the content change?
+                  </InputLabel>
+                  <Select
+                    labelId="changeFreq"
+                    id="changeFreq-select"
+                    value={this.props.data.changeFreq}
+                    onChange={(e) => {
+                      this.onChange(e.target.value, "changeFreq");
+                    }}
+                    label="How often will the content change?"
+                  >
+                    <MenuItem>Open this select menu</MenuItem>
+                    <MenuItem value="always">Always</MenuItem>
+                    <MenuItem value="daily">Daily</MenuItem>
+                    <MenuItem value="weekly">Weekly</MenuItem>
+                    <MenuItem value="monthly">Monthly</MenuItem>
+                    <MenuItem value="yearly">Yearly</MenuItem>
+                    <MenuItem value="never">Never</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item mb={1}>
+                <FormControl variant="standard" sx={{ minWidth: "100%" }}>
+                  <InputLabel id="priority">
+                    Page Prority (10 Highest)
+                  </InputLabel>
+                  <Select
+                    labelId="priority"
+                    id="priority-select"
+                    value={this.props.data.priority}
+                    onChange={(e) => {
+                      this.onChange(e.target.value, "priority");
+                    }}
+                    label="Page Priority (10 being the highest)"
+                  >
+                    <MenuItem>Open this select menu</MenuItem>
+                    <MenuItem value={0.1}>1</MenuItem>
+                    <MenuItem value={0.2}>2</MenuItem>
+                    <MenuItem value={0.3}>3</MenuItem>
+                    <MenuItem value={0.4}>4</MenuItem>
+                    <MenuItem value={0.5}>5</MenuItem>
+                    <MenuItem value={0.6}>6</MenuItem>
+                    <MenuItem value={0.7}>7</MenuItem>
+                    <MenuItem value={0.8}>8</MenuItem>
+                    <MenuItem value={0.9}>9</MenuItem>
+                    <MenuItem value={1.0}>10</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item mb={1}>
+                <TextField
+                  id="ldJson"
+                  label="Structured Data"
+                  variant="standard"
+                  placeholder=""
+                  onChange={(e) => {
+                    this.onChange(e.target.value, "ldJson");
+                  }}
+                  value={this.props.data?.ldJson}
+                  style={{ width: "100%" }}
+                  multiline
+                />
+              </Grid>
+              <Grid
+                item
+                mb={1}
                 style={{
+                  width: "100%",
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "100%"
+                  justifyContent: "center",
+                  alignItems: "center"
                 }}
               >
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  data-bs-dismiss="modal"
-                  id={"close-seo-manager"}
-                  onClick={this.props.resetData}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-light"
-                  onClick={authSignOut}
-                >
+                <Button variant="text" onClick={authSignOut} type="button">
                   Sign Out
-                </button>
-                {this.state.saving ? (
-                  <div className="spinner-border" role="status">
-                    <span className="visually-hidden">saving...</span>
-                  </div>
-                ) : (
-                  <button
+                </Button>
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <div className="modal-footer" style={{ width: "100%" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%"
+                  }}
+                >
+                  <Button
+                    variant="text"
+                    id={"close-seo-manager"}
+                    onClick={this.props.resetData}
                     type="button"
-                    className="btn btn-success"
+                  >
+                    Close
+                  </Button>
+
+                  <LoadingButton
+                    variant="text"
                     onClick={this.saveData}
+                    type="button"
+                    loading={this.state.saving}
                   >
                     Save
-                  </button>
-                )}
+                  </LoadingButton>
+                </div>
               </div>
-            </div>
+            </DialogActions>
           </>
         )}
       </>

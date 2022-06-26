@@ -67,10 +67,10 @@ class SEOHelperLite extends React.Component<
     }
     return (
       <>
-        <title>{data.title || ""}</title>
+        <title>{data.title || data?.defaultTitle || ""}</title>
         <meta
           name="description"
-          content={data.description || ""}
+          content={data.description || data.defaultDescription || ""}
           key={"description"}
         />
         {data.keywords && <meta name="keywords" content={data.keywords} />}
@@ -79,23 +79,37 @@ class SEOHelperLite extends React.Component<
         )}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        {data.title && <meta property="og:title" content={data.title} />}
+        {data.title && (
+          <meta property="og:title" content={data.title || response?.error} />
+        )}
         {data.description && (
-          <meta property="og:description" content={data.description} />
+          <meta
+            property="og:description"
+            content={data.description || data.defaultDescription}
+          />
         )}
 
-        {data.image && <meta property="og:image" content={data.image} />}
+        {data.image.url && (
+          <meta property="og:image" content={data.image.url} />
+        )}
         {data.canonicalURL && (
           <meta
             property="og:url"
             content={`${data.canonicalURL}${data.path}`}
           />
         )}
-        {data.title && <meta name="twitter:title" content={data.title} />}
-        {data.description && (
-          <meta name="twitter:description" content={data.description} />
+        {data.title && (
+          <meta name="twitter:title" content={data.title || response?.error} />
         )}
-        {data.image && <meta name="twitter:image" content={data.image} />}
+        {data.description && (
+          <meta
+            name="twitter:description"
+            content={data.description || data.defaultDescription}
+          />
+        )}
+        {data.image.url && (
+          <meta name="twitter:image" content={data.image.url} />
+        )}
         {(data.pageFavicon || data.projectFavicon) && (
           <link
             rel="icon"
@@ -109,6 +123,12 @@ class SEOHelperLite extends React.Component<
           name="robots"
           content={`${data.index || "index"}, ${data.follow || "follow"}`}
         />
+        {data.ldJson && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: data.ldJson }}
+          />
+        )}
         {this.props.children}
       </>
     );

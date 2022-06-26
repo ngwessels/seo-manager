@@ -1,2 +1,2 @@
-import e from"../node_modules/has-flag/index.js";export{default}from"../node_modules/has-flag/index.js";
+import o from"../node_modules/supports-color/index.js";export{default}from"../node_modules/supports-color/index.js";
 //# sourceMappingURL=index8.js_commonjs-proxy.map

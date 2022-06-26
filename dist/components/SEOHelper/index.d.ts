@@ -43,6 +43,7 @@ declare class SEOHelper extends React.Component<{
     resetData: () => void;
     updateData: (data: any, original: boolean) => void;
     openManager: (user?: any) => void;
+    handleClose: () => void;
     render(): JSX.Element;
 }
 export default SEOHelper;

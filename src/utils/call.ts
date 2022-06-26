@@ -16,12 +16,13 @@ export const serverCall = (
       if (!initData) {
         return reject({ results: false, error: "SEO Manager not initialized" });
       }
+      console.log("Process ENV:", process.env.NEXT_PUBLIC_NODE_ENV_MANAGER);
       const formattedPath = formatPath(path);
       const urlPath = url
         ? url
-        : process.env.NODE_ENV === "production"
+        : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test"
         ? `https://seo-manager-website.vercel.app/api/${version}/${formattedPath}`
-        : `https://seo-manager-website-git-testing-shadow-republic.vercel.app/api/${version}/${formattedPath}`;
+        : `http://localhost:3001/api/${version}/${formattedPath}`;
 
       let callHeaders = {
         X_ProjectId: initData?.projectId,

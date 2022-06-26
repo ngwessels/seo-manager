@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/return-await */
+/* eslint-disable radix */
+/* eslint-disable prefer-const */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 //Firebase
 import { firebase } from "../../firebase";
 import { getAuth, signOut, signInWithEmailAndPassword } from "firebase/auth";
@@ -42,7 +47,7 @@ export const addFiles = (e: any, validContentTypes: any, data: any) => {
       file.localURL = URL.createObjectURL(file);
       photos.push({
         object: file,
-        name: formattedFileName({ path: "/testing/1234/testing/" })
+        name: formattedFileName({ path: data.path })
       });
     }
   }

@@ -8,7 +8,7 @@ import { initializeApp, FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig =
-  process.env.NODE_ENV === "production"
+  process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test"
     ? {
         apiKey: "AIzaSyDPjpRmobrdUtIY3hIaNoyox7alxYJH_B8",
         authDomain: "seo-manager-live.firebaseapp.com",
@@ -28,7 +28,9 @@ const firebaseConfig =
         measurementId: "G-PYZDK47B2M"
       };
 
-const firebase: FirebaseApp = initializeApp(firebaseConfig, 'nextjs-seo-manager');
+const firebase: FirebaseApp = initializeApp(
+  firebaseConfig,
+  "nextjs-seo-manager"
+);
 
-
-export {firebase};
+export { firebase };

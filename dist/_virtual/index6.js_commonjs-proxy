@@ -1,2 +1,2 @@
-import o from"../node_modules/supports-color/index.js";export{default}from"../node_modules/supports-color/index.js";
+import e from"../node_modules/debug/src/index.js";export{default}from"../node_modules/debug/src/index.js";
 //# sourceMappingURL=index6.js_commonjs-proxy.map
