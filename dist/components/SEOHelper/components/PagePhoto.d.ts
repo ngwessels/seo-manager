@@ -22,8 +22,6 @@ declare class PagePhotos extends React.Component<{
         photoManager: boolean;
     };
     constructor(object: PhotoObject);
-    uploadNewFile: () => Promise<unknown>;
-    addFile: (e: any) => void;
     deleteFileAction: (fileId: string) => Promise<unknown>;
     deleteFile: () => void;
     render(): JSX.Element;

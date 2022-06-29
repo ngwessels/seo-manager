@@ -2,7 +2,7 @@
 import React from "react";
 
 //Firebase
-import { firebase } from "../../firebase";
+import { firebase } from "../../../firebase";
 import {
   getStorage,
   ref,
@@ -15,11 +15,11 @@ import { getAuth } from "firebase/auth";
 const auth = getAuth(firebase);
 
 //Utils
-import { hideModal, openModal, formattedFileName, addFiles } from "./utils";
+import { hideModal, openModal, formattedFileName, addFiles } from "../utils";
 import { serverCall } from "utils/call";
 
 //Components
-import Photos from "./Photos";
+import Files from "./Files";
 
 type PhotoObject = {
   image: any;
@@ -53,96 +53,6 @@ class PagePhotos extends React.Component<{
     };
   }
 
-  uploadNewFile = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // const userIdToken = await auth?.currentUser?.getIdToken();
-        const userIdToken = await auth?.currentUser?.getIdToken();
-        const response = await serverCall(
-          "/files/generateFileIds",
-          "post",
-          { type: "default", qty: 1 },
-          undefined,
-          {
-            X_Authorization: userIdToken,
-            AuthorizationId: auth?.currentUser?.uid
-          }
-        );
-        const metadata = {
-          contentType: this.props.file.type,
-          cacheControl: "public,max-age=604800",
-          customMetadata: {
-            type: "default",
-            userIdToken,
-            userId: auth?.currentUser?.uid,
-            fileName: this.props.file.name,
-            fileId: response.results.photoId[0],
-            projectId: this.props.data.projectId
-          }
-        };
-        const fileRef = ref(
-          storage,
-          `projects/${this.props.data.projectId}/files/${response.results.photoId[0]}`
-        );
-        const uploadTask = uploadBytesResumable(
-          fileRef,
-          this.props.file.object,
-          metadata
-        );
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-          },
-          (error) => {
-            console.error("Error:", error);
-            return resolve({ error: true, results: false });
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              this.props.onChange(
-                { url: downloadURL, fileId: response.results.photoId[0] },
-                "image"
-              );
-              return resolve({ error: false, results: downloadURL });
-            });
-          }
-        );
-      } catch (err) {
-        console.error("Error:", err);
-      }
-    });
-  };
-
-  addFile = (e: any) => {
-    let validContentType = ["image/jpeg", "image/png"];
-    const photos = addFiles(e, validContentType, this.props.data);
-    if (photos && !photos.error) {
-      // if (this.props.image.url) {
-      //   const fileId = this.props.image.fileId;
-      //   const action2 = {
-      //     message: "- Deletes previous cover photo",
-      //     action: () => this.deleteFileAction(fileId)
-      //   };
-      //   this.props.addPerformActionOnUpdate(action2, "delete_file");
-      // }
-      // this.props.onChange(photos.results[0], "file");
-      // this.props.onChange(photos.results[0].object.localURL, "newImage");
-      this.props.onChange("", "image");
-      // const action = {
-      //   message: "- Upload new page photo and will replace current photo",
-      //   action: this.uploadNewFile
-      // };
-
-      // this.props.addPerformActionOnUpdate(action, "file");
-      this.setState({ fileError: "" });
-    } else if (photos.error) {
-      this.setState({ fileError: photos.error });
-    }
-  };
-
   deleteFileAction = (fileId: string) => {
     return new Promise(async (resolve, reject) => {
       const fileRef = ref(
@@ -155,24 +65,15 @@ class PagePhotos extends React.Component<{
   };
 
   deleteFile = () => {
-    const fileId = this.props.image.fileId;
-    this.props.onChange("", "file");
-    this.props.onChange("", "newImage");
     this.props.onChange({ url: "", fileId: "" }, "image");
-    const action = {
-      message: "- Deletes previous cover photo",
-      action: () => this.deleteFileAction(fileId)
-    };
-    this.props.addPerformActionOnUpdate(action, "delete_file");
   };
 
   render() {
     return (
       <>
-        <Photos
+        <Files
           open={this.state.photoManager}
           onChangeComplete={(e) => {
-            console.log(e);
             this.props.onChange(e, "image");
           }}
           onClose={() => {
@@ -180,13 +81,12 @@ class PagePhotos extends React.Component<{
           }}
           multiple={false}
           selected={this.props.image}
+          data={this.props.data}
+          accept={"image/png, image/jpeg, image/jpg"}
         />
-        <div className="file-upload mb-3">
-          <input
+        <div className="file-upload mb-3" style={{ height: 300 }}>
+          <div
             className="file-input"
-            // type="file"
-            // onChange={this.addFile}
-            // multiple={false}
             onClick={() => {
               this.setState({ photoManager: true });
             }}
@@ -195,7 +95,7 @@ class PagePhotos extends React.Component<{
           {(this.props.newImage || this.props.image.url) && (
             <div className={"delete-btn-container"}>
               <div className="delete-btn" onClick={this.deleteFile}>
-                <a className={"delete-button"}>DELETE</a>
+                <a className={"delete-button"}>REMOVE</a>
                 <div className="delete-hoverBtn">
                   <p className="delete-hoverText">ARE YOU SURE?</p>
                 </div>
@@ -325,7 +225,7 @@ class PagePhotos extends React.Component<{
             </div>
           )}
           {!this.props.newImage && !this.props.image.url && (
-            <div className="card-subtitle">Drag n Drop your photo here</div>
+            <div className="card-subtitle">Click here to set Photo</div>
           )}
         </div>
         {this.state.fileError && (

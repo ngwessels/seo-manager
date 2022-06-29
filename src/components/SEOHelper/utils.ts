@@ -32,22 +32,22 @@ export const formattedFileName = (data: any) => {
   return path;
 };
 
-export const addFiles = (e: any, validContentTypes: any, data: any) => {
+export const addFiles = (e: any, validContentTypes: any) => {
   let photos = [];
   for (let idx in e.target.files) {
     let file = e.target.files[idx];
     if (file && file.type) {
       const { name, size, type } = e.target.files[idx];
-      if (!type || !validContentTypes.includes(type)) {
-        return {
-          error: "That file is not supported. Only .jpeg, .jpg, and .png",
-          results: false
-        };
-      }
+      // if (!type || !validContentTypes.includes(type)) {
+      //   return {
+      //     error: "That file is not supported. Only .jpeg, .jpg, and .png",
+      //     results: false
+      //   };
+      // }
       file.localURL = URL.createObjectURL(file);
       photos.push({
         object: file,
-        name: formattedFileName({ path: data.path })
+        name: file.name
       });
     }
   }

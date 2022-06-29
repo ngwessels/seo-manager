@@ -16,7 +16,7 @@ export const serverCall = (
       if (!initData) {
         return reject({ results: false, error: "SEO Manager not initialized" });
       }
-      console.log("Process ENV:", process.env.NEXT_PUBLIC_NODE_ENV_MANAGER);
+
       const formattedPath = formatPath(path);
       const urlPath = url
         ? url

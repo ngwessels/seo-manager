@@ -1,2 +1,2 @@
-import e from"../node_modules/@mui/utils/node_modules/react-is/cjs/react-is.development.js";export{default}from"../node_modules/@mui/utils/node_modules/react-is/cjs/react-is.development.js";
+import e from"../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js";export{default}from"../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js";
 //# sourceMappingURL=react-is.development3.js_commonjs-proxy.map

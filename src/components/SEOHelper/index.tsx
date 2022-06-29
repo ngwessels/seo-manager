@@ -277,6 +277,7 @@ class SEOHelper extends React.Component<
           aria-labelledby="customized-dialog-title"
           open={this.state.openManager}
           maxWidth={false}
+          style={{ zIndex: 100 }}
         >
           <DialogTitle sx={{ m: 0, p: 2 }}>
             SEO Manager

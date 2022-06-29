@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-unneeded-ternary */
-export class Event {
+export class EventModel {
   type: any;
   name: any;
   startDate: any;
@@ -21,27 +21,30 @@ export class Event {
     this.type = {
       index: "@type",
       type: "select",
-      defaultValue: "Event",
-      selection: [{ title: "Event", data: "Event" }],
-      required: true
+      value: "Event",
+      label: ""
     };
     this.name = {
       index: "name",
       type: "input",
-      required: true
+      required: true,
+      label: "Event Name"
     };
     this.startDate = {
       index: "startDate",
       type: "date-time",
-      required: true
+      required: true,
+      label: "Start of Event"
     };
     this.endDate = {
       index: "endDate",
       type: "date-time",
-      required: true
+      required: true,
+      label: "End of Event"
     };
     this.eventAttendanceMode = {
       index: "eventAttendanceMode",
+      label: "Event Attendance Type",
       type: "select",
       selection: [
         {
@@ -61,6 +64,7 @@ export class Event {
     };
     this.eventStatus = {
       index: "eventStatus",
+      label: "Event Status",
       type: "select",
       defaultValue: "https://schema.org/EventScheduled",
       selection: [
@@ -81,6 +85,7 @@ export class Event {
       index: "previousStartDate",
       type: "date-time",
       defaultValue: this.startDate.value,
+      label: "Previous Start Date",
       required:
         this.eventStatus.value !== "https://schema.org/EventRescheduled"
           ? true
@@ -89,7 +94,19 @@ export class Event {
     this.location = {
       index: "location",
       type: "location",
-      required: true
+      required: true,
+      template: {
+        "@type": "Place",
+        name: "",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "",
+          addressLocality: "",
+          postalCode: "",
+          addressRegion: "",
+          addressCountry: "US"
+        }
+      }
     };
     this.image = {
       index: "image",
@@ -99,9 +116,9 @@ export class Event {
     this.description = {
       index: "description",
       type: "textfield",
+      label: "Event Description",
       defaultValue: "",
       required: true,
-      minChar: 25,
       maxChar: 250,
       showCharCount: true
     };
@@ -125,18 +142,18 @@ export class Event {
     };
     this.structure = [
       "type",
+      "image",
       "name",
-      "startDate",
-      "endDate",
+      "description",
       "eventAttendanceMode",
       "eventStatus",
+      "startDate",
+      "endDate",
       "previousStartDate",
       "location",
-      "image",
-      "description",
+      "organizer",
       "offers",
-      "performer",
-      "organizer"
+      "performer"
     ];
   }
 }

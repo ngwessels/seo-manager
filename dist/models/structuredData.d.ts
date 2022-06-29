@@ -1,4 +1,4 @@
-export declare class Event {
+export declare class EventModel {
     type: any;
     name: any;
     startDate: any;
