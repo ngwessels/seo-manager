@@ -13,6 +13,7 @@ export declare class EventModel {
     performer: any;
     organizer: any;
     structure: any;
+    format: any;
     constructor();
 }
 export declare class Offers {

@@ -16,6 +16,7 @@ export class EventModel {
   performer: any;
   organizer: any;
   structure: any;
+  format: any;
 
   constructor() {
     this.type = {
@@ -78,18 +79,15 @@ export class EventModel {
       required: true
     };
     this.previousStartDate = {
-      hidden:
-        this.eventStatus.value !== "https://schema.org/EventRescheduled"
-          ? true
-          : false,
+      visibleWhen: {
+        index: "eventStatus",
+        value: "https://schema.org/EventRescheduled"
+      },
       index: "previousStartDate",
       type: "date-time",
       defaultValue: this.startDate.value,
       label: "Previous Start Date",
-      required:
-        this.eventStatus.value !== "https://schema.org/EventRescheduled"
-          ? true
-          : false
+      required: true
     };
     this.location = {
       index: "location",
@@ -126,19 +124,77 @@ export class EventModel {
       index: "offers",
       type: "offers",
       classType: Offers,
-      required: false
+      required: false,
+      template: {
+        "@type": "Offer",
+        url: "",
+        price: "",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        validFrom: ""
+      }
     };
     this.performer = {
       index: "performer",
       type: "performer",
       classType: Performer,
-      required: false
+      required: false,
+      template: {
+        "@type": "PerformingGroup",
+        name: ""
+      }
     };
     this.organizer = {
       index: "organizer",
       type: "organizer",
       classType: Organizer,
-      required: false
+      required: false,
+      template: {
+        "@type": "Organization",
+        name: "",
+        url: ""
+      }
+    };
+
+    this.format = {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: "",
+      startDate: "",
+      endDate: "",
+      eventAttendanceMode: "",
+      eventStatus: "",
+      location: {
+        "@type": "Place",
+        name: "",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "",
+          addressLocality: "",
+          postalCode: "",
+          addressRegion: "",
+          addressCountry: ""
+        }
+      },
+      image: [],
+      description: ""
+      // offers: {
+      //   "@type": "Offer",
+      //   url: "https://www.example.com/event_offer/12345_201803180430",
+      //   price: "30",
+      //   priceCurrency: "USD",
+      //   availability: "https://schema.org/InStock",
+      //   validFrom: "2024-05-21T12:00"
+      // },
+      // performer: {
+      //   "@type": "PerformingGroup",
+      //   name: "Kira and Morrison"
+      // },
+      // organizer: {
+      //   "@type": "Organization",
+      //   name: "Kira and Morrison Music",
+      //   url: "https://kiraandmorrisonmusic.com"
+      // }
     };
     this.structure = [
       "type",
@@ -147,9 +203,9 @@ export class EventModel {
       "description",
       "eventAttendanceMode",
       "eventStatus",
+      "previousStartDate",
       "startDate",
       "endDate",
-      "previousStartDate",
       "location",
       "organizer",
       "offers",

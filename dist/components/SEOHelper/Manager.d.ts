@@ -24,6 +24,7 @@ declare class Manager extends React.Component<{
         file: any;
         performActionOnUpdate: any;
         photoManager: boolean;
+        events: any[];
     };
     reactTags: any;
     constructor(object: ManagerObject);

@@ -51,12 +51,20 @@ import Form from "./Form";
 
 type EventsObject = {
   events: any;
+  data: any;
+  onChangeComplete: any;
 };
 
 class Events extends React.Component<{
   events: any;
+  data: any;
+  onChangeComplete: any;
 }> {
-  state: {};
+  state: {
+    eventModalOpen: boolean;
+    isNewEvent: boolean;
+    updatingEventIdx: number;
+  };
   constructor(object: EventsObject) {
     super(object);
     this.state = {
@@ -91,18 +99,51 @@ class Events extends React.Component<{
   };
 
   render() {
+    console.log("Events:", this.props.events);
     return (
       <>
-        <Form
-          onClose={() => {}}
-          open={true}
-          onDelete={() => {}}
-          onChangeComplete={() => {}}
-          model={new EventModel()}
-          data={this.props.events[0]}
-          idx={0}
-          title={"Event Manager"}
-        />
+        {this.state.eventModalOpen && (
+          <Form
+            onClose={() => {
+              this.setState({
+                eventModalOpen: false,
+                updatingEventIdx: null,
+                isNewEvent: false
+              });
+            }}
+            open={this.state.eventModalOpen}
+            onDelete={(idx: number) => {
+              let events = [...this.props.events];
+              // delete events[idx];
+              events.splice(idx, 1);
+              this.props.onChangeComplete(events, "events");
+            }}
+            onChangeComplete={(event: any, idx: number) => {
+              let events = [...this.props.events];
+              if (!events?.[idx]) {
+                events.push(event);
+              } else {
+                events[idx] = event;
+              }
+              this.props.onChangeComplete(events, "events");
+            }}
+            model={new EventModel()}
+            data={this.props.data}
+            event={
+              this.state.isNewEvent === true
+                ? new EventModel().format
+                : this.props.events[0]
+            }
+            idx={
+              this.state.isNewEvent === true
+                ? this.props.events?.length || 0
+                : this.state.updatingEventIdx
+            }
+            title={"Event Manager"}
+            deleteButton={!this.state.isNewEvent}
+          />
+        )}
+
         <Grid item xs={12} mt={2}>
           <Typography variant={"h4"} gutterBottom>
             Events
@@ -118,6 +159,37 @@ class Events extends React.Component<{
           <Button variant="contained" onClick={this.addEvent}>
             Add Event
           </Button>
+        </Grid>
+        <Grid
+          item
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          flexDirection={"column"}
+          flexWrap={"wrap"}
+          mt={3}
+        >
+          {this.props.events.map((item: any, idx: number) => {
+            return (
+              <Grid
+                mt={2}
+                mb={2}
+                className={"event-box"}
+                onClick={() => {
+                  this.setState({
+                    eventModalOpen: true,
+                    updatingEventIdx: idx,
+                    isNewEvent: false
+                  });
+                }}
+                key={`Event-${idx}`}
+              >
+                <Typography variant={"h5"} textAlign={"center"} width={"100%"}>
+                  {item?.name}
+                </Typography>
+              </Grid>
+            );
+          })}
         </Grid>
       </>
     );

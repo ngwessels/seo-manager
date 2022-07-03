@@ -129,6 +129,12 @@ class SEOHelperLite extends React.Component<
             dangerouslySetInnerHTML={{ __html: data.ldJson }}
           />
         )}
+        {data.events && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data.events) }}
+          />
+        )}
         {this.props.children}
       </>
     );

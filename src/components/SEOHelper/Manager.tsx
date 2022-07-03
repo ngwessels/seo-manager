@@ -13,7 +13,8 @@ import { serverCall } from "utils/call";
 import ReactTags from "react-tag-autocomplete";
 
 //Components
-import PagePhotos from "./components/PagePhoto";
+// import PagePhotos from "./components/PagePhoto";
+import PhotosViewer from "./components/PhotosViewer";
 import Events from "./components/Events";
 
 import {
@@ -66,6 +67,7 @@ class Manager extends React.Component<{
     file: any;
     performActionOnUpdate: any;
     photoManager: boolean;
+    events: any[];
   };
   reactTags: any;
 
@@ -77,7 +79,50 @@ class Manager extends React.Component<{
       newImage: "",
       file: null,
       performActionOnUpdate: {},
-      photoManager: true
+      photoManager: true,
+      events: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "The Adventures of Kira and Morrison",
+          startDate: "2025-07-21T19:00-05:00",
+          endDate: "2025-07-21T23:00-05:00",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          eventStatus: "https://schema.org/EventScheduled",
+          location: {
+            "@type": "Place",
+            name: "Snickerpark Stadium",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "100 West Snickerpark Dr",
+              addressLocality: "Snickertown",
+              postalCode: "19019",
+              addressRegion: "PA",
+              addressCountry: "US"
+            }
+          },
+          image: [],
+          description:
+            "The Adventures of Kira and Morrison is coming to Snickertown in a can't miss performance.",
+          offers: {
+            "@type": "Offer",
+            url: "https://www.example.com/event_offer/12345_201803180430",
+            price: "30",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            validFrom: "2024-05-21T12:00"
+          },
+          performer: {
+            "@type": "PerformingGroup",
+            name: "Kira and Morrison"
+          },
+          organizer: {
+            "@type": "Organization",
+            name: "Kira and Morrison Music",
+            url: "https://kiraandmorrisonmusic.com"
+          }
+        }
+      ]
     };
     this.reactTags = React.createRef();
   }
@@ -94,6 +139,7 @@ class Manager extends React.Component<{
       );
       if (response) {
         this.props.onChange(response?.results, true);
+        // this.onChange(this.state.events, "events");
       }
       this.setState({ loading: false });
     });
@@ -102,10 +148,12 @@ class Manager extends React.Component<{
   onChange = (value: any, location: string) => {
     let props = { ...this.props.data };
     if (props[location] || props[location] === "") {
+      console.log(0);
       props[location] = value;
       this.props.onChange(props, false);
       this.setState({ data: props });
     } else {
+      console.log(1);
       this.setState({ [location]: value });
     }
   };
@@ -173,6 +221,7 @@ class Manager extends React.Component<{
   };
 
   render() {
+    console.log("Data:", this.props.data);
     return (
       <>
         {this.state.loading ? (
@@ -192,14 +241,19 @@ class Manager extends React.Component<{
             <DialogContent dividers>
               <Grid item xs={12}>
                 <div className="form-floating mb-3">
-                  <PagePhotos
-                    onChange={this.onChange}
-                    image={this.props.data.image}
-                    newImage={this.state.newImage}
-                    addPerformActionOnUpdate={this.addPerformAction}
+                  <PhotosViewer
+                    files={
+                      this.props?.data?.image
+                        ? [this.props.data.image]
+                        : [{ url: "", fileId: "" }]
+                    }
+                    onChangeComplete={(e: any) => {
+                      const object = e?.url ? e : { url: "", fileId: "" };
+                      this.onChange(object, "image");
+                    }}
+                    multiple={false}
+                    accept={"image/png, image/jpeg, image/jpg"}
                     data={this.props.data}
-                    file={this.state.file}
-                    user={this.props.user}
                   />
                 </div>
               </Grid>
@@ -356,54 +410,9 @@ class Manager extends React.Component<{
                 />
               </Grid>
               <Events
-                events={[
-                  {
-                    "@context": "https://schema.org",
-                    "@type": "Event",
-                    name: "The Adventures of Kira and Morrison",
-                    startDate: "2025-07-21T19:00-05:00",
-                    endDate: "2025-07-21T23:00-05:00",
-                    eventAttendanceMode:
-                      "https://schema.org/OfflineEventAttendanceMode",
-                    eventStatus: "https://schema.org/EventScheduled",
-                    location: {
-                      "@type": "Place",
-                      name: "Snickerpark Stadium",
-                      address: {
-                        "@type": "PostalAddress",
-                        streetAddress: "100 West Snickerpark Dr",
-                        addressLocality: "Snickertown",
-                        postalCode: "19019",
-                        addressRegion: "PA",
-                        addressCountry: "US"
-                      }
-                    },
-                    image: [
-                      "https://example.com/photos/1x1/photo.jpg",
-                      "https://example.com/photos/4x3/photo.jpg",
-                      "https://example.com/photos/16x9/photo.jpg"
-                    ],
-                    description:
-                      "The Adventures of Kira and Morrison is coming to Snickertown in a can't miss performance.",
-                    offers: {
-                      "@type": "Offer",
-                      url: "https://www.example.com/event_offer/12345_201803180430",
-                      price: "30",
-                      priceCurrency: "USD",
-                      availability: "https://schema.org/InStock",
-                      validFrom: "2024-05-21T12:00"
-                    },
-                    performer: {
-                      "@type": "PerformingGroup",
-                      name: "Kira and Morrison"
-                    },
-                    organizer: {
-                      "@type": "Organization",
-                      name: "Kira and Morrison Music",
-                      url: "https://kiraandmorrisonmusic.com"
-                    }
-                  }
-                ]}
+                events={this.props.data?.events}
+                data={this.props.data || []}
+                onChangeComplete={this.onChange}
               />
               <Grid
                 item
