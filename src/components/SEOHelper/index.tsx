@@ -209,7 +209,7 @@ class SEOHelper extends React.Component<
         {data.events && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: data.events }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data.events) }}
           />
         )}
 
