@@ -1,2 +1,0 @@
-import{__awaiter as t}from"../../node_modules/tslib/tslib.es6.js";import{Component as e}from"react";import{serverCall as r}from"../../utils/call.js";export default class extends e{static getInitialProps({res:e}){return t(this,void 0,void 0,(function*(){e.setHeader("Content-Type","text/plain");try{const{results:t}=yield r("/robots/","put");e.write(t)}catch(t){console.error(t.error)}e.end()}))}}
-//# sourceMappingURL=index.js.map

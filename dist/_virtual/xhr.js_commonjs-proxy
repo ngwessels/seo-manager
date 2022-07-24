@@ -1,2 +1,0 @@
-import o from"../node_modules/axios/lib/adapters/xhr.js";export{default}from"../node_modules/axios/lib/adapters/xhr.js";
-//# sourceMappingURL=xhr.js_commonjs-proxy.map

@@ -1,36 +1,39 @@
+import babel from "rollup-plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import peerDeps from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
+import external from "rollup-plugin-peer-deps-external";
 import { terser } from "rollup-plugin-terser";
-import { getFiles } from "./scripts/buildUtils";
+import postcss from "rollup-plugin-postcss";
 
-const extensions = [".js", ".ts", ".jsx", ".tsx"];
+export default [
+  {
+    input: "./src/index.js",
+    output: [
+      {
+        file: "dist/index.js",
+        format: "cjs"
+      },
+      {
+        file: "dist/index.es.js",
+        format: "es",
+        exports: "named"
+      }
+    ],
+    plugins: [
+      postcss({
+        plugins: [],
+        minimize: true
+      }),
+      resolve(),
 
-export default {
-  input: [
-    "./src/index.ts",
-    ...getFiles("./src/components", extensions),
-    ...getFiles("./src/utils", extensions)
-  ],
-  output: {
-    dir: "dist",
-    format: "esm",
-    preserveModules: true,
-    preserveModulesRoot: "src",
-    sourcemap: true
-  },
-  plugins: [
-    postcss(),
-    peerDeps(),
-    resolve(),
-    commonjs(),
-    typescript({
-      tsconfig: "./tsconfig.build.json",
-      declaration: true,
-      declarationDir: "dist"
-    }),
-    terser()
-  ]
-};
+      external(),
+      babel({
+        exclude: "node_modules/**",
+        presets: ["@babel/preset-react", "@babel/preset-typescript"],
+        plugins: ["@babel/plugin-proposal-class-properties"]
+      }),
+      commonjs(),
+      terser()
+    ]
+  }
+];
