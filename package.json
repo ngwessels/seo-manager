@@ -89,7 +89,6 @@
     "@rollup/plugin-node-resolve": "^13.0.6",
     "axios": "^0.26.1",
     "encoding": "^0.1.13",
-    "nextjs-seo-manager": "^0.0.1-beta.137",
     "prop-types": "^15.8.1"
   }
 }
