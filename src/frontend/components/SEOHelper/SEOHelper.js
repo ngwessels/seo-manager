@@ -137,7 +137,7 @@ export class SEOHelper extends React.Component {
         <meta
           property="og:description"
           content={
-            data.page.description || data?.global?.defaultDescription || ""
+            data?.page?.description || data?.global?.defaultDescription || ""
           }
         />
 
@@ -157,7 +157,7 @@ export class SEOHelper extends React.Component {
         <meta
           name="twitter:description"
           content={
-            data.page.description || data?.global?.defaultDescription || ""
+            data?.page?.description || data?.global?.defaultDescription || ""
           }
         />
         {data?.page?.image?.url && (
