@@ -1,16 +1,42 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "0.0.1-beta.114",
+  "version": "0.0.1-beta.136",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js"
+    },
+    "./backend": {
+      "import": "./dist/backend/index.es.js",
+      "require": "./dist/backend/index.js"
+    },
+    "./SEOHelperLite": {
+      "import": "./dist/frontend/SEOHelperLite/index.es.js",
+      "require": "./dist/frontend/SEOHelperLite/index.js"
+    },
+    "./SEOHelper": {
+      "import": "./dist/frontend/SEOHelper/index.es.js",
+      "require": "./dist/frontend/SEOHelper/index.js"
+    },
+    "./RobotsHelper": {
+      "import": "./dist/frontend/RobotsHelper/index.es.js",
+      "require": "./dist/frontend/RobotsHelper/index.js"
+    },
+    "./SitemapHelper": {
+      "import": "./dist/frontend/SitemapHelper/index.es.js",
+      "require": "./dist/frontend/SitemapHelper/index.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "rollup -c --watch",
     "build:local": "npm run build && npm pack",
-    "build:publish": "npm run build && npm publish"
+    "build:publish": "rollup -c && npm publish"
   },
   "repository": {
     "type": "git",
@@ -41,8 +67,8 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-typescript": "^8.3.3",
     "babel-loader": "^8.2.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^2.38.4",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -56,14 +82,13 @@
     "@mui/lab": ">=5.0.0-alpha.75",
     "@mui/material": ">=5.5.0",
     "firebase": ">=9.5.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",
     "axios": "^0.26.1",
     "encoding": "^0.1.13",
-    "node-cache": "^5.1.2",
     "prop-types": "^15.8.1"
   }
 }

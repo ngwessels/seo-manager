@@ -55,17 +55,6 @@
   }
 }
 
-a {
-  color: #fafafa;
-  display: block;
-  text-decoration: none;
-  -webkit-margin-before: 1em;
-  -webkit-margin-after: 1em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  transition: 0.5s;
-}
-
 .delete-btn-container {
   position: absolute;
   display: flex;
@@ -221,8 +210,9 @@ a {
   right: 30px;
   margin-top: -15px;
   z-index: 10;
-  color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
   cursor: pointer;
+  box-shadow: none;
 }
 
 .carousel-dots {

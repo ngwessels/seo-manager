@@ -26,12 +26,12 @@ import { getAnalytics } from "firebase/analytics";
 // };
 
 export class SEOHelperLite extends React.Component {
-  constructor(object) {
-    super(object);
-    this.checkComponentErrors(object);
+  constructor(props) {
+    super(props);
+    this.checkComponentErrors(props);
     this.state = {
-      data: object.data,
-      head: object.head(this.formatHead(object.data)),
+      data: props.data,
+      head: props.head(this.formatHead(props.data)),
       loading: true,
       loaded: false
     };

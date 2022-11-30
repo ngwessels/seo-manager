@@ -36,18 +36,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }));
 
-// type FileDetailsObject = {
-//   onClose: any;
-//   open: boolean;
-//   onDelete: any;
-//   file: any;
-//   isImage: boolean;
-//   idx: any;
-// };
-
 class FileDetails extends React.Component {
-  constructor({ onClose, open, onDelete, file, isImage, idx }) {
-    super({ onClose, open, onDelete, file, isImage, idx });
+  constructor(props) {
+    super(props);
     this.state = {
       deleteLoading: false
     };

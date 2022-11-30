@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 
 const firebaseConfig =
   process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
@@ -22,6 +22,15 @@ const firebaseConfig =
         measurementId: "G-PYZDK47B2M"
       };
 
-const firebase = initializeApp(firebaseConfig, "seo-manager");
-
-export default firebase;
+let app;
+const appFoundIndex = getApps()?.findIndex((a) => {
+  if (a?.name === "seo-manager") {
+    return true;
+  }
+});
+if (appFoundIndex < 0) {
+  app = initializeApp(firebaseConfig, "seo-manager");
+} else {
+  app = getApp("seo-manager");
+}
+export default app;

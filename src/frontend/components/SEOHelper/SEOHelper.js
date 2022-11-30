@@ -4,7 +4,7 @@ import React from "react";
 //PropTypes
 import PropTypes from "prop-types";
 
-// import { returnKey } from "utils/Init";
+//Utilities
 import { returnKey } from "../../../utilities/setupInit";
 
 import "./styles.css";
@@ -22,21 +22,6 @@ import {
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-    width: "95vw",
-    maxWidth: "900px"
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1)
-  },
-  "& .MuiPaper-root": {
-    margin: "0px",
-    maxWidth: "none !important"
-  }
-}));
-
 //Firebase
 import firebase from "../../../firebase";
 import { getAnalytics } from "firebase/analytics";
@@ -52,11 +37,12 @@ const auth = getAuth(firebase);
 import Manager from "./Manager";
 
 //Utils
-import { hideModal, openModal, formattedFileName, addFiles } from "./utils";
+// import { hideModal, openModal, formattedFileName, addFiles } from "./utils";
 
 export class SEOHelper extends React.Component {
-  constructor({ head, data, onChangeComplete, onClose, open }) {
-    super({ head, data, onChangeComplete, onClose, open });
+  constructor(props) {
+    super(props);
+    const { head, data, onChangeComplete, onClose, open } = props;
     this.checkComponentErrors({ head, data, onChangeComplete, onClose, open });
     const initData = returnKey();
     this.state = {
@@ -77,10 +63,20 @@ export class SEOHelper extends React.Component {
   }
 
   componentDidMount = () => {
-    const permissionLevels = ["owner", "admin", "editor"];
     this.setState({ loading: true, user: false, loaded: true });
+    this.authentication();
+    // console.log(`SEOHelper Mounted:`, Date.now());
+  };
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props?.open !== prevProps?.open) {
+      this.setState({ openManager: this.props?.open ? true : false });
+    }
+  };
+
+  authentication = () => {
+    const permissionLevels = ["owner", "admin", "editor"];
     onAuthStateChanged(auth, async (user) => {
-      console.log(`SEOHelper Mounted:`, Date.now());
       if (user) {
         const customClaims = await user.getIdTokenResult(true);
         const userData = { ...user, customClaims: customClaims.claims };
@@ -91,7 +87,6 @@ export class SEOHelper extends React.Component {
           )
         ) {
           this.setState({ authorizedUser: true });
-          // this.openManager(userData);
         } else {
           this.setState({ authorizedUser: false });
         }
@@ -104,16 +99,7 @@ export class SEOHelper extends React.Component {
     });
   };
 
-  componentDidUpdate = (prevProps) => {
-    if (this.props?.open !== prevProps?.open) {
-      this.setState({ openManager: this.props?.open ? true : false });
-    }
-  };
-
   checkComponentErrors = ({ head, data, onChangeComplete, onClose, open }) => {
-    // if (!object.data && object.data !== false) {
-    //   throw "Please add this tag to your SEOHelper component 'data={this.props.seo}'. If you are using NextJS make sure you are calling our fetchSEO function in getServerSideProps or getStaticProps and passing the data as a prop.";
-    // }
     if (!head) {
       throw "Please add this tag to your SEOHelper component 'head={(data) => (<Head>{data}</Head>)}'. If your not using NextJS replace <Head>{data}</Head> with <Helmet>{data}</Helmet> from npm react-helmet.";
     }
@@ -125,72 +111,85 @@ export class SEOHelper extends React.Component {
     }
     return (
       <>
-        <title>{data.title || data?.defaultTitle || ""}</title>
+        <title>{data?.page?.title || data?.global?.defaultTitle || ""}</title>
         <meta
           name="description"
-          content={data.description || data.defaultDescription || ""}
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
           key={"description"}
         />
-        {data.keywords && <meta name="keywords" content={data.keywords} />}
-        {data.canonicalURL && (
-          <link href={`${data.canonicalURL}${data.path}`} rel="canonical" />
+        {data?.page?.keywords && (
+          <meta name="keywords" content={data.page.keywords} />
+        )}
+        {data?.global?.canonicalURL && data?.page?.path && (
+          <link
+            href={`${data.global.canonicalURL}${data.page.path}`}
+            rel="canonical"
+          />
         )}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        {data.title && (
-          <meta property="og:title" content={data.title || response?.error} />
-        )}
-        {data.description && (
-          <meta
-            property="og:description"
-            content={data.description || data.defaultDescription}
-          />
-        )}
+        <meta
+          property="og:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+        <meta
+          property="og:description"
+          content={
+            data.page.description || data?.global?.defaultDescription || ""
+          }
+        />
 
-        {data?.image?.url && (
-          <meta property="og:image" content={data.image.url} />
+        {data?.page?.image?.url && (
+          <meta property="og:image" content={data.page.image.url} />
         )}
-        {data.canonicalURL && (
+        {data?.global?.canonicalURL && data?.page?.path && (
           <meta
             property="og:url"
-            content={`${data.canonicalURL}${data.path}`}
+            content={`${data.global.canonicalURL}${data.page.path}`}
           />
         )}
-        {data.title && (
-          <meta name="twitter:title" content={data.title || response?.error} />
+        <meta
+          name="twitter:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+        <meta
+          name="twitter:description"
+          content={
+            data.page.description || data?.global?.defaultDescription || ""
+          }
+        />
+        {data?.page?.image?.url && (
+          <meta name="twitter:image" content={data.page.image.url} />
         )}
-        {data.description && (
-          <meta
-            name="twitter:description"
-            content={data.description || data.defaultDescription}
-          />
-        )}
-        {data?.image?.url && (
-          <meta name="twitter:image" content={data.image.url} />
-        )}
-        {(data.pageFavicon || data.projectFavicon) && (
+        {data?.global?.favicon && (
           <link
             rel="icon"
             type="image/x-icon"
-            href={data.pageFavicon || data.projectFavicon}
+            href={data.global.favicon}
             sizes="192x192"
           />
         )}
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta
           name="robots"
-          content={`${data.index || "index"}, ${data.follow || "follow"}`}
+          content={`${data?.page?.index || "index"}, ${
+            data?.page?.follow || "follow"
+          }`}
         />
-        {data.ldJson && (
+        {data?.page?.ldJson && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: data.ldJson }}
+            dangerouslySetInnerHTML={{ __html: data.page.ldJson }}
           />
         )}
-        {data.events && (
+        {data?.page?.events && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(data.events) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(data.page.events)
+            }}
           />
         )}
 
@@ -390,9 +389,6 @@ export class SEOHelper extends React.Component {
   }
 }
 
-// export default SEOHelper;
-
-// head, data, onChangeComplete, onClose, open
 SEOHelper.propTypes = {
   head: PropTypes.any.isRequired,
   data: PropTypes.any.isRequired,
@@ -400,3 +396,18 @@ SEOHelper.propTypes = {
   onClose: PropTypes.any,
   open: PropTypes.bool
 };
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+    width: "95vw",
+    maxWidth: "900px"
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1)
+  },
+  "& .MuiPaper-root": {
+    margin: "0px",
+    maxWidth: "none !important"
+  }
+}));

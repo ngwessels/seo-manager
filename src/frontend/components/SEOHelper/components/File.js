@@ -8,17 +8,9 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 //Components
 import FileDetails from "./FileDetails";
 
-// type FileObject = {
-//   isClicked: any;
-//   onDelete: any;
-//   onClick: any;
-//   item: any;
-//   idx: any;
-// };
-
 export default class File extends React.Component {
-  constructor({ isClicked, onDelete, onClick, item, idx }) {
-    super({ isClicked, onDelete, onClick, item, idx });
+  constructor(props) {
+    super(props);
     this.state = {
       imageTypes: [
         "image/png",

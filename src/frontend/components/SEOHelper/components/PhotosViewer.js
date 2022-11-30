@@ -9,14 +9,6 @@ import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 //Components
 import Files from "./Files";
 
-// type PhotoObject = {
-//   files: any[];
-//   onChangeComplete: any;
-//   multiple: boolean;
-//   accept: string;
-//   data: any;
-// };
-
 class PagePhotos extends React.Component {
   constructor(object) {
     super(object);
@@ -283,6 +275,7 @@ class PagePhotos extends React.Component {
                 onClick={() => {
                   this.setState({ openPhotoManager: true });
                 }}
+                color={"#22211f"}
               />
             </div>
           </div>

@@ -55,10 +55,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 // };
 
 class Form extends React.Component {
-  constructor(object) {
-    super(object);
+  constructor(props) {
+    super(props);
     this.state = {
-      data: object?.event
+      data: props?.event
     };
   }
 

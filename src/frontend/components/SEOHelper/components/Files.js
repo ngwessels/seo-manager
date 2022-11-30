@@ -71,26 +71,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 // };
 
 class SEOHelper extends React.Component {
-  constructor({
-    selected,
-    onChangeComplete,
-    onClose,
-    multiple,
-    open,
-    maxFiles,
-    data,
-    accept
-  }) {
-    super({
-      selected,
-      onChangeComplete,
-      onClose,
-      multiple,
-      open,
-      maxFiles,
-      data,
-      accept
-    });
+  constructor(props) {
+    super(props);
+    const { selected, multiple } = props;
     this.state = {
       files: [],
       loading: true,

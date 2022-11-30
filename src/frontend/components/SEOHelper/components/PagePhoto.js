@@ -21,19 +21,9 @@ import { serverCall } from "../../../../utilities/serverCall";
 //Components
 import Files from "./Files";
 
-// type PhotoObject = {
-//   image: any;
-//   newImage?: string;
-//   onChange: any;
-//   addPerformActionOnUpdate: any;
-//   data: any;
-//   file: any;
-//   user: any;
-// };
-
 class PagePhotos extends React.Component {
-  constructor(object) {
-    super(object);
+  constructor(props) {
+    super(props);
     this.state = {
       fileError: "",
       photoManager: false

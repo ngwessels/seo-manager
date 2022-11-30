@@ -27,15 +27,9 @@ import { EventModel } from "./../../../../models/structuredData";
 //Components
 import Form from "./Form";
 
-// type EventsObject = {
-//   events: any;
-//   data: any;
-//   onChangeComplete: any;
-// };
-
 class Events extends React.Component {
-  constructor({ events, data, onChangeComplete }) {
-    super({ events, data, onChangeComplete });
+  constructor(props) {
+    super(props);
     this.state = {
       eventModalOpen: false,
       isNewEvent: false,
@@ -111,7 +105,7 @@ class Events extends React.Component {
             deleteButton={!this.state.isNewEvent}
           />
         )}
-        <Grid
+        {/* <Grid
           item
           xs={12}
           display={"flex"}
@@ -122,7 +116,7 @@ class Events extends React.Component {
           <Button variant="contained" onClick={this.addEvent}>
             + Add Event
           </Button>
-        </Grid>
+        </Grid> */}
         <Grid
           item
           display={"flex"}
