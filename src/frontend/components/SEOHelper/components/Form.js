@@ -101,7 +101,7 @@ class Form extends React.Component {
                 this.props.onClose();
               }}
             >
-              {Object.keys(this.props?.model?.structure).map((idx) => {
+              {Object.keys(this.props?.model?.structure || []).map((idx) => {
                 const index = this.props?.model?.structure[idx];
                 const modelItem = this.props.model[index];
 
@@ -149,17 +149,19 @@ class Form extends React.Component {
                           required={modelItem?.required || false}
                         >
                           <MenuItem>Select Option ...</MenuItem>
-                          {Object.keys(modelItem.selection).map((idx) => {
-                            const { title, data } = modelItem.selection[idx];
-                            return (
-                              <MenuItem
-                                value={data}
-                                key={`${modelItem.index}-${idx}`}
-                              >
-                                {title}
-                              </MenuItem>
-                            );
-                          })}
+                          {Object.keys(modelItem?.selection || []).map(
+                            (idx) => {
+                              const { title, data } = modelItem.selection[idx];
+                              return (
+                                <MenuItem
+                                  value={data}
+                                  key={`${modelItem.index}-${idx}`}
+                                >
+                                  {title}
+                                </MenuItem>
+                              );
+                            }
+                          )}
                         </Select>
                       </FormControl>
                     </Grid>

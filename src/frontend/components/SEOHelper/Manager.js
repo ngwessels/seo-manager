@@ -91,6 +91,13 @@ class Manager extends React.Component {
     }
   };
 
+  onGlobalChange = (value, location) => {
+    let props = { ...this.props.data };
+    props.global[location] = value;
+    this.props.onChange(props, false);
+    this.setState({ data: props });
+  };
+
   addPerformAction = (e, type) => {
     //Adds a perform action that takes place when user clicks submit. TODO: A menu will pop up and user will accept that will details all major changes that will be made on save
     let performAction = this.state.performActionOnUpdate;
@@ -102,15 +109,15 @@ class Manager extends React.Component {
     //Saves Data
     this.setState({ saving: true });
     auth?.currentUser?.getIdToken().then(async (token) => {
-      const awaitActions = Object.keys(this.state.performActionOnUpdate).map(
-        async (idx) => {
-          const action = this.state.performActionOnUpdate[idx];
-          if (action && action.action) {
-            await action.action();
-          }
-          return true;
+      const awaitActions = Object.keys(
+        this.state.performActionOnUpdate || []
+      ).map(async (idx) => {
+        const action = this.state.performActionOnUpdate[idx];
+        if (action && action.action) {
+          await action.action();
         }
-      );
+        return true;
+      });
       await Promise.all(awaitActions);
 
       const response = await serverCall(
@@ -157,7 +164,7 @@ class Manager extends React.Component {
                     onChange={(event, newValue) => {
                       this.setState({ tabIndex: newValue });
                     }}
-                    aria-label="basic tabs example"
+                    aria-label="Select SEO Manager Options"
                   >
                     <Tab label="Page" {...a11yProps(0)} />
                     <Tab label="Global" {...a11yProps(1)} />
@@ -182,6 +189,7 @@ class Manager extends React.Component {
                       multiple={false}
                       accept={"image/png, image/jpeg, image/jpg"}
                       data={this.props.data.page}
+                      projectId={this.props?.data?.projectId}
                     />
                   </div>
                 </Grid>
@@ -377,7 +385,72 @@ class Manager extends React.Component {
                 /> */}
               </TabPanel>
               <TabPanel value={this.state.tabIndex} index={1}>
-                Global
+                <Grid item mb={1}>
+                  <TextField
+                    id="default-title"
+                    label="Default Title"
+                    variant="standard"
+                    placeholder=""
+                    onChange={(e) => {
+                      this.onGlobalChange(e.target.value, "defaultTitle");
+                    }}
+                    value={this.props.data?.global?.defaultTitle}
+                    style={{ width: "100%" }}
+                    multiline
+                    helperText={`${
+                      this.props.data?.global?.defaultTitle.length || 0
+                    } of 60 (recommended)`}
+                  />
+                </Grid>
+                <Grid item mb={1}>
+                  <TextField
+                    id="default-description"
+                    label="Default Description"
+                    variant="standard"
+                    placeholder=""
+                    onChange={(e) => {
+                      this.onGlobalChange(e.target.value, "defaultDescription");
+                    }}
+                    value={this.props.data?.global?.defaultDescription}
+                    style={{ width: "100%" }}
+                    multiline
+                    helperText={`${
+                      this.props.data?.global?.defaultDescription.length || 0
+                    } of 160 (recommended)`}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="form-floating mb-3">
+                    <PhotosViewer
+                      files={
+                        this.props?.data?.global?.favicon?.fileId
+                          ? [this.props.data.global.favicon]
+                          : [{ url: "", fileId: "" }]
+                      }
+                      onChangeComplete={(e) => {
+                        const object = e?.url ? e : { url: "", fileId: "" };
+                        this.onGlobalChange(object, "favicon");
+                      }}
+                      multiple={false}
+                      accept={"image/png, image/jpeg, image/jpg"}
+                      data={this.props.data.page}
+                      projectId={this.props?.data?.projectId}
+                    />
+                  </div>
+                </Grid>
+                <Grid item mb={1}>
+                  <TextField
+                    id="navbar-color"
+                    label="Pick a Navigation Theme Color"
+                    variant="standard"
+                    type={"color"}
+                    value={this.props?.data?.global?.themeColor || "#FFFFFF"}
+                    style={{ width: "100%" }}
+                    onChange={(e) => {
+                      this.onGlobalChange(e.target.value, "themeColor");
+                    }}
+                  />
+                </Grid>
               </TabPanel>
               <TabPanel value={this.state.tabIndex} index={2}>
                 Forms

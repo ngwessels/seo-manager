@@ -163,14 +163,14 @@ export class SEOHelper extends React.Component {
         {data?.page?.image?.url && (
           <meta name="twitter:image" content={data.page.image.url} />
         )}
-        {data?.global?.favicon && (
+        {/* {data?.global?.favicon && (
           <link
             rel="icon"
             type="image/x-icon"
             href={data.global.favicon}
             sizes="192x192"
           />
-        )}
+        )} */}
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta
           name="robots"

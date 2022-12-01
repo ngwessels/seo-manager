@@ -52,13 +52,14 @@ class FileDetails extends React.Component {
       "Are you sure you want to delete this file? (yes or no)"
     );
     if (confirm === "yes") {
+      alert(`File Location: ${this.props.file.location}`);
       const fileRef = ref(storage, this.props.file.location);
       await deleteObject(fileRef);
       this.props.onDelete(this.props.file, this.props.idx);
       this.setState({ deleteLoading: false });
       this.props.onClose();
     } else {
-      alert("This file has not been deleted");
+      // alert("This file has not been deleted");
     }
     this.setState({ deleteLoading: false });
   };

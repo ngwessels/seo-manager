@@ -216,7 +216,7 @@ class SEOHelper extends React.Component {
           }
         );
 
-        const uploadStep = Object.keys(newFiles).map((idx) => {
+        const uploadStep = Object.keys(newFiles || []).map((idx) => {
           return new Promise(async (resolve, reject) => {
             const item = newFiles[idx];
             const file = item.object;
@@ -232,11 +232,11 @@ class SEOHelper extends React.Component {
                 userId: auth?.currentUser?.uid,
                 fileName: name,
                 fileId,
-                projectId: this.props.data.projectId
+                projectId: this.props.projectId
               }
             };
 
-            const fileLocation = `projects/${this.props.data.projectId}/files/${fileId}`;
+            const fileLocation = `projects/${this.props.projectId}/files/${fileId}`;
 
             const fileRef = ref(storage, fileLocation);
             const uploadTask = uploadBytesResumable(fileRef, file, metadata);
@@ -411,19 +411,20 @@ class SEOHelper extends React.Component {
                 </div>
               </div>
             )}
-            {this.state.loading === false && this.state?.files?.length === 0 && (
-              <div
-                style={{
-                  width: "100%",
-                  height: 400,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Typography>Add your first files</Typography>
-              </div>
-            )}
+            {this.state.loading === false &&
+              this.state?.files?.length === 0 && (
+                <div
+                  style={{
+                    width: "100%",
+                    height: 400,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <Typography>Add your first files</Typography>
+                </div>
+              )}
           </DialogContent>
           <DialogActions>
             <div
@@ -436,8 +437,8 @@ class SEOHelper extends React.Component {
             >
               {this.state.loading === false && (
                 <div
-                  className="file-upload mb-3"
-                  style={{ height: 70, width: "100%" }}
+                  className="file-upload carousel-frame-design"
+                  style={{ width: "100%", height: 140, marginBottom: 10 }}
                 >
                   <input
                     className="file-input"
@@ -446,19 +447,17 @@ class SEOHelper extends React.Component {
                     multiple={true}
                     style={{ zIndex: 2 }}
                   />
-                  <div className={"overlay"} />
 
                   <div
                     style={{
-                      zIndex: 0
+                      zIndex: 0,
+                      height: 140
                     }}
                   >
-                    <FileUploadOutlinedIcon fontSize={"large"} />
-                  </div>
-                  <div className={"card-subtitle"}>
-                    <Typography textAlign={"center"}>
-                      Drag and drop a file here or click
-                    </Typography>
+                    <iframe
+                      src="https://embed.lottiefiles.com/animation/27938"
+                      style={{ height: "100%", width: "100%", zIndex: 0 }}
+                    />
                   </div>
                 </div>
               )}
