@@ -12,6 +12,7 @@ const auth = getAuth(firebase);
 //Server Call
 import { serverCall } from "../../../utilities/serverCall";
 import { setProject } from "../../../utilities/setupInit";
+import { getUserToken } from "../../../utilities/fetch";
 
 //Components
 import PhotosViewer from "./components/PhotosViewer";
@@ -38,13 +39,10 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 
 //Utils
-import {
-  hideModal,
-  openModal,
-  formattedFileName,
-  addFiles,
-  authSignOut
-} from "./utils";
+import { hideModal, authSignOut } from "./utils";
+
+//Components
+import OpenDashboard from "./components/OpenDashboard";
 
 class Manager extends React.Component {
   constructor(props) {
@@ -56,7 +54,9 @@ class Manager extends React.Component {
       file: null,
       performActionOnUpdate: {},
       photoManager: true,
-      tabIndex: 0
+      tabIndex: 0,
+      savedLocations: {},
+      isNewPage: false
     };
   }
 
@@ -67,35 +67,40 @@ class Manager extends React.Component {
       const response = await serverCall(
         "/seo/authorized_get",
         "put",
-        { path: this.props.data?.page?.path || "" },
+        {
+          path: this.props.data?.page?.path || ""
+        },
         undefined,
         { X_Authorization: token, AuthorizationId: auth?.currentUser?.uid }
       );
-
-      if (response) {
-        this.props.onChange(response?.results, true);
-        setProject(response?.results);
+      if (response?.results?.seoRequest) {
+        this.props.onChange(response?.results?.seoRequest, true);
+        setProject(response?.results?.seoRequest);
       }
-      this.setState({ loading: false });
+
+      this.setState({
+        loading: false,
+        isNewPage: response?.results?.isNewPage ? true : false
+      });
     });
   };
 
   onPageChange = (value, location) => {
     let props = { ...this.props.data };
-    if (props.page[location] || props.page[location] === "") {
-      props.page[location] = value;
-      this.props.onChange(props, false);
-      this.setState({ data: props });
-    } else {
-      this.setState({ [location]: value });
-    }
+    let savedLocations = this.state.savedLocations;
+    props.page[location] = value;
+    savedLocations["page"] = true;
+    this.props.onChange(props, false);
+    this.setState({ data: props, savedLocations });
   };
 
   onGlobalChange = (value, location) => {
     let props = { ...this.props.data };
+    let savedLocations = this.state.savedLocations;
     props.global[location] = value;
+    savedLocations["global"] = true;
     this.props.onChange(props, false);
-    this.setState({ data: props });
+    this.setState({ data: props, savedLocations });
   };
 
   addPerformAction = (e, type) => {
@@ -120,20 +125,45 @@ class Manager extends React.Component {
       });
       await Promise.all(awaitActions);
 
-      const response = await serverCall(
-        "/seo/update",
-        "put",
-        { data: this.props.data },
-        undefined,
-        { X_Authorization: token, AuthorizationId: auth?.currentUser?.uid }
-      );
+      if (this.state.isNewPage === true) {
+        //New Page
+        const response = await serverCall(
+          "/seo/create",
+          "post",
+          { data: this.props.data, savedLocations: this.state.savedLocations },
+          undefined,
+          { X_Authorization: token, AuthorizationId: auth?.currentUser?.uid }
+        );
 
-      if (response?.results && this.props.onChangeComplete) {
-        this.props.onChangeComplete(response?.results);
+        if (response?.results && this.props.onChangeComplete) {
+          this.props.onChangeComplete(response?.results);
+        }
+
+        this.setState({ saving: false });
+
+        if (!response?.error) {
+          hideModal(); //Hides Modal
+        }
+      } else {
+        //Existing page
+        const response = await serverCall(
+          "/seo/update",
+          "put",
+          { data: this.props.data, savedLocations: this.state.savedLocations },
+          undefined,
+          { X_Authorization: token, AuthorizationId: auth?.currentUser?.uid }
+        );
+
+        if (response?.results && this.props.onChangeComplete) {
+          this.props.onChangeComplete(response?.results);
+        }
+
+        this.setState({ saving: false });
+
+        if (!response?.error) {
+          hideModal(); //Hides Modal
+        }
       }
-
-      this.setState({ saving: false });
-      hideModal(); //Hides Modal
     });
   };
 
@@ -168,10 +198,19 @@ class Manager extends React.Component {
                   >
                     <Tab label="Page" {...a11yProps(0)} />
                     <Tab label="Global" {...a11yProps(1)} />
-                    <Tab label="Forms" {...a11yProps(2)} />
+                    {/* <Tab label="Forms" {...a11yProps(2)} /> */}
                     <Tab label="Account" {...a11yProps(3)} />
                   </Tabs>
                 </Box>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                mt={2}
+                display={"flex"}
+                justifyContent={"center"}
+              >
+                <OpenDashboard projectId={this.props?.data?.projectId} />
               </Grid>
               <TabPanel value={this.state.tabIndex} index={0}>
                 <Grid item xs={12}>
@@ -187,7 +226,7 @@ class Manager extends React.Component {
                         this.onPageChange(object, "image");
                       }}
                       multiple={false}
-                      accept={"image/png, image/jpeg, image/jpg"}
+                      accept={"image/png, image/jpeg, image/jpg, image/webp"}
                       data={this.props.data.page}
                       projectId={this.props?.data?.projectId}
                     />
@@ -201,7 +240,13 @@ class Manager extends React.Component {
                     placeholder=""
                     value={this.props.data?.page?.path || ""}
                     style={{ width: "100%" }}
-                    disabled
+                    onChange={(e) => {
+                      let string = e.target.value;
+                      if (string?.[0] !== "/") {
+                        string = `/${string}`;
+                      }
+                      this.onPageChange(string, "path");
+                    }}
                   />
                 </Grid>
                 <Grid item mb={1}>
@@ -432,7 +477,7 @@ class Manager extends React.Component {
                         this.onGlobalChange(object, "favicon");
                       }}
                       multiple={false}
-                      accept={"image/png, image/jpeg, image/jpg"}
+                      accept={"image/png, image/jpeg, image/jpg, image/webp"}
                       data={this.props.data.page}
                       projectId={this.props?.data?.projectId}
                     />
@@ -452,10 +497,10 @@ class Manager extends React.Component {
                   />
                 </Grid>
               </TabPanel>
-              <TabPanel value={this.state.tabIndex} index={2}>
+              {/* <TabPanel value={this.state.tabIndex} index={2}>
                 Forms
-              </TabPanel>
-              <TabPanel value={this.state.tabIndex} index={3}>
+              </TabPanel> */}
+              <TabPanel value={this.state.tabIndex} index={2}>
                 <Grid container>
                   <Grid
                     item
@@ -464,10 +509,16 @@ class Manager extends React.Component {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      alignItems: "center"
+                      alignItems: "center",
+                      flexDirection: "column"
                     }}
                   >
-                    <Button variant="text" onClick={authSignOut} type="button">
+                    <Button
+                      variant="text"
+                      onClick={authSignOut}
+                      type="button"
+                      mt={5}
+                    >
                       Sign Out
                     </Button>
                   </Grid>

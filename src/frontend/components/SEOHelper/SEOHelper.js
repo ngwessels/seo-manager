@@ -36,14 +36,18 @@ const auth = getAuth(firebase);
 //Components
 import Manager from "./Manager";
 
-//Utils
-// import { hideModal, openModal, formattedFileName, addFiles } from "./utils";
-
 export class SEOHelper extends React.Component {
   constructor(props) {
     super(props);
-    const { head, data, onChangeComplete, onClose, open } = props;
-    this.checkComponentErrors({ head, data, onChangeComplete, onClose, open });
+    const { head, data, onChangeComplete, onClose, open, isNewPage } = props;
+    this.checkComponentErrors({
+      head,
+      data,
+      onChangeComplete,
+      onClose,
+      open,
+      isNewPage
+    });
     const initData = returnKey();
     this.state = {
       data: data,
@@ -65,7 +69,6 @@ export class SEOHelper extends React.Component {
   componentDidMount = () => {
     this.setState({ loading: true, user: false, loaded: true });
     this.authentication();
-    // console.log(`SEOHelper Mounted:`, Date.now());
   };
 
   componentDidUpdate = (prevProps) => {
@@ -99,7 +102,14 @@ export class SEOHelper extends React.Component {
     });
   };
 
-  checkComponentErrors = ({ head, data, onChangeComplete, onClose, open }) => {
+  checkComponentErrors = ({
+    head,
+    data,
+    onChangeComplete,
+    onClose,
+    open,
+    isNewPage
+  }) => {
     if (!head) {
       throw "Please add this tag to your SEOHelper component 'head={(data) => (<Head>{data}</Head>)}'. If your not using NextJS replace <Head>{data}</Head> with <Helmet>{data}</Helmet> from npm react-helmet.";
     }
@@ -111,66 +121,8 @@ export class SEOHelper extends React.Component {
     }
     return (
       <>
-        <title>{data?.page?.title || data?.global?.defaultTitle || ""}</title>
-        <meta
-          name="description"
-          content={
-            data?.page?.description || data?.global?.defaultDescription || ""
-          }
-          key={"description"}
-        />
-        {data?.page?.keywords && (
-          <meta name="keywords" content={data.page.keywords} />
-        )}
-        {data?.global?.canonicalURL && data?.page?.path && (
-          <link
-            href={`${data.global.canonicalURL}${data.page.path}`}
-            rel="canonical"
-          />
-        )}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:title"
-          content={data?.page?.title || data?.global?.defaultTitle || ""}
-        />
-        <meta
-          property="og:description"
-          content={
-            data?.page?.description || data?.global?.defaultDescription || ""
-          }
-        />
-
-        {data?.page?.image?.url && (
-          <meta property="og:image" content={data.page.image.url} />
-        )}
-        {data?.global?.canonicalURL && data?.page?.path && (
-          <meta
-            property="og:url"
-            content={`${data.global.canonicalURL}${data.page.path}`}
-          />
-        )}
-        <meta
-          name="twitter:title"
-          content={data?.page?.title || data?.global?.defaultTitle || ""}
-        />
-        <meta
-          name="twitter:description"
-          content={
-            data?.page?.description || data?.global?.defaultDescription || ""
-          }
-        />
-        {data?.page?.image?.url && (
-          <meta name="twitter:image" content={data.page.image.url} />
-        )}
-        {/* {data?.global?.favicon && (
-          <link
-            rel="icon"
-            type="image/x-icon"
-            href={data.global.favicon}
-            sizes="192x192"
-          />
-        )} */}
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta
           name="robots"
@@ -178,6 +130,74 @@ export class SEOHelper extends React.Component {
             data?.page?.follow || "follow"
           }`}
         />
+        {data?.global?.themeColor && (
+          <meta name="theme-color" content={data?.global?.themeColor} />
+        )}
+
+        {data?.global?.favicon?.url && (
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href={data.global.favicon.url}
+            sizes="192x192"
+          />
+        )}
+
+        {data?.global?.canonicalURL && data?.page?.path && (
+          <link
+            href={`${data.global.canonicalURL}${data.page.path}`}
+            rel="canonical"
+          />
+        )}
+        {data?.global?.canonicalURL && data?.page?.path && (
+          <meta
+            property="og:url"
+            content={`${data.global.canonicalURL}${data.page.path}`}
+          />
+        )}
+
+        {data?.page?.image?.url && (
+          <meta property="og:image" content={data.page.image.url} />
+        )}
+
+        {data?.page?.image?.url && (
+          <meta name="twitter:image" content={data.page.image.url} />
+        )}
+
+        <title>{data?.page?.title || data?.global?.defaultTitle || ""}</title>
+        <meta
+          property="og:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+        <meta
+          name="twitter:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+
+        <meta
+          name="description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+          key={"description"}
+        />
+        <meta
+          property="og:description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+        />
+        <meta
+          name="twitter:description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+        />
+
+        {data?.page?.keywords && (
+          <meta name="keywords" content={data.page.keywords} />
+        )}
+
         {data?.page?.ldJson && (
           <script
             type="application/ld+json"
@@ -192,7 +212,6 @@ export class SEOHelper extends React.Component {
             }}
           />
         )}
-
         {this.props.children}
       </>
     );
@@ -287,6 +306,7 @@ export class SEOHelper extends React.Component {
                 resetData={this.resetData}
                 onChangeComplete={this.props.onChangeComplete}
                 user={this.state.user}
+                isNewPage={this.props.isNewPage}
               />
             )}
           {this.state.user === false && this.state.loading === false && (
@@ -394,7 +414,8 @@ SEOHelper.propTypes = {
   data: PropTypes.any.isRequired,
   onChangeComplete: PropTypes.any,
   onClose: PropTypes.any,
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  isNewPage: PropTypes.bool
 };
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

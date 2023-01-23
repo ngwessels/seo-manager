@@ -59,7 +59,7 @@ class PagePhotos extends React.Component {
           multiple={false}
           selected={this.props.image}
           data={this.props.data}
-          accept={"image/png, image/jpeg, image/jpg"}
+          accept={"image/png, image/jpeg, image/jpg, image/webp"}
         />
         <div className="file-upload mb-3" style={{ height: 300 }}>
           <div

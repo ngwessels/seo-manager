@@ -59,72 +59,95 @@ export class SEOHelperLite extends React.Component {
     }
     return (
       <>
-        <title>{data.title || data?.defaultTitle || ""}</title>
-        <meta
-          name="description"
-          content={data.description || data.defaultDescription || ""}
-          key={"description"}
-        />
-        {data.keywords && <meta name="keywords" content={data.keywords} />}
-        {data.canonicalURL && (
-          <link href={`${data.canonicalURL}${data.path}`} rel="canonical" />
-        )}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        {data.title && (
-          <meta property="og:title" content={data.title || response?.error} />
-        )}
-        {data.description && (
-          <meta
-            property="og:description"
-            content={data.description || data.defaultDescription}
-          />
-        )}
-
-        {data?.image?.url && (
-          <meta property="og:image" content={data.image.url} />
-        )}
-        {data.canonicalURL && (
-          <meta
-            property="og:url"
-            content={`${data.canonicalURL}${data.path}`}
-          />
-        )}
-        {data.title && (
-          <meta name="twitter:title" content={data.title || response?.error} />
-        )}
-        {data.description && (
-          <meta
-            name="twitter:description"
-            content={data.description || data.defaultDescription}
-          />
-        )}
-        {data?.image?.url && (
-          <meta name="twitter:image" content={data.image.url} />
-        )}
-        {(data.pageFavicon || data.projectFavicon) && (
-          <link
-            rel="icon"
-            type="image/x-icon"
-            href={data.pageFavicon || data.projectFavicon}
-            sizes="192x192"
-          />
-        )}
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta
           name="robots"
-          content={`${data.index || "index"}, ${data.follow || "follow"}`}
+          content={`${data?.page?.index || "index"}, ${
+            data?.page?.follow || "follow"
+          }`}
         />
-        {data.ldJson && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: data.ldJson }}
+        {data?.global?.themeColor && (
+          <meta name="theme-color" content={data?.global?.themeColor} />
+        )}
+
+        {data?.global?.favicon?.url && (
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href={data.global.favicon.url}
+            sizes="192x192"
           />
         )}
-        {data.events && (
+
+        {data?.global?.canonicalURL && data?.page?.path && (
+          <link
+            href={`${data.global.canonicalURL}${data.page.path}`}
+            rel="canonical"
+          />
+        )}
+        {data?.global?.canonicalURL && data?.page?.path && (
+          <meta
+            property="og:url"
+            content={`${data.global.canonicalURL}${data.page.path}`}
+          />
+        )}
+
+        {data?.page?.image?.url && (
+          <meta property="og:image" content={data.page.image.url} />
+        )}
+
+        {data?.page?.image?.url && (
+          <meta name="twitter:image" content={data.page.image.url} />
+        )}
+
+        <title>{data?.page?.title || data?.global?.defaultTitle || ""}</title>
+        <meta
+          property="og:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+        <meta
+          name="twitter:title"
+          content={data?.page?.title || data?.global?.defaultTitle || ""}
+        />
+
+        <meta
+          name="description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+          key={"description"}
+        />
+        <meta
+          property="og:description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+        />
+        <meta
+          name="twitter:description"
+          content={
+            data?.page?.description || data?.global?.defaultDescription || ""
+          }
+        />
+
+        {data?.page?.keywords && (
+          <meta name="keywords" content={data.page.keywords} />
+        )}
+
+        {data?.page?.ldJson && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(data.events) }}
+            dangerouslySetInnerHTML={{ __html: data.page.ldJson }}
+          />
+        )}
+        {data?.page?.events && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(data.page.events)
+            }}
           />
         )}
         {this.props.children}

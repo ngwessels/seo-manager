@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "0.0.1-beta.140",
+  "version": "0.0.1-beta.153",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -10,8 +10,8 @@
       "require": "./dist/index.js"
     },
     "./backend": {
-      "import": "./dist/backend/index.es.js",
-      "require": "./dist/backend/index.js"
+      "import": "./dist/backend/index.es.ts",
+      "require": "./dist/backend/index.ts"
     },
     "./SEOHelperLite": {
       "import": "./dist/frontend/SEOHelperLite/index.es.js",
@@ -58,20 +58,29 @@
   },
   "author": "Nate Wessels (https://natewessels.dev)",
   "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://github.com/ngwessels/seo-manager#readme",
+  "homepage": "https://www.seomanager.dev/",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.18.6",
     "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-json": "^5.0.2",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.3",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "babel-loader": "^8.2.2",
+    "postcss": "^8.4.21",
     "rollup": "^2.38.4",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
     "@emotion/react": ">=11.8.0",
@@ -84,7 +93,6 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.6",
     "axios": "^0.26.1",
     "encoding": "^0.1.13",
     "prop-types": "^15.8.1"

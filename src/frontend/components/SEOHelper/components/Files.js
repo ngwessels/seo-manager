@@ -10,7 +10,6 @@ import {
   DialogActions,
   IconButton,
   Typography,
-  TextField,
   Grid,
   CircularProgress,
   Box
@@ -19,8 +18,6 @@ import LinearProgress from "@mui/material/LinearProgress";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 //Firebase
 import firebase from "../../../../firebase";
@@ -59,17 +56,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }));
 
-// type SEOObject = {
-//   selected: any;
-//   onChangeComplete: any;
-//   onClose: any;
-//   multiple?: boolean;
-//   open: boolean;
-//   maxFiles?: number;
-//   data: any;
-//   accept?: string;
-// };
-
 class SEOHelper extends React.Component {
   constructor(props) {
     super(props);
@@ -87,9 +73,7 @@ class SEOHelper extends React.Component {
     };
   }
 
-  componentDidMount = () => {
-    // this.getData();
-  };
+  componentDidMount = () => {};
 
   componentDidUpdate = (prevProps) => {
     if (this.props.open === true && prevProps.open === false) {
@@ -447,17 +431,28 @@ class SEOHelper extends React.Component {
                     multiple={true}
                     style={{ zIndex: 2 }}
                   />
-
+                  <iframe
+                    src="https://embed.lottiefiles.com/animation/27938"
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      zIndex: 0,
+                      position: "absolute"
+                    }}
+                  />
                   <div
                     style={{
-                      zIndex: 0,
-                      height: 140
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "flex-end",
+                      paddingBottom: 5
                     }}
                   >
-                    <iframe
-                      src="https://embed.lottiefiles.com/animation/27938"
-                      style={{ height: "100%", width: "100%", zIndex: 0 }}
-                    />
+                    <Typography component={"p"} style={{ opacity: 0.5 }}>
+                      <i>Click or Drag-n-Drop</i>
+                    </Typography>
                   </div>
                 </div>
               )}

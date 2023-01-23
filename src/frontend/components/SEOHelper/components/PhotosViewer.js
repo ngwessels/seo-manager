@@ -4,7 +4,7 @@ import React from "react";
 //MUI
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
+import { Typography } from "@mui/material";
 
 //Components
 import Files from "./Files";
@@ -288,6 +288,22 @@ class PagePhotos extends React.Component {
             >
               <div
                 style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                  paddingBottom: 20,
+                  position: "absolute",
+                  zIndex: 1
+                }}
+              >
+                <Typography component={"p"} style={{ opacity: 0.5 }}>
+                  <i>Click to Select or Upload File</i>
+                </Typography>
+              </div>
+              <div
+                style={{
                   zIndex: -1,
                   width: "100%",
                   height: "100%",
@@ -301,15 +317,6 @@ class PagePhotos extends React.Component {
                   style={{ height: "100%", width: "100%" }}
                 />
               </div>
-              <div
-                style={{
-                  zIndex: 1,
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  top: 0
-                }}
-              />
             </div>
           </>
         )}

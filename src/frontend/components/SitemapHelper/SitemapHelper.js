@@ -7,7 +7,8 @@ export class SitemapHelper extends React.Component {
     res.setHeader("Content-Type", "text/xml");
     try {
       const { results } = await serverCall("/sitemap/", "put", {
-        path: req.url
+        path: req.url,
+        headers: req.headers
       });
       res.write(results);
     } catch (err) {

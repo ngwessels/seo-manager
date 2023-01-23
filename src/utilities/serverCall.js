@@ -36,15 +36,17 @@ export const serverCall = (path, method = "put", data, url, headers) => {
         headers: callHeaders
       });
       if (!response?.data?.results) {
-        return reject({
-          results: false,
-          error: false,
-          message: "Not Successful"
+        return resolve({
+          results: response?.data?.results || false,
+          error: response?.data?.error || true,
+          message:
+            response?.data?.message ||
+            "There was an error on our end! Please try again in a few mintues!"
         });
       }
       return resolve({ results: response?.data?.results });
     } catch (err) {
-      return reject({ results: false, data: err?.response?.data });
+      return resolve({ results: false, data: err?.response?.data });
     }
   });
 };
@@ -88,16 +90,21 @@ export const serverSecretCall = (path, method = "put", data, url, headers) => {
         data: data || {},
         headers: callHeaders
       });
-      if (!response?.data?.results) {
-        return reject({
-          results: false,
-          error: false,
-          message: "Not Successful"
-        });
-      }
-      return resolve({ results: response?.data?.results });
+      return resolve({
+        results: response?.data?.results || false,
+        error: response?.data?.error || true,
+        message:
+          response?.data?.message ||
+          "There was an error on our end! Please try again in a few mintues!"
+      });
     } catch (err) {
-      return reject({ results: false, data: err?.response?.data });
+      return resolve({
+        results: err?.response?.data?.results || false,
+        error: err?.response?.data?.error || true,
+        message:
+          err?.response?.data?.message ||
+          "There was an error on our end! Please try again in a few mintues!"
+      });
     }
   });
 };

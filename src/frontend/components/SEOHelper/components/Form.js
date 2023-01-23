@@ -376,7 +376,7 @@ class Form extends React.Component {
                           this.setState({ data });
                         }}
                         multiple={true}
-                        accept={"image/png, image/jpeg, image/jpg"}
+                        accept={"image/png, image/jpeg, image/jpg, image/webp"}
                         data={this.props.data}
                       />
                     </Grid>

@@ -4,6 +4,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
+// import tsPlugin from "@rollup/plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
+
+//Plugins
+import json from "@rollup/plugin-json";
 
 export default [
   {
@@ -20,36 +25,7 @@ export default [
       }
     ],
     plugins: [
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
-      }),
-      commonjs(),
-      terser()
-    ]
-  },
-  {
-    input: "./src/backend/index.js",
-    output: [
-      {
-        file: "dist/backend/index.js",
-        format: "cjs"
-      },
-      {
-        file: "dist/backend/index.es.js",
-        format: "es",
-        exports: "named"
-      }
-    ],
-    plugins: [
+      json(),
       postcss({
         plugins: [],
         minimize: true
@@ -80,6 +56,7 @@ export default [
       }
     ],
     plugins: [
+      json(),
       postcss({
         plugins: [],
         minimize: true
@@ -110,6 +87,7 @@ export default [
       }
     ],
     plugins: [
+      json(),
       postcss({
         plugins: [],
         minimize: true
@@ -140,6 +118,7 @@ export default [
       }
     ],
     plugins: [
+      json(),
       postcss({
         plugins: [],
         minimize: true
@@ -170,6 +149,39 @@ export default [
       }
     ],
     plugins: [
+      json(),
+      postcss({
+        plugins: [],
+        minimize: true
+      }),
+      resolve(),
+
+      external(),
+      babel({
+        exclude: "node_modules/**",
+        presets: ["@babel/preset-react", "@babel/preset-typescript"],
+        plugins: ["@babel/plugin-proposal-class-properties"]
+      }),
+      commonjs(),
+      terser()
+    ]
+  },
+  {
+    input: "./src/backend/index.ts",
+    output: [
+      {
+        file: "dist/backend/index.ts",
+        format: "cjs"
+      },
+      {
+        file: "dist/backend/index.es.ts",
+        format: "es",
+        exports: "named"
+      }
+    ],
+    plugins: [
+      typescript(/*{ plugin options }*/),
+      json(),
       postcss({
         plugins: [],
         minimize: true
