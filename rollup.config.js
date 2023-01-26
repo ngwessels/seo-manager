@@ -1,11 +1,12 @@
-import babel from "rollup-plugin-babel";
+import { babel } from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import postcss from "rollup-plugin-postcss";
-// import tsPlugin from "@rollup/plugin-typescript";
-import typescript from "rollup-plugin-typescript2";
+import typescript from "@rollup/plugin-typescript";
+import sourcemaps from "rollup-plugin-sourcemaps";
+// import typescript from "rollup-plugin-typescript2";
 
 //Plugins
 import json from "@rollup/plugin-json";
@@ -38,8 +39,8 @@ export default [
         presets: ["@babel/preset-react", "@babel/preset-typescript"],
         plugins: ["@babel/plugin-proposal-class-properties"]
       }),
-      commonjs(),
-      terser()
+      commonjs()
+      // terser()
     ]
   },
   {
@@ -167,25 +168,30 @@ export default [
     ]
   },
   {
-    input: "./src/backend/index.ts",
-    output: [
-      {
-        file: "dist/backend/index.ts",
-        format: "cjs"
-      },
-      {
-        file: "dist/backend/index.es.ts",
-        format: "es",
-        exports: "named"
-      }
-    ],
+    input: "./src/backend/index.js",
     plugins: [
-      typescript(/*{ plugin options }*/),
+      // typescript({
+      //   sourceMap: false
+      // }),
+      // sourcemaps()
+      // babel({
+      //   babelHelpers: "bundled",
+      //   presets: []
+      // })
+      // json(),
+      // postcss({
+      //   plugins: [],
+      //   minimize: true
+      // }),
+      // resolve(),
+      // external(),
+      // babel({
+      //   exclude: "node_modules/**",
+      //   presets: ["@babel/preset-react", "@babel/preset-typescript"],
+      //   plugins: ["@babel/plugin-proposal-class-properties"]
+      // }),
+      // commonjs()
       json(),
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
       resolve(),
 
       external(),
@@ -194,8 +200,18 @@ export default [
         presets: ["@babel/preset-react", "@babel/preset-typescript"],
         plugins: ["@babel/plugin-proposal-class-properties"]
       }),
-      commonjs(),
-      terser()
+      commonjs()
+      // terser()
+    ],
+    output: [
+      {
+        file: "dist/backend/index.js",
+        format: "cjs"
+      },
+      {
+        file: "dist/backend/index.es.js",
+        format: "es"
+      }
     ]
   }
 ];

@@ -1,6 +1,7 @@
-export const SEOinitialize = ({ projectId, projectKey, secretKey }) => {
+export const SEOinitialize = (keys) => {
   const init = returnKey() || {};
   let object = { ...init };
+  const { projectId, projectKey, secretKey } = keys;
   if (projectId) {
     object.projectId = projectId;
     process.env.SEO_MANAGER_MODULE_PROJECTID = projectId;
@@ -34,7 +35,7 @@ export const returnKey = () => {
     objectValid = true;
   }
 
-  return objectValid ? object : false;
+  return object;
 };
 
 export const setProject = (project) => {

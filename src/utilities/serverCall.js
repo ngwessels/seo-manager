@@ -17,10 +17,10 @@ export const serverCall = (path, method = "put", data, url, headers) => {
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://seo-manager-website.vercel.app/api/${version}/${formattedPath}`
+        ? `https://seomanager.dev/api/${version}/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
         ? `http://localhost:3001/api/${version}/${formattedPath}`
-        : `https://seo-manager-website-git-testing-shadow-republic.vercel.app/api/${version}/${formattedPath}`;
+        : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;
 
       let callHeaders = {
         X_ProjectId: initData?.projectId,
@@ -36,13 +36,7 @@ export const serverCall = (path, method = "put", data, url, headers) => {
         headers: callHeaders
       });
       if (!response?.data?.results) {
-        return resolve({
-          results: response?.data?.results || false,
-          error: response?.data?.error || true,
-          message:
-            response?.data?.message ||
-            "There was an error on our end! Please try again in a few mintues!"
-        });
+        return resolve(response?.data);
       }
       return resolve({ results: response?.data?.results });
     } catch (err) {
@@ -72,10 +66,10 @@ export const serverSecretCall = (path, method = "put", data, url, headers) => {
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://seo-manager-website.vercel.app/api/${version}/${formattedPath}`
+        ? `https://seomanager.dev/api/${version}/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
         ? `http://localhost:3001/api/${version}/${formattedPath}`
-        : `https://seo-manager-website-git-testing-shadow-republic.vercel.app/api/${version}/${formattedPath}`;
+        : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;
       let callHeaders = {
         X_ProjectId: initData?.projectId,
         X_ProjectKey: initData?.projectKey,
@@ -90,19 +84,14 @@ export const serverSecretCall = (path, method = "put", data, url, headers) => {
         data: data || {},
         headers: callHeaders
       });
-      return resolve({
-        results: response?.data?.results || false,
-        error: response?.data?.error || true,
-        message:
-          response?.data?.message ||
-          "There was an error on our end! Please try again in a few mintues!"
-      });
+      return resolve(response?.data);
     } catch (err) {
       return resolve({
         results: err?.response?.data?.results || false,
         error: err?.response?.data?.error || true,
         message:
           err?.response?.data?.message ||
+          err?.response?.data ||
           "There was an error on our end! Please try again in a few mintues!"
       });
     }

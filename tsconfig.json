@@ -1,7 +1,26 @@
 {
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "module": "ES2020",
+    "declaration": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "pretty": true,
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "strict": true,
     "outDir": "dist",
-    "sourceMap": true
-  }
+    "baseUrl": "src/",
+    "rootDir": "src",
+    "listFiles": false,
+    "noEmitHelpers": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "compileOnSave": false
 }

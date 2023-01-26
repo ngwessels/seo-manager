@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { getApps, initializeApp, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+'use strict';
+
+var app$1 = require('firebase/app');
+var auth = require('firebase/auth');
 
 const SEOinitialize = keys => {
   const init = returnKey$1() || {};
@@ -41,13 +42,36 @@ const returnKey$1 = () => {
   }
   return object;
 };
-const setProject = project => {
-  process.env.SEO_MANAGER_MODULE_PROJECT = JSON.stringify(project);
+
+const firebaseConfig = process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" && process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development" ? {
+  apiKey: "AIzaSyDPjpRmobrdUtIY3hIaNoyox7alxYJH_B8",
+  authDomain: "seo-manager-live.firebaseapp.com",
+  projectId: "seo-manager-live",
+  storageBucket: "seo-manager-live.appspot.com",
+  messagingSenderId: "510256510596",
+  appId: "1:510256510596:web:eae1ccc42cb103b8a7f4d1",
+  measurementId: "G-RED1HCM49W"
+} : {
+  apiKey: "AIzaSyBD6KEJFm2SVguRDEiqufIlRo5HuHu0IZg",
+  authDomain: "seo-manager-test.firebaseapp.com",
+  projectId: "seo-manager-test",
+  storageBucket: "seo-manager-test.appspot.com",
+  messagingSenderId: "682714204028",
+  appId: "1:682714204028:web:a782b9da96ce811ee606f9",
+  measurementId: "G-PYZDK47B2M"
 };
-const returnProject = () => {
-  const data = process.env.SEO_MANAGER_MODULE_PROJECT;
-  return data ? JSON.parse(data) : null;
-};
+let app;
+const appFoundIndex = app$1.getApps()?.findIndex(a => {
+  if (a?.name === "seo-manager") {
+    return true;
+  }
+});
+if (appFoundIndex < 0) {
+  app = app$1.initializeApp(firebaseConfig, "seo-manager");
+} else {
+  app = app$1.getApp("seo-manager");
+}
+var firebase = app;
 
 // import axios from "axios";
 const axios = require("axios");
@@ -148,79 +172,8 @@ const formatPath = path => {
   return newPath;
 };
 
-class SitemapHelper extends React.Component {
-  static async getInitialProps({
-    res,
-    req
-  }) {
-    res.setHeader("Content-Type", "text/xml");
-    try {
-      const {
-        results
-      } = await serverCall("/sitemap/", "put", {
-        path: req.url,
-        headers: req.headers
-      });
-      res.write(results);
-    } catch (err) {
-      console.error(err.error);
-    }
-    res.end();
-  }
-}
-
-class RobotsHelper extends Component {
-  static async getInitialProps({
-    res,
-    req
-  }) {
-    res.setHeader("Content-Type", "text/plain");
-    try {
-      const {
-        results
-      } = await serverCall("/robots/", "put", {
-        headers: req.headers
-      });
-      res.write(results);
-    } catch (err) {
-      console.error(err.error);
-    }
-    res.end();
-  }
-}
-
-const firebaseConfig = process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" && process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development" ? {
-  apiKey: "AIzaSyDPjpRmobrdUtIY3hIaNoyox7alxYJH_B8",
-  authDomain: "seo-manager-live.firebaseapp.com",
-  projectId: "seo-manager-live",
-  storageBucket: "seo-manager-live.appspot.com",
-  messagingSenderId: "510256510596",
-  appId: "1:510256510596:web:eae1ccc42cb103b8a7f4d1",
-  measurementId: "G-RED1HCM49W"
-} : {
-  apiKey: "AIzaSyBD6KEJFm2SVguRDEiqufIlRo5HuHu0IZg",
-  authDomain: "seo-manager-test.firebaseapp.com",
-  projectId: "seo-manager-test",
-  storageBucket: "seo-manager-test.appspot.com",
-  messagingSenderId: "682714204028",
-  appId: "1:682714204028:web:a782b9da96ce811ee606f9",
-  measurementId: "G-PYZDK47B2M"
-};
-let app;
-const appFoundIndex = getApps()?.findIndex(a => {
-  if (a?.name === "seo-manager") {
-    return true;
-  }
-});
-if (appFoundIndex < 0) {
-  app = initializeApp(firebaseConfig, "seo-manager");
-} else {
-  app = getApp("seo-manager");
-}
-var firebase = app;
-
 //Firebase
-getAuth(firebase);
+auth.getAuth(firebase);
 const fetch = (path, request = {}) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -465,4 +418,11 @@ const returnKey = () => {
   return object;
 };
 
-export { RobotsHelper, SEOInit, SEOinitialize, SitemapHelper, backendValidation, checkBackendKeys, deleteSeoPage, fetchSEO, getSeoPages, insertSeoPage, returnKey$1 as returnKey, returnProject, setProject, updateSeoPage };
+exports.SEOInit = SEOInit;
+exports.backendValidation = backendValidation;
+exports.checkBackendKeys = checkBackendKeys;
+exports.deleteSeoPage = deleteSeoPage;
+exports.fetchSEO = fetchSEO;
+exports.getSeoPages = getSeoPages;
+exports.insertSeoPage = insertSeoPage;
+exports.updateSeoPage = updateSeoPage;
