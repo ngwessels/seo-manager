@@ -20,7 +20,7 @@
     "listFiles": false,
     "noEmitHelpers": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../init.js"],
   "exclude": ["node_modules"],
   "compileOnSave": false
 }
