@@ -1,0 +1,28 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": false,
+        "corejs": "module"
+      }
+    ],
+    "@babel/preset-typescript",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+    // [
+    //   "module-resolver",
+    //   {
+    //     "alias": {
+    //       "@mui/material/styles": "@mui/material/node/styles/index.js"
+    //     }
+    //   }
+    // ]
+  ]
+}

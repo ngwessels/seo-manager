@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-unneeded-ternary */
 export class EventModel {

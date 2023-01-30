@@ -1,217 +1,140 @@
-import { babel } from "@rollup/plugin-babel";
-import resolve from "@rollup/plugin-node-resolve";
+// rollup.config.js
 import commonjs from "@rollup/plugin-commonjs";
-import external from "rollup-plugin-peer-deps-external";
+// import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
-import postcss from "rollup-plugin-postcss";
-import typescript from "@rollup/plugin-typescript";
-import sourcemaps from "rollup-plugin-sourcemaps";
-// import typescript from "rollup-plugin-typescript2";
+import typescript from "rollup-plugin-typescript2";
 
-//Plugins
 import json from "@rollup/plugin-json";
+import postcss from "rollup-plugin-postcss";
+import { babel } from "@rollup/plugin-babel";
+// import resolve from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
+import cleanup from "rollup-plugin-cleanup";
+
+import analyze from "rollup-plugin-analyzer";
+
+const limitBytes = 1e6;
+const onAnalysis = ({ bundleSize }) => {
+  if (bundleSize < limitBytes) return;
+  console.log(`Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`);
+  return process.exit(1);
+};
 
 export default [
   {
-    input: "./src/index.js",
+    input: "src/index.ts",
     output: [
       {
-        file: "dist/index.js",
-        format: "cjs"
+        file: "dist/index.cjs",
+        format: "cjs",
+        sourcemap: true
       },
       {
         file: "dist/index.es.js",
         format: "es",
-        exports: "named"
+        sourcemap: true
       }
     ],
     plugins: [
-      json(),
-      postcss({
-        plugins: [],
-        minimize: true
+      // resolve({ jsnext: true, main: true, browser: true, }),
+      // nodeResolve(),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
       }),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
-      }),
-      commonjs()
-      // terser()
-    ]
-  },
-  {
-    input: "./src/frontend/components/SEOHelperLite/default.js",
-    output: [
-      {
-        file: "dist/frontend/SEOHelperLite/index.js",
-        format: "cjs"
-      },
-      {
-        file: "dist/frontend/SEOHelperLite/index.es.js",
-        format: "es",
-        exports: "named"
-      }
-    ],
-    plugins: [
-      json(),
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        },
+        exclude: "node_modules/**"
       }),
       commonjs(),
-      terser()
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      terser({ compress: true })
+      // analyze({ onAnalysis, skipFormatted: true })
     ]
   },
   {
-    input: "./src/frontend/components/SEOHelper/default.js",
+    input: "./src/frontend/index.mjs",
     output: [
       {
-        file: "dist/frontend/SEOHelper/index.js",
-        format: "cjs"
+        file: "dist/helpers/index.cjs",
+        format: "cjs",
+        sourcemap: true
       },
       {
-        file: "dist/frontend/SEOHelper/index.es.js",
-        format: "es",
-        exports: "named"
+        file: "dist/helpers/index.es.js",
+        format: "esm",
+        sourcemap: true
       }
     ],
     plugins: [
-      json(),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
       postcss({
         plugins: [],
         minimize: true
       }),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
-      }),
+      json(),
+      // resolve({ jsnext: true, main: true, browser: true }),
       commonjs(),
-      terser()
+      babel({
+        exclude: "node_modules/**"
+      }),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      terser({ compress: true }),
+      analyze({ onAnalysis, skipFormatted: true })
     ]
   },
   {
-    input: "./src/frontend/components/RobotsHelper/default.js",
+    input: "./src/frontend/components/SEOHelper/index.mjs",
     output: [
       {
-        file: "dist/frontend/RobotsHelper/index.js",
-        format: "cjs"
+        file: "dist/seohelper/index.es.js",
+        format: "esm",
+        sourcemap: false
       },
       {
-        file: "dist/frontend/RobotsHelper/index.es.js",
-        format: "es",
-        exports: "named"
+        file: "dist/seohelper/index.cjs",
+        format: "cjs",
+        sourcemap: false
       }
     ],
     plugins: [
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      postcss({}),
       json(),
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
-      }),
+      // resolve({ jsnext: true, main: true, browser: true }),
       commonjs(),
-      terser()
-    ]
-  },
-  {
-    input: "./src/frontend/components/SitemapHelper/default.js",
-    output: [
-      {
-        file: "dist/frontend/SitemapHelper/index.js",
-        format: "cjs"
-      },
-      {
-        file: "dist/frontend/SitemapHelper/index.es.js",
-        format: "es",
-        exports: "named"
-      }
-    ],
-    plugins: [
-      json(),
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
-      resolve(),
 
-      external(),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
       babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
+        exclude: "node_modules/**"
       }),
-      commonjs(),
-      terser()
-    ]
-  },
-  {
-    input: "./src/backend/index.js",
-    plugins: [
-      // typescript({
-      //   sourceMap: false
-      // }),
-      // sourcemaps()
-      // babel({
-      //   babelHelpers: "bundled",
-      //   presets: []
-      // })
-      // json(),
-      // postcss({
-      //   plugins: [],
-      //   minimize: true
-      // }),
-      // resolve(),
-      // external(),
-      // babel({
-      //   exclude: "node_modules/**",
-      //   presets: ["@babel/preset-react", "@babel/preset-typescript"],
-      //   plugins: ["@babel/plugin-proposal-class-properties"]
-      // }),
-      // commonjs()
-      json(),
-      resolve(),
-
-      external(),
-      babel({
-        exclude: "node_modules/**",
-        presets: ["@babel/preset-react", "@babel/preset-typescript"],
-        plugins: ["@babel/plugin-proposal-class-properties"]
-      }),
-      commonjs()
-      // terser()
+      terser({ compress: true }),
+      analyze({ onAnalysis, skipFormatted: true })
     ],
-    output: [
-      {
-        file: "dist/backend/index.js",
-        format: "cjs"
-      },
-      {
-        file: "dist/backend/index.es.js",
-        format: "es"
-      }
-    ]
+    external: ["react", "react-dom"]
   }
 ];

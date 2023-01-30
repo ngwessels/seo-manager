@@ -1,100 +1,25 @@
 {
   "env": {
     "browser": true,
-    "commonjs": true,
-    "es2021": true
+    "es6": true
   },
-  "extends": [
-    "airbnb-typescript",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:storybook/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
-    "project": "./tsconfig.eslint.json",
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react"],
   "rules": {
-    "arrow-body-style": 0,
-    "react/jsx-closing-tag-location": 0,
-    "react/jsx-indent": 0,
-    "operator-linebreak": 0,
-    "func-names": 0,
-    "react/jsx-boolean-value": 0,
-    "jsx-a11y/label-has-associated-control": 0,
-    "@typescript-eslint/no-unsafe-call": 0,
-    "react/jsx-fragments": 0,
-    "@typescript-eslint/no-throw-literal": 0,
-    "no-empty": 0,
-    "object-curly-newline": 0,
-    "import/no-extraneous-dependencies": 0,
-    "@typescript-eslint/no-var-requires": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/jsx-curly-brace-presence": 0,
-    "jsx-a11y/control-has-associated-label": 0,
-    "react/button-has-type": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
-    "import/prefer-default-export": 0,
-    "@typescript-eslint/quotes": 0,
-    "import/export": 0,
-    "@typescript-eslint/require-await": 0,
-    "import/order": 0,
-    "import/no-useless-path-segments": 0,
-    "import/newline-after-import": 0,
-    "import/first": 0,
-    "spaced-comment": 0,
-    "@typescript-eslint/restrict-template-expressions": 0,
-    "react/destructuring-assignment": 0,
-    "@typescript-eslint/comma-dangle": 0,
-    "@typescript-eslint/no-misused-promises": 0,
-    "no-console": 0,
-    "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-unused-vars": 0,
-    "react/no-unused-state": 0,
-    "@typescript-eslint/no-unsafe-member-access": 0,
-    "@typescript-eslint/no-unsafe-assignment": 0,
-    "@typescript-eslint/lines-between-class-members": 0,
-    "react/state-in-constructor": 0,
-    "@typescript-eslint/indent": 0,
-    "react/jsx-max-props-per-line": [
-      2,
-      {
-        "maximum": 1,
-        "when": "multiline"
-      }
-    ]
-  },
-  "overrides": [
-    {
-      "files": ["*.style.tsx", "*.style.jsx", "*.styled.tsx", "*.styled.jsx"],
-      "rules": {
-        "import/prefer-default-export": 0
-      }
-    },
-    {
-      "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
-      "rules": {
-        "import/no-extraneous-dependencies": 0,
-        "import/no-named-as-default": 0,
-        "@typescript-eslint/no-unsafe-assignment": 0,
-        "@typescript-eslint/no-unsafe-member-access": 0
-      }
-    }
-  ],
-  "settings": {
-    "import/resolver": {
-      "typescript": {},
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "react/prop-types": 0,
+    "no-console": "off"
   }
 }

@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "declaration": true,
+    "declarationDir": "dist",
     "target": "es6",
-    "moduleResolution": "node",
-    "module": "ES2020",
-    "declaration": false,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "pretty": true,
-    "allowUnreachableCode": true,
-    "allowUnusedLabels": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": false,
+    "module": "esnext",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "outDir": "./dist",
     "strict": true,
-    "outDir": "dist",
-    "baseUrl": "src/",
-    "rootDir": "src",
-    "listFiles": false,
-    "noEmitHelpers": true
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    },
+    "plugins": [{ "transform": "typescript-transform-paths" }]
   },
-  "include": ["src/**/*", "../init.js"],
-  "exclude": ["node_modules"],
-  "compileOnSave": false
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**"],
+  "files": ["src/index.d.ts", "src/firebase.ts"]
 }
