@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "0.0.1-beta.162",
+  "version": "0.0.1-beta.175",
   "description": "",
   "main": "dist/index.es.js",
   "type": "module",
@@ -10,13 +10,21 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs"
     },
+    "./init": {
+      "import": "./dist/init.es.js",
+      "require": "./dist/init.cjs"
+    },
     "./helpers": {
       "import": "./dist/helpers/index.es.js",
       "require": "./dist/helpers/index.cjs"
     },
     "./seohelper": {
-      "import": "./dist/seohelper/index.cjs",
-      "require": "./dist/seohelper/index.es.js"
+      "import": "./dist/seohelper/default.js",
+      "require": "./dist/seohelper/default.js"
+    },
+    "./seomanager": {
+      "import": "./dist/seomanager/index.js",
+      "require": "./dist/seomanager/index.js"
     }
   },
   "devDependencies": {
@@ -36,6 +44,8 @@
     "@rollup/plugin-typescript": "^11.0.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "module-resolver": "^1.0.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
     "rollup": "^2.0.0",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-babel": "^4.4.0",
@@ -60,7 +70,10 @@
     "@mui/material": ">=5.5.0",
     "axios": "^0.26.1",
     "encoding": "^0.1.13",
-    "prop-types": "^15.8.1"
+    "nextjs-seo-manager": "^0.0.1-beta.170",
+    "prop-types": "^15.8.1",
+    "react-draggable": "^4.4.5",
+    "react-icons": "^4.7.1"
   },
   "scripts": {
     "build": "rollup -c --watch",

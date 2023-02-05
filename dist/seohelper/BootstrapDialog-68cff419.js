@@ -1,0 +1,1 @@
+import{Dialog as i}from"@mui/material";import{styled as t}from"@mui/material/styles";const o=t(i)((({theme:i})=>({"& .MuiDialogContent-root":{padding:i.spacing(2),width:"95vw",maxWidth:"900px"},"& .MuiDialogActions-root":{padding:i.spacing(1)},"& .MuiPaper-root":{margin:"0px",maxWidth:"none !important"}})));export{o as B};

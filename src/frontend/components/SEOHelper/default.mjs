@@ -1,2 +1,2 @@
 import { SEOHelper } from "./SEOHelper";
-export default { SEOHelper };
+export default SEOHelper;

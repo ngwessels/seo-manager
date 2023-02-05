@@ -8,7 +8,6 @@ export const fetch = (
   path: string,
   headers: any = {}
 ): Promise<{ results: boolean; error: string; message: string }> => {
-  console.log(path, headers?.["user-agent"]);
   return new Promise(async (resolve) => {
     try {
       //   if (process.browser) {

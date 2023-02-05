@@ -7,7 +7,7 @@ export class RobotsHelper extends Component {
     res.setHeader("Content-Type", "text/plain");
     try {
       const { results } = await serverCall("/robots/", "put", {
-        headers: req.headers
+        headers: req?.headers || {}
       });
       res.write(results);
     } catch (err) {

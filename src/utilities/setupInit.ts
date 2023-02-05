@@ -1,33 +1,3 @@
-import { SEOInitKeys } from "../types";
-
-//INITIALIZE PROJECT
-/**
- * * @name SEOInit
- * @function
- * @param {SEOInitKeys} keys - Object containing secretKey, projectId, and projectKey
- */
-export const SEOInit = (keys: SEOInitKeys): boolean => {
-  const init = returnKey() || {};
-  let object = { ...init };
-  const { projectId, projectKey, secretKey } = keys;
-  if (projectId) {
-    object.projectId = projectId;
-    process.env.SEO_MANAGER_MODULE_PROJECTID = projectId;
-  }
-  if (projectKey) {
-    object.projectKey = projectKey;
-    process.env.SEO_MANAGER_MODULE_PROJECTKEY = projectKey;
-  }
-  if (secretKey) {
-    object.secretKey = secretKey;
-    process.env.SEO_MANAGER_MODULE_SECRETKEY = secretKey;
-  }
-  if (!object?.projectId) {
-    throw "Please add a projectId by calling the SEOInit function SEOInit({projectId: '<<Add Value Here>>'})";
-  }
-  return true;
-};
-
 export const returnKey = (): {
   secretKey?: string;
   projectKey?: string;
@@ -57,5 +27,14 @@ export const setProject = (project: any) => {
 
 export const returnProject = (): any | null => {
   const data = process.env.SEO_MANAGER_MODULE_PROJECT;
+  return data ? JSON.parse(data) : null;
+};
+
+export const setProjectPlan = (projectPlan: any) => {
+  process.env.SEO_MANAGER_MODULE_PROJECTPLAN = JSON.stringify(projectPlan);
+};
+
+export const returnProjectPlan = (): any | null => {
+  const data = process.env.SEO_MANAGER_MODULE_PROJECTPLAN;
   return data ? JSON.parse(data) : null;
 };

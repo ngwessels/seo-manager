@@ -21,7 +21,7 @@ export const serverCall = (
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://seomanager.dev/api/${version}/${formattedPath}`
+        ? `https://www.seomanager.dev/api/${version}/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
         ? `http://localhost:3001/api/${version}/${formattedPath}`
         : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;
@@ -75,7 +75,7 @@ export const serverSecretCall = (
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://seomanager.dev/api/${version}/${formattedPath}`
+        ? `https://www.seomanager.dev/api/${version}/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
         ? `http://localhost:3001/api/${version}/${formattedPath}`
         : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;

@@ -1,1 +1,1 @@
-export * from "./SEOHelper.mjs";
+export * from "./SEOHelper";

@@ -9,7 +9,7 @@ export class SitemapHelper extends React.Component {
     try {
       const { results } = await serverCall("/sitemap/", "put", {
         path: req.url,
-        headers: req.headers
+        headers: req?.headers || {}
       });
       res.write(results);
     } catch (err) {

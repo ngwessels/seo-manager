@@ -1,10 +1,3 @@
-import { SEOInitKeys } from "../types";
-/**
- * * @name SEOInit
- * @function
- * @param {SEOInitKeys} keys - Object containing secretKey, projectId, and projectKey
- */
-export declare const SEOInit: (keys: SEOInitKeys) => boolean;
 export declare const returnKey: () => {
     secretKey?: string;
     projectKey?: string;
@@ -12,3 +5,5 @@ export declare const returnKey: () => {
 };
 export declare const setProject: (project: any) => void;
 export declare const returnProject: () => any | null;
+export declare const setProjectPlan: (projectPlan: any) => void;
+export declare const returnProjectPlan: () => any | null;

@@ -1,0 +1,1 @@
+import{a as e}from"./default-bd811017.js";import t from"react";import{f as o}from"./firebase-f83deced.js";import{getAnalytics as r}from"firebase/analytics";import"firebase/app";class s extends t.Component{constructor(t){super(t),e(this,"componentDidMount",(()=>{r(o),console.log("Analytics Mounted")})),this.state={}}render(){return null}}export{s as default};

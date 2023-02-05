@@ -36,8 +36,6 @@ export default [
       }
     ],
     plugins: [
-      // resolve({ jsnext: true, main: true, browser: true, }),
-      // nodeResolve(),
       replace({
         "process.env.NODE_ENV": JSON.stringify("production")
       }),
@@ -55,7 +53,40 @@ export default [
         exclude: "node_modules/**"
       }),
       terser({ compress: true })
-      // analyze({ onAnalysis, skipFormatted: true })
+    ]
+  },
+  {
+    input: "src/init.ts",
+    output: [
+      {
+        file: "dist/init.cjs",
+        format: "cjs",
+        sourcemap: true
+      },
+      {
+        file: "dist/init.es.js",
+        format: "es",
+        sourcemap: true
+      }
+    ],
+    plugins: [
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        },
+        exclude: "node_modules/**"
+      }),
+      commonjs(),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      terser({ compress: true })
     ]
   },
   {
@@ -99,16 +130,50 @@ export default [
     ]
   },
   {
-    input: "./src/frontend/components/SEOHelper/index.mjs",
+    input: "./src/frontend/components/SEOHelper/default.mjs",
     output: [
       {
-        file: "dist/seohelper/index.es.js",
+        dir: "dist/seohelper",
         format: "esm",
         sourcemap: false
-      },
+      }
+      // {
+      //   dir: "dist/seohelper/",
+      //   format: "cjs",
+      //   sourcemap: false
+      // }
+    ],
+    plugins: [
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      postcss({}),
+      json(),
+      commonjs(),
+
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      terser({ compress: true }),
+      analyze({ onAnalysis, skipFormatted: true })
+    ],
+    external: ["react", "react-dom"]
+  },
+
+  {
+    input: "./src/SEOManager/index.tsx",
+    output: [
       {
-        file: "dist/seohelper/index.cjs",
-        format: "cjs",
+        dir: "dist/seomanager",
+        format: "esm",
         sourcemap: false
       }
     ],
@@ -125,7 +190,6 @@ export default [
       }),
       postcss({}),
       json(),
-      // resolve({ jsnext: true, main: true, browser: true }),
       commonjs(),
 
       cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
