@@ -14,25 +14,25 @@ import { BootstrapDialog } from "./BootstrapDialog";
 import { DialogScreens } from "../interfaces";
 
 interface State {
-  loading: boolean;
+  hidden: boolean;
 }
 
 class Loading extends React.Component<DialogScreens, State> {
   constructor(props: DialogScreens) {
     super(props);
     this.state = {
-      loading: true
+      hidden: true
     };
   }
 
   componentDidMount(): void {
     setTimeout(() => {
-      this.setState({ loading: false });
-    }, 200);
+      this.setState({ hidden: false });
+    }, 500);
   }
 
   render() {
-    if (this.state.loading === true) {
+    if (this.state.hidden === true) {
       return null;
     }
     return (

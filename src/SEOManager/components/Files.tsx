@@ -204,7 +204,7 @@ class Files extends React.Component<FilesOptions, State> {
             AuthorizationId: auth?.currentUser?.uid
           }
         );
-
+        console.log("VERSION:", this.props?.version);
         const uploadStep = Object.keys(newFiles || []).map((idx) => {
           return new Promise(async (resolve, _reject) => {
             const item = newFiles[idx];
@@ -221,7 +221,8 @@ class Files extends React.Component<FilesOptions, State> {
                 userId: auth?.currentUser?.uid,
                 fileName: name,
                 fileId,
-                projectId: this.props.seoData?.manager?.projectId
+                projectId: this.props.seoData?.manager?.projectId,
+                seoManagerVersion: this.props?.version
               }
             };
 
@@ -538,7 +539,8 @@ class Files extends React.Component<FilesOptions, State> {
 
 const mapStateToProps = (state: any) => ({
   user: state?.user,
-  seoData: state?.seoData
+  seoData: state?.seoData,
+  version: state?.version
 });
 
 export default connect(mapStateToProps)(Files);

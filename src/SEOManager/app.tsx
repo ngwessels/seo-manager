@@ -30,15 +30,13 @@ class App extends React.Component<Options, State> {
   }
 
   componentDidMount = () => {
-    setTimeout(() => {
-      if (this.props?.data) {
-        const action = {
-          type: "SET_INITIAL_SEO_DATA",
-          results: this.props.data
-        };
-        this.props.dispatch(action);
-      }
-    }, 100);
+    if (this.props?.data) {
+      const action = {
+        type: "SET_INITIAL_SEO_DATA",
+        results: this.props.data
+      };
+      this.props.dispatch(action);
+    }
   };
 
   componentDidUpdate = (prevProps: any) => {
@@ -52,10 +50,11 @@ class App extends React.Component<Options, State> {
   };
 
   clickToOpenManager = () => {
-    this.setState({ isManagerOpen: true, authentication: true });
     if (this.props?.onOpen) {
       this.props.onOpen();
     }
+
+    this.setState({ isManagerOpen: true, authentication: true });
   };
   clickToCloseManager = () => {
     this.setState({ isManagerOpen: false });
@@ -75,6 +74,7 @@ class App extends React.Component<Options, State> {
   };
 
   render() {
+    // console.log("PROPS:", this.props);
     return (
       <>
         <button

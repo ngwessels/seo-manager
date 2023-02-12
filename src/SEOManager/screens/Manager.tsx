@@ -46,7 +46,7 @@ import PhotosViewer from "../components/PhotosViewer";
 import { BootstrapDialog } from "./BootstrapDialog";
 
 //Interfaces
-import { ManagerOptions } from "./../interfaces";
+import { ManagerOptions } from "../interfaces";
 
 interface State {
   savedLocations: any;
@@ -112,7 +112,9 @@ class Manager extends React.Component<ManagerOptions, State> {
         loading: false,
         isNewPage: response?.results?.isNewPage ? true : false
       });
-      this.props.onIsLoading(false);
+      setTimeout(() => {
+        this.props.onIsLoading(false);
+      }, 1000);
     });
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(

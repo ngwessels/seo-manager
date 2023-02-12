@@ -27,12 +27,12 @@ export default [
       {
         file: "dist/index.cjs",
         format: "cjs",
-        sourcemap: true
+        sourcemap: false
       },
       {
         file: "dist/index.es.js",
         format: "es",
-        sourcemap: true
+        sourcemap: false
       }
     ],
     plugins: [
@@ -61,12 +61,12 @@ export default [
       {
         file: "dist/init.cjs",
         format: "cjs",
-        sourcemap: true
+        sourcemap: false
       },
       {
         file: "dist/init.es.js",
         format: "es",
-        sourcemap: true
+        sourcemap: false
       }
     ],
     plugins: [
@@ -90,23 +90,20 @@ export default [
     ]
   },
   {
-    input: "./src/frontend/index.mjs",
+    input: "./src/robotshelper/default.mjs",
     output: [
       {
-        file: "dist/helpers/index.cjs",
+        file: "dist/robotshelper/index.cjs",
         format: "cjs",
-        sourcemap: true
+        sourcemap: false
       },
       {
-        file: "dist/helpers/index.es.js",
+        file: "dist/robotshelper/index.es.js",
         format: "esm",
-        sourcemap: true
+        sourcemap: false
       }
     ],
     plugins: [
-      replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
-      }),
       typescript({
         tsconfig: "./tsconfig.json",
         tsconfigDefaults: {
@@ -114,34 +111,54 @@ export default [
           declarationDir: "./dist"
         }
       }),
-      postcss({
-        plugins: [],
-        minimize: true
-      }),
       json(),
-      // resolve({ jsnext: true, main: true, browser: true }),
       commonjs(),
       babel({
         exclude: "node_modules/**"
       }),
       cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
-      terser({ compress: true }),
-      analyze({ onAnalysis, skipFormatted: true })
+      terser({ compress: true })
     ]
   },
   {
-    input: "./src/frontend/components/SEOHelper/default.mjs",
+    input: "./src/sitemapshelper/default.mjs",
+    output: [
+      {
+        file: "dist/sitemapshelper/index.cjs",
+        format: "cjs",
+        sourcemap: false
+      },
+      {
+        file: "dist/sitemapshelper/index.es.js",
+        format: "esm",
+        sourcemap: false
+      }
+    ],
+    plugins: [
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      json(),
+      commonjs(),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      terser({ compress: true })
+    ]
+  },
+  {
+    input: "./src/seohelper/default.mjs",
     output: [
       {
         dir: "dist/seohelper",
         format: "esm",
         sourcemap: false
       }
-      // {
-      //   dir: "dist/seohelper/",
-      //   format: "cjs",
-      //   sourcemap: false
-      // }
     ],
     plugins: [
       replace({
@@ -169,7 +186,7 @@ export default [
   },
 
   {
-    input: "./src/SEOManager/index.tsx",
+    input: "./src/seomanager/index.tsx",
     output: [
       {
         dir: "dist/seomanager",

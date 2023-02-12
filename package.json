@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "0.0.1-beta.175",
+  "version": "0.0.1-beta.181",
   "description": "",
   "main": "dist/index.es.js",
   "type": "module",
@@ -14,9 +14,13 @@
       "import": "./dist/init.es.js",
       "require": "./dist/init.cjs"
     },
-    "./helpers": {
-      "import": "./dist/helpers/index.es.js",
-      "require": "./dist/helpers/index.cjs"
+    "./robotshelper": {
+      "import": "./dist/robotshelper/index.es.js",
+      "require": "./dist/robotshelper/index.cjs"
+    },
+    "./sitemapshelper": {
+      "import": "./dist/sitemapshelper/index.es.js",
+      "require": "./dist/sitemapshelper/index.cjs"
     },
     "./seohelper": {
       "import": "./dist/seohelper/default.js",
@@ -78,7 +82,7 @@
   "scripts": {
     "build": "rollup -c --watch",
     "build:local": "npm run build && npm pack",
-    "build:publish": "rollup -c && npm publish"
+    "build:publish": "rm -r dist && rollup -c && npm publish"
   },
   "repository": {
     "type": "git",

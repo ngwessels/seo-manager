@@ -41,6 +41,7 @@ export interface FilesOptions {
     accept: string;
     user?: any;
     seoData?: any;
+    version?: any;
 }
 export interface FileOptions {
     isClicked: any;

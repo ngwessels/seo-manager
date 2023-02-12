@@ -27,6 +27,12 @@ class Authentication extends React.Component {
     const permissionLevels = ["owner", "admin", "editor"];
     if (user) {
       const customClaims = await user.getIdTokenResult(true);
+      // console.log(
+      //   "USER:",
+      //   user,
+      //   customClaims,
+      //   this.props?.seoData?.initial?.projectId
+      // );
       if (
         customClaims?.claims?.[this.props?.seoData?.initial?.projectId] &&
         permissionLevels.includes(

@@ -1,5 +1,5 @@
 import React from "react";
-import { ManagerOptions } from "./../interfaces";
+import { ManagerOptions } from "../interfaces";
 interface State {
     savedLocations: any;
     loading: boolean;

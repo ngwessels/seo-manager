@@ -1,7 +1,7 @@
 import axios, { Method } from "axios";
 import { returnKey } from "./setupInit";
 
-const version = "v1";
+// const version = "v1";
 
 export const serverCall = (
   path: string,
@@ -21,11 +21,10 @@ export const serverCall = (
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://www.seomanager.dev/api/${version}/${formattedPath}`
+        ? `https://v1.seomanager.dev/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
-        ? `http://localhost:3001/api/${version}/${formattedPath}`
-        : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;
-
+        ? `http://localhost:3002/${formattedPath}`
+        : `https://v1-testing.seomanager.dev/${formattedPath}`;
       let callHeaders = {
         X_ProjectId: initData?.projectId,
         X_ProjectKey: initData?.projectKey || ""
@@ -38,12 +37,19 @@ export const serverCall = (
         data: data || {},
         headers: callHeaders
       });
-      if (!response?.data?.results) {
-        return resolve(response?.data);
-      }
-      return resolve({ results: response?.data?.results });
+      return resolve({
+        ...(response?.data || {}),
+        results: response?.data?.results,
+        statusCode: response.status
+      });
     } catch (err: any) {
-      return resolve({ results: false, data: err?.response?.data });
+      console.log("SERVER CALL ERROR:", err);
+      return resolve({
+        ...(err?.response?.data || {}),
+        results: false,
+        data: err?.response?.data,
+        statusCode: err.response.status
+      });
     }
   });
 };
@@ -70,15 +76,14 @@ export const serverSecretCall = (
       }
 
       const formattedPath = formatPath(path);
-
       const urlPath = url
         ? url
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Test" &&
           process.env.NEXT_PUBLIC_NODE_ENV_MANAGER !== "Development"
-        ? `https://www.seomanager.dev/api/${version}/${formattedPath}`
+        ? `https://v1.seomanager.dev/${formattedPath}`
         : process.env.NEXT_PUBLIC_NODE_ENV_MANAGER === "Test"
-        ? `http://localhost:3001/api/${version}/${formattedPath}`
-        : `https://testing.seomanager.dev/api/${version}/${formattedPath}`;
+        ? `http://localhost:3002/${formattedPath}`
+        : `https://v1-testing.seomanager.dev/${formattedPath}`;
       let callHeaders = {
         X_ProjectId: initData?.projectId,
         X_ProjectKey: initData?.projectKey || "",
@@ -93,15 +98,24 @@ export const serverSecretCall = (
         data: data || {},
         headers: callHeaders
       });
-      return resolve(response?.data);
-    } catch (err: any) {
       return resolve({
+        ...(response?.data || {}),
+        results: response?.data?.results,
+        error: response?.data?.error || true,
+        message: response?.data?.message || "Successful",
+        statusCode: response.status
+      });
+    } catch (err: any) {
+      console.log("SERVER SECRET CALL ERROR:", err);
+      return resolve({
+        ...(err?.response?.data || {}),
         results: err?.response?.data?.results || false,
         error: err?.response?.data?.error || true,
         message:
           err?.response?.data?.message ||
           err?.response?.data ||
-          "There was an error on our end! Please try again in a few minutes!"
+          "There was an error on our end! Please try again in a few minutes!",
+        statusCode: err.response.status
       });
     }
   });

@@ -1,5 +1,5 @@
 import React from "react";
-import { Options } from "./../interfaces";
+import { Options } from "../interfaces";
 interface State {
     loading: boolean;
     projectId: string;

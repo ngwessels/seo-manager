@@ -22,12 +22,17 @@ export const fetchSEO = (path: string, meta: FetchSEOHeaders = {}) => {
 };
 
 //VALIDATION
-export const backendValidation = (queueId: string) => {
+/**
+@name backendValidation
+@function
+@param {any} body - Your req.body
+*/
+export const backendValidation = (body: any) => {
   return new Promise(async (resolve) => {
     try {
       checkBackendKeys(); //Checks keys
-      const response = await serverSecretCall("/backend/validate", "put", {
-        queueId
+      const response = await serverSecretCall("/backend_api/validate", "put", {
+        encrypted: body?.data?.encrypted || {}
       });
       return resolve(response);
     } catch (err: any) {
@@ -79,17 +84,21 @@ export function insertSeoPage(
         });
       }
       checkBackendKeys(); //Checks keys
-      const response = await serverSecretCall("backend/seo/insert", "post", {
-        pageIdentifiers,
-        pageSEO
-      });
+      const response = await serverSecretCall(
+        "backend_api/seo/insert",
+        "post",
+        {
+          pageIdentifiers,
+          pageSEO
+        }
+      );
       return resolve(response);
     } catch (err: any) {
       console.error(err);
       return resolve({
         results: false,
-        message: err?.data?.error || err?.error || "Something went wrong",
-        error: true
+        message: err?.data?.message || err?.message || "Something went wrong",
+        error: err?.data?.error || err?.error || "Something went wrong"
       });
     }
   });
@@ -118,7 +127,7 @@ export const updateSeoPage = (
         });
       }
       checkBackendKeys(); //Checks keys
-      const response = await serverSecretCall("backend/seo/update", "put", {
+      const response = await serverSecretCall("backend_api/seo/update", "put", {
         pageIdentifiers,
         pageSEO,
         options
@@ -152,9 +161,13 @@ export const deleteSeoPage = (pageIdentifiers: PageIdentifiers[]) => {
         });
       }
       checkBackendKeys(); //Checks keys
-      const response = await serverSecretCall("backend/seo/delete", "post", {
-        pageIdentifiers
-      });
+      const response = await serverSecretCall(
+        "backend_api/seo/delete",
+        "post",
+        {
+          pageIdentifiers
+        }
+      );
       return resolve(response);
     } catch (err: any) {
       return resolve({
@@ -177,7 +190,7 @@ export const getSeoPages = (pageIdentifiers: PageIdentifiers): Promise<any> => {
     try {
       checkBackendKeys(); //Checks keys
       const response = await serverSecretCall(
-        "backend/seo/getSeoPages",
+        "backend_api/seo/getSeoPages",
         "post",
         {
           pageIdentifiers

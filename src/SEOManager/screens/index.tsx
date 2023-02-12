@@ -12,7 +12,7 @@ const Loading = React.lazy(() => import("./loading"));
 const Manager = React.lazy(() => import("./Manager"));
 const NotAuthorized = React.lazy(() => import("./notAuthorized"));
 
-import { Options } from "./../interfaces";
+import { Options } from "../interfaces";
 
 interface State {
   loading: boolean;

@@ -6,7 +6,12 @@ import { PageIdentifiers, PageSEO, FetchSEOHeaders, PageOptions } from "../types
  * @param {FetchSEOHeaders} [meta] - {request: context?.req}
  */
 export declare const fetchSEO: (path: string, meta?: FetchSEOHeaders) => Promise<unknown>;
-export declare const backendValidation: (queueId: string) => Promise<unknown>;
+/**
+@name backendValidation
+@function
+@param {any} body - Your req.body
+*/
+export declare const backendValidation: (body: any) => Promise<unknown>;
 export declare const checkBackendKeys: () => void;
 /**
 @name insertSeoPage
