@@ -17,7 +17,7 @@ import {
 export const fetchSEO = (path: string, meta: FetchSEOHeaders = {}) => {
   return new Promise(async (resolve) => {
     const data = await fetch(path, meta?.request?.headers || {});
-    return resolve(data);
+    return resolve(data?.results || {});
   });
 };
 
@@ -67,16 +67,12 @@ export const checkBackendKeys = () => {
 /**
 @name insertSeoPage
 @function
-@param {PageIdentifiers[]} pageIdentifiers - Array of {path [Required], pageId [Optional]}
 @param {PageSEO[]} pageSEO - Array of {title, description}
 */
-export function insertSeoPage(
-  pageIdentifiers: PageIdentifiers[],
-  pageSEO: PageSEO[]
-) {
+export function insertSeoPage(pageSEO: PageSEO[]) {
   return new Promise(async (resolve) => {
     try {
-      if (pageIdentifiers?.length > 50) {
+      if (pageSEO?.length > 50) {
         return resolve({
           results: false,
           message: "You are limited to 50 inserts at the same time!",
@@ -88,7 +84,6 @@ export function insertSeoPage(
         "backend_api/seo/insert",
         "post",
         {
-          pageIdentifiers,
           pageSEO
         }
       );

@@ -16,10 +16,9 @@ export declare const checkBackendKeys: () => void;
 /**
 @name insertSeoPage
 @function
-@param {PageIdentifiers[]} pageIdentifiers - Array of {path [Required], pageId [Optional]}
 @param {PageSEO[]} pageSEO - Array of {title, description}
 */
-export declare function insertSeoPage(pageIdentifiers: PageIdentifiers[], pageSEO: PageSEO[]): Promise<unknown>;
+export declare function insertSeoPage(pageSEO: PageSEO[]): Promise<unknown>;
 /**
 @name updateSeoPage - Update a batch of SEO Pages
 @function

@@ -14,8 +14,20 @@ import React from "react";
 
 const SEOManager = React.lazy(() => import("../seomanager/index"));
 
+/**
+ * Represents a counter component in React.
+ *
+ * @class SEOHelper
+ * @extends React.Component
+ */
 //SEO DATA FETCH
 export class SEOHelper extends React.Component {
+  /**
+   *
+   * @param {object} props - The component props.
+   * @param {object} props.data - The data passed by the fetchSEO function
+   * @param {object} props.head - (data) => <Head>{data}</Head>
+   */
   constructor(props) {
     super(props);
     this.checkComponentErrors(props);
@@ -150,7 +162,6 @@ export class SEOHelper extends React.Component {
             }}
           />
         )}
-        {/* {this.props.children} */}
       </>
     );
   };

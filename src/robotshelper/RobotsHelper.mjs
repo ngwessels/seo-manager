@@ -1,12 +1,12 @@
 import { Component } from "react";
 
-import { serverCall } from "src/utilities/serverCall";
+import { serverSecretCall } from "src/utilities/serverCall";
 
 export class RobotsHelper extends Component {
   static async getInitialProps({ res, req }) {
     res.setHeader("Content-Type", "text/plain");
     try {
-      const { results } = await serverCall("/robots/", "put", {
+      const { results } = await serverSecretCall("/robots/", "put", {
         headers: req?.headers || {}
       });
       res.write(results);

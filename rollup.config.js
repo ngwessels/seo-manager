@@ -189,7 +189,7 @@ export default [
     input: "./src/seomanager/index.tsx",
     output: [
       {
-        dir: "dist/seomanager",
+        dir: "dist/seo-manager",
         format: "esm",
         sourcemap: false
       }

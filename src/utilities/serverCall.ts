@@ -101,7 +101,7 @@ export const serverSecretCall = (
       return resolve({
         ...(response?.data || {}),
         results: response?.data?.results,
-        error: response?.data?.error || true,
+        error: response?.data?.error || false,
         message: response?.data?.message || "Successful",
         statusCode: response.status
       });

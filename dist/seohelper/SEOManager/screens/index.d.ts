@@ -15,9 +15,9 @@ declare const _default: import("react-redux").ConnectedComponent<typeof Screens,
     data?: any;
     key?: React.Key | null | undefined;
     onClose?: any;
-    isNewPage?: boolean | undefined;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
+    isNewPage?: boolean | undefined;
     onChangeComplete: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").AnyAction>> | undefined;
     store?: import("redux").Store<any, import("redux").AnyAction> | undefined;

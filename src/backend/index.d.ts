@@ -7,10 +7,7 @@ import {
 
 declare function backendValidation(body: any): any;
 declare function fetchSEO(path: string, meta: FetchSEOHeaders): any;
-declare function insertSeoPage(
-  pageIdentifiers: PageIdentifiers[],
-  pageSEO: PageSEO[]
-): any;
+declare function insertSeoPage(pageSEO: PageSEO[]): any;
 declare function updateSeoPage(
   pageIdentifiers: PageIdentifiers[],
   pageSEO: PageSEO[],

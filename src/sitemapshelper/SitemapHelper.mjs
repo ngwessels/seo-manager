@@ -1,12 +1,12 @@
 import React from "react";
 
-import { serverCall } from "src/utilities/serverCall";
+import { serverSecretCall } from "src/utilities/serverCall";
 
 export class SitemapHelper extends React.Component {
   static async getInitialProps({ res, req }) {
     res.setHeader("Content-Type", "text/xml");
     try {
-      const { results } = await serverCall("/sitemap/", "put", {
+      const { results } = await serverSecretCall("/sitemap/", "put", {
         path: req.url,
         headers: req?.headers || {}
       });
