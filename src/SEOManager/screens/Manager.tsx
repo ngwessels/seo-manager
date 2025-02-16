@@ -34,7 +34,7 @@ import {
   Tabs,
   Tab
 } from "@mui/material";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 //Server Call
@@ -260,9 +260,7 @@ class Manager extends React.Component<ManagerOptions, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
           <DialogContent dividers>
             <Grid item xs={12}>

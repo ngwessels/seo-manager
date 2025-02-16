@@ -1,1 +1,3 @@
-export declare const BootstrapDialog: import("@emotion/styled").StyledComponent<import("@mui/material").DialogProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+/// <reference types="react" />
+import { DialogProps } from "@mui/material/Dialog";
+export declare const BootstrapDialog: React.ComponentType<DialogProps>;

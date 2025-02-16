@@ -21,12 +21,12 @@ declare class Manager extends React.Component<ManagerOptions, State> {
     addPerformAction: (e: any, type: any) => void;
     saveData: () => void;
     authSignOut: () => Promise<void>;
-    render(): JSX.Element | null;
+    render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Manager, {
-    ref?: React.LegacyRef<Manager> | undefined;
-    data?: any;
+    ref?: React.Ref<Manager> | undefined;
     key?: React.Key | null | undefined;
+    data?: any;
     onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
@@ -34,7 +34,7 @@ declare const _default: import("react-redux").ConnectedComponent<typeof Manager,
     onChangeComplete: any;
     isLoading: boolean;
     onIsLoading: any;
-    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").AnyAction>> | undefined;
-    store?: import("redux").Store<any, import("redux").AnyAction> | undefined;
+    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
+    store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;
 export default _default;

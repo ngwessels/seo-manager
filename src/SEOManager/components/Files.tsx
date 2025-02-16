@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 //Firebase
 import firebase from "src/firebase";
@@ -341,9 +341,7 @@ class Files extends React.Component<FilesOptions, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
 
           <DialogContent>

@@ -6,6 +6,6 @@ interface State {
 declare class Loading extends React.Component<DialogScreens, State> {
     constructor(props: DialogScreens);
     componentDidMount(): void;
-    render(): JSX.Element | null;
+    render(): React.JSX.Element | null;
 }
 export default Loading;

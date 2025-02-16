@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import "../styles.css";
 import { Typography } from "@mui/material";
-import { MdOutlineInfo } from "react-icons/md";
+// import { MdOutlineInfo } from "react-icons/md";
 
 //Components
 import FileDetails from "./FileDetails";
@@ -73,19 +73,7 @@ class File extends React.Component<FileOptions, State> {
               position: "relative"
             }}
           >
-            <div style={{ position: "absolute", right: -15, top: -15 }}>
-              <MdOutlineInfo
-                size={"1.5em"}
-                onClick={() => {
-                  this.setState({ fileDetail: true });
-                }}
-                style={{
-                  cursor: "pointer",
-                  backgroundColor: "white",
-                  borderRadius: 100
-                }}
-              />
-            </div>
+            <div style={{ position: "absolute", right: -15, top: -15 }}></div>
           </div>
           {isImage && (
             <img

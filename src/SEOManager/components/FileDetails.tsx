@@ -12,7 +12,7 @@ import {
   Grid
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 //Firebase
 import firebase from "src/firebase";
@@ -77,9 +77,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
 
           <DialogContent>

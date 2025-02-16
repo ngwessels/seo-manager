@@ -11,7 +11,7 @@ import {
   TextField,
   Grid
 } from "@mui/material";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { BootstrapDialog } from "./BootstrapDialog";
@@ -86,9 +86,7 @@ class Login extends React.Component<DialogScreens, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
           <DialogContent>
             <form onSubmit={this.signIn}>

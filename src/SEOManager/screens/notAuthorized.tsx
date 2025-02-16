@@ -9,7 +9,7 @@ import {
   IconButton,
   Typography
 } from "@mui/material";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 import { BootstrapDialog } from "./BootstrapDialog";
 
@@ -82,9 +82,7 @@ class NotAuthorized extends React.Component<DialogScreens, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
 
           <DialogContent>

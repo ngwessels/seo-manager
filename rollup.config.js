@@ -37,7 +37,8 @@ export default [
     ],
     plugins: [
       replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
       }),
       typescript({
         tsconfig: "./tsconfig.json",
@@ -71,7 +72,8 @@ export default [
     ],
     plugins: [
       replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
       }),
       typescript({
         tsconfig: "./tsconfig.json",
@@ -162,7 +164,8 @@ export default [
     ],
     plugins: [
       replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
       }),
       typescript({
         tsconfig: "./tsconfig.json",
@@ -196,7 +199,8 @@ export default [
     ],
     plugins: [
       replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
       }),
       typescript({
         tsconfig: "./tsconfig.json",

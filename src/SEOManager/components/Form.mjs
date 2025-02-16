@@ -21,7 +21,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { styled } from "@mui/material/styles";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 
 //Components
 import PhotosViewer from "./PhotosViewer";
@@ -89,9 +89,7 @@ class Form extends React.Component {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            >
-              <MdClose />
-            </IconButton>
+            ></IconButton>
           </DialogTitle>
 
           <DialogContent>

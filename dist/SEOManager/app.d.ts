@@ -11,18 +11,18 @@ declare class App extends React.Component<Options, State> {
     clickToOpenManager: () => void;
     clickToCloseManager: () => void;
     onChangeComplete: (e: any) => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof App, {
-    ref?: React.LegacyRef<App> | undefined;
-    data?: any;
+    ref?: React.Ref<App> | undefined;
     key?: React.Key | null | undefined;
+    data?: any;
     onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
     isNewPage?: boolean | undefined;
     onChangeComplete: any;
-    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").AnyAction>> | undefined;
-    store?: import("redux").Store<any, import("redux").AnyAction> | undefined;
+    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
+    store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;
 export default _default;

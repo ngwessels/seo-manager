@@ -14,12 +14,12 @@ declare class OpenDashboard extends React.Component<Props, State> {
     init: () => void;
     setUserToken: () => Promise<void>;
     openWindow: () => void;
-    render(): JSX.Element | null;
+    render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof OpenDashboard, {
-    ref?: React.LegacyRef<OpenDashboard> | undefined;
+    ref?: React.Ref<OpenDashboard> | undefined;
     key?: React.Key | null | undefined;
-    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").AnyAction>> | undefined;
-    store?: import("redux").Store<any, import("redux").AnyAction> | undefined;
+    context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
+    store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;
 export default _default;
