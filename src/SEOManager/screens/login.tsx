@@ -9,10 +9,11 @@ import {
   IconButton,
   Typography,
   TextField,
-  Grid
+  Grid,
+  Button
 } from "@mui/material";
 // import { MdClose } from "react-icons/md";
-import LoadingButton from "@mui/lab/LoadingButton";
+// import LoadingButton from "@mui/lab/LoadingButton";
 
 import { BootstrapDialog } from "./BootstrapDialog";
 
@@ -138,8 +139,8 @@ class Login extends React.Component<DialogScreens, State> {
                 </div>
               )}
               <div className="d-grid gap-2">
-                <LoadingButton
-                  loading={this.state.loading}
+                <Button
+                  // loading={this.state.loading}
                   variant="contained"
                   type={"submit"}
                   style={{ marginTop: 15 }}
@@ -147,7 +148,7 @@ class Login extends React.Component<DialogScreens, State> {
                   className={"nextjs-seo-manager__button"}
                 >
                   Login
-                </LoadingButton>
+                </Button>
               </div>
             </form>
           </DialogContent>

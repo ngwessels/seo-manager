@@ -25,29 +25,33 @@ class Authentication extends React.Component {
 
   loadUser = async (user) => {
     const permissionLevels = ["owner", "admin", "editor"];
+    let userData = {
+      ...user
+    };
     if (user) {
       const customClaims = await user.getIdTokenResult(true);
-      // console.log(
-      //   "USER:",
-      //   user,
-      //   customClaims,
-      //   this.props?.seoData?.initial?.projectId
-      // );
+
       if (
         customClaims?.claims?.[this.props?.seoData?.initial?.projectId] &&
         permissionLevels.includes(
           customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
         )
       ) {
-        user.authorizedProject = true;
+        userData.authorizedProject = true;
       } else {
-        user.authorizedProject = false;
+        userData.authorizedProject = false;
       }
+      console.log(
+        "USER:",
+        userData,
+        customClaims,
+        this.props?.seoData?.initial?.projectId
+      );
     }
 
     const action = {
       type: "SET_USER",
-      results: user
+      results: JSON.parse(JSON.stringify(userData))
     };
     this.props.dispatch(action);
   };

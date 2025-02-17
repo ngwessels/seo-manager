@@ -3,7 +3,11 @@ import React from "react";
 //Redux
 import { Provider } from "react-redux";
 //Reducers
-import store from "./redux/store";
+import store from "./redux/reducers/rootReducer";
+
+//Mui
+import { createTheme, ThemeProvider } from "@mui/material";
+const theme = createTheme({});
 
 //App.tsx
 import App from "./app";
@@ -17,7 +21,9 @@ export default class index extends React.Component<Options> {
   render() {
     return (
       <Provider store={store}>
-        <App {...this.props} />
+        <ThemeProvider theme={theme}>
+          <App {...this.props} />
+        </ThemeProvider>
       </Provider>
     );
   }

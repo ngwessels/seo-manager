@@ -38,6 +38,7 @@ class Screens extends React.Component<Options, State> {
   };
 
   render() {
+    console.log(this.props?.user);
     return (
       <React.Fragment>
         <React.Suspense fallback={<></>}>

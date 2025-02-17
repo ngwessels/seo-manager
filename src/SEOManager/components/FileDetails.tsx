@@ -11,7 +11,7 @@ import {
   TextField,
   Grid
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+// import LoadingButton from "@mui/lab/LoadingButton";
 // import { MdClose } from "react-icons/md";
 
 //Firebase
@@ -230,14 +230,14 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                   Close
                 </Button>
 
-                <LoadingButton
+                <Button
                   variant="text"
                   onClick={this.deleteFile}
                   type="button"
                   loading={this.state.deleteLoading}
                 >
                   Delete
-                </LoadingButton>
+                </Button>
               </div>
             </div>
           </DialogActions>

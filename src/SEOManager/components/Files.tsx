@@ -17,7 +17,7 @@ import {
   Box
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-import LoadingButton from "@mui/lab/LoadingButton";
+// import LoadingButton from "@mui/lab/LoadingButton";
 // import { MdClose } from "react-icons/md";
 
 //Firebase
@@ -517,7 +517,7 @@ class Files extends React.Component<FilesOptions, State> {
                   ).toFixed(2)}
                   MB
                 </Typography>
-                <LoadingButton
+                <Button
                   variant="text"
                   onClick={this.save}
                   type="button"
@@ -525,7 +525,7 @@ class Files extends React.Component<FilesOptions, State> {
                   className="nextjs-seo-manager__button"
                 >
                   Save
-                </LoadingButton>
+                </Button>
               </div>
             </div>
           </DialogActions>

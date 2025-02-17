@@ -26,8 +26,8 @@ declare class Manager extends React.Component<ManagerOptions, State> {
 declare const _default: import("react-redux").ConnectedComponent<typeof Manager, {
     ref?: React.Ref<Manager> | undefined;
     key?: React.Key | null | undefined;
-    onClose?: any;
     data?: any;
+    onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
     isNewPage?: boolean | undefined;

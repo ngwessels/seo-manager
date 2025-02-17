@@ -25,8 +25,8 @@ declare const _default: import("react-redux").ConnectedComponent<typeof Files, {
     ref?: React.Ref<Files> | undefined;
     key?: React.Key | null | undefined;
     onClose: any;
-    open: boolean;
     onChangeComplete: any;
+    open: boolean;
     multiple: boolean;
     selected: any;
     accept: string;

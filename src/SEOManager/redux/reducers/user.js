@@ -1,12 +1,13 @@
 const user = (state = { isLoggedIn: null }, action) => {
-  let newState = { ...state };
   switch (action.type) {
     case "SET_USER":
-      newState = action.results ? action.results : {};
-      newState.isLoggedIn = action?.results?.email ? true : false;
-      break;
+      return {
+        ...state,
+        ...action.results, // Spread the new user data
+        isLoggedIn: action?.results?.email ? true : false
+      };
+    default:
+      return state; // Return the current state if no action matches
   }
-  return newState;
 };
-
 export default user;
