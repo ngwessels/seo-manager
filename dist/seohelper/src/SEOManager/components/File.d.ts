@@ -13,8 +13,8 @@ declare class File extends React.Component<FileOptions, State> {
 declare const _default: import("react-redux").ConnectedComponent<typeof File, {
     ref?: React.Ref<File> | undefined;
     key: string;
-    onClick: any;
     isClicked: any;
+    onClick: any;
     item: any;
     idx: number;
     onDelete: any;

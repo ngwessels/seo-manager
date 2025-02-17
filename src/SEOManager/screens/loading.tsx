@@ -7,7 +7,7 @@ import {
   IconButton,
   CircularProgress
 } from "@mui/material";
-// import { MdClose } from "react-icons/md";
+import CloseIcon from "@mui/icons-material/Close";
 import { BootstrapDialog } from "./BootstrapDialog";
 
 //Components
@@ -58,7 +58,9 @@ class Loading extends React.Component<DialogScreens, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            ></IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent dividers>
             <div

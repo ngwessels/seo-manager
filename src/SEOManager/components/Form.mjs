@@ -19,9 +19,9 @@ import {
 } from "@mui/material";
 import { DateTimePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-// import LoadingButton from "@mui/lab/LoadingButton";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { styled } from "@mui/material/styles";
-// import { MdClose } from "react-icons/md";
+import CloseIcon from "@mui/icons-material/Close";
 
 //Components
 import PhotosViewer from "./PhotosViewer";
@@ -89,7 +89,9 @@ class Form extends React.Component {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            ></IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
 
           <DialogContent>
@@ -500,14 +502,15 @@ class Form extends React.Component {
                     Delete
                   </Button>
                 )}
-                <Button
+                <LoadingButton
                   variant="text"
                   onClick={() => {
                     document.getElementById("form-submit")?.click();
                   }}
+                  loading={false}
                 >
                   Complete
-                </Button>
+                </LoadingButton>
               </div>
             </div>
           </DialogActions>

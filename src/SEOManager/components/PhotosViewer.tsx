@@ -5,7 +5,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 //MUI
-// import { MdOutlineArrowBack, MdOutlineArrowForward } from "react-icons/md";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Typography } from "@mui/material";
 
 //Components
@@ -275,8 +276,12 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
             </div>
             {this.state.files.length > 1 && (
               <>
-                <div className={"carousel-prev"}></div>
-                <div className={"carousel-next"}></div>
+                <div className={"carousel-prev"}>
+                  <ArrowBackIcon />
+                </div>
+                <div className={"carousel-next"}>
+                  <ArrowForwardIcon />
+                </div>
                 <ol className="carousel-dots">
                   {Object.keys(this.state.files || []).map((idx) => {
                     return <li key={`file-${idx}`} />;

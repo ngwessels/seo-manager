@@ -9,11 +9,10 @@ import {
   IconButton,
   Typography,
   TextField,
-  Grid,
-  Button
+  Grid
 } from "@mui/material";
-// import { MdClose } from "react-icons/md";
-// import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import { BootstrapDialog } from "./BootstrapDialog";
 
@@ -87,7 +86,9 @@ class Login extends React.Component<DialogScreens, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            ></IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent>
             <form onSubmit={this.signIn}>
@@ -139,8 +140,8 @@ class Login extends React.Component<DialogScreens, State> {
                 </div>
               )}
               <div className="d-grid gap-2">
-                <Button
-                  // loading={this.state.loading}
+                <LoadingButton
+                  loading={this.state.loading}
                   variant="contained"
                   type={"submit"}
                   style={{ marginTop: 15 }}
@@ -148,7 +149,7 @@ class Login extends React.Component<DialogScreens, State> {
                   className={"nextjs-seo-manager__button"}
                 >
                   Login
-                </Button>
+                </LoadingButton>
               </div>
             </form>
           </DialogContent>

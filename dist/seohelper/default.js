@@ -1,1 +1,1 @@
-export{S as default}from"./default-a8c480eb.js";import"react";
+export{S as default}from"./default-3f3e9018.js";import"react";import"axios";

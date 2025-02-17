@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import "../styles.css";
 import { Typography } from "@mui/material";
-// import { MdOutlineInfo } from "react-icons/md";
 
 //Components
 import FileDetails from "./FileDetails";
@@ -59,6 +58,7 @@ class File extends React.Component<FileOptions, State> {
           idx={this.props.idx}
           isImage={isImage}
         />
+
         <div
           style={{
             border: this.props.isClicked

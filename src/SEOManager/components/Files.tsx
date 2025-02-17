@@ -17,8 +17,8 @@ import {
   Box
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-// import LoadingButton from "@mui/lab/LoadingButton";
-// import { MdClose } from "react-icons/md";
+import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 //Firebase
 import firebase from "src/firebase";
@@ -204,7 +204,7 @@ class Files extends React.Component<FilesOptions, State> {
             AuthorizationId: auth?.currentUser?.uid
           }
         );
-        console.log("VERSION:", this.props?.version);
+
         const uploadStep = Object.keys(newFiles || []).map((idx) => {
           return new Promise(async (resolve, _reject) => {
             const item = newFiles[idx];
@@ -341,7 +341,9 @@ class Files extends React.Component<FilesOptions, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            ></IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
 
           <DialogContent>
@@ -517,7 +519,7 @@ class Files extends React.Component<FilesOptions, State> {
                   ).toFixed(2)}
                   MB
                 </Typography>
-                <Button
+                <LoadingButton
                   variant="text"
                   onClick={this.save}
                   type="button"
@@ -525,7 +527,7 @@ class Files extends React.Component<FilesOptions, State> {
                   className="nextjs-seo-manager__button"
                 >
                   Save
-                </Button>
+                </LoadingButton>
               </div>
             </div>
           </DialogActions>

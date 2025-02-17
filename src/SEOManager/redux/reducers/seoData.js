@@ -1,20 +1,26 @@
 const SeoData = (state = { initial: {}, manager: {}, plan: {} }, action) => {
-  let newState = { ...state };
   switch (action.type) {
     case "SET_INITIAL_SEO_DATA":
-      newState.initial = action.results ? action.results : {};
-      break;
+      return { ...state, initial: action.results || {} };
+
     case "SET_MANAGER_SEO_DATA":
-      newState.manager = action.results ? action.results : {};
-      break;
+      return { ...state, manager: action.results || {} };
+
     case "UPDATE_MANAGER_SEO_DATA":
-      newState.manager[action.location] = action.results;
-      break;
+      return {
+        ...state,
+        manager: {
+          ...state.manager,
+          [action.location]: action.results
+        }
+      };
+
     case "SET_MANAGER_PROJECT_PLAN":
-      newState.plan = action.results;
-      break;
+      return { ...state, plan: action.results };
+
+    default:
+      return state; // If no action matches, return the current state
   }
-  return newState;
 };
 
 export default SeoData;

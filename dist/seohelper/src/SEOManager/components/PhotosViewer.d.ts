@@ -14,12 +14,12 @@ declare class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof PhotosViewer, {
-    ref?: React.Ref<PhotosViewer> | undefined;
-    key?: React.Key | null | undefined;
+    files: any;
     onChangeComplete: any;
     multiple: boolean;
     accept: string;
-    files: any;
+    ref?: React.Ref<PhotosViewer> | undefined;
+    key?: React.Key | null | undefined;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

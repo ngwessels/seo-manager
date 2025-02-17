@@ -24,16 +24,16 @@ declare class Manager extends React.Component<ManagerOptions, State> {
     render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Manager, {
-    ref?: React.Ref<Manager> | undefined;
-    key?: React.Key | null | undefined;
+    isNewPage?: boolean | undefined;
     data?: any;
     onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
-    isNewPage?: boolean | undefined;
-    onChangeComplete: any;
     isLoading: boolean;
     onIsLoading: any;
+    onChangeComplete: any;
+    ref?: React.Ref<Manager> | undefined;
+    key?: React.Key | null | undefined;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

@@ -41,12 +41,6 @@ class Authentication extends React.Component {
       } else {
         userData.authorizedProject = false;
       }
-      console.log(
-        "USER:",
-        userData,
-        customClaims,
-        this.props?.seoData?.initial?.projectId
-      );
     }
 
     const action = {

@@ -11,8 +11,8 @@ import {
   TextField,
   Grid
 } from "@mui/material";
-// import LoadingButton from "@mui/lab/LoadingButton";
-// import { MdClose } from "react-icons/md";
+import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 //Firebase
 import firebase from "src/firebase";
@@ -77,7 +77,9 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                 top: 8,
                 color: (theme) => theme.palette.grey[500]
               }}
-            ></IconButton>
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
 
           <DialogContent>
@@ -230,14 +232,14 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                   Close
                 </Button>
 
-                <Button
+                <LoadingButton
                   variant="text"
                   onClick={this.deleteFile}
                   type="button"
                   loading={this.state.deleteLoading}
                 >
                   Delete
-                </Button>
+                </LoadingButton>
               </div>
             </div>
           </DialogActions>

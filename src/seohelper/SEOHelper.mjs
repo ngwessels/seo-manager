@@ -12,7 +12,10 @@
 //React
 import React from "react";
 
-const SEOManager = React.lazy(() => import("../seomanager/index"));
+const SEOManager = React.lazy(() => import("../SEOManager/index"));
+
+//Server Call
+import { serverCall } from "src/utilities/serverCall";
 
 /**
  * Represents a counter component in React.
@@ -40,10 +43,23 @@ export class SEOHelper extends React.Component {
     };
   }
 
-  componentDidMount = () => {
-    // console.log(`SEOHelperLite Mounted:`, Date.now());
+  componentDidMount = async () => {
     this.setState({ loading: false, loaded: true, componentLoaded: true });
-    // getAnalytics(firebase);
+
+    console.log({ data: this.props.data });
+
+    try {
+      const response = await serverCall("/seo/ping", "put", {
+        projectId: this.props?.data?.global?.projectId || "",
+        pageId: this.props?.data?.page?.pageId || "",
+        clientTime: new Date().toISOString(),
+        path: this.props?.data?.page?.path || "",
+        userAgent: navigator.userAgent
+      });
+      console.log("PING RESPONSE:", response);
+    } catch (err) {
+      console.error("PING API ERROR");
+    }
   };
 
   componentDidUpdate = (prevProps) => {

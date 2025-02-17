@@ -31,8 +31,8 @@ import {
   Tabs,
   Tab
 } from "@mui/material";
-// import { MdClose } from "react-icons/md";
-// import LoadingButton from "@mui/lab/LoadingButton";
+import CloseIcon from "@mui/icons-material/Close";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 //Server Call
 import { serverCall } from "src/utilities/serverCall";
@@ -253,7 +253,9 @@ class Manager extends React.Component<ManagerOptions, State> {
               top: 8,
               color: (theme) => theme.palette.grey[500]
             }}
-          ></IconButton>
+          >
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
         <DialogContent dividers>
           <Grid item xs={12}>
@@ -618,15 +620,15 @@ class Manager extends React.Component<ManagerOptions, State> {
                 Close
               </Button>
 
-              <Button
+              <LoadingButton
                 variant="text"
                 onClick={this.saveData}
                 type="button"
-                // loading={this.state.saving}
+                loading={this.state.saving}
                 className="nextjs-seo-manager__button"
               >
                 Save
-              </Button>
+              </LoadingButton>
             </div>
           </div>
         </DialogActions>
