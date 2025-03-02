@@ -10,7 +10,7 @@ import { returnKey } from "src/utilities/setupInit";
 const Login = React.lazy(() => import("./login"));
 const Loading = React.lazy(() => import("./loading"));
 const Manager = React.lazy(() => import("./Manager"));
-const NotAuthorized = React.lazy(() => import("./notAuthorized"));
+// const NotAuthorized = React.lazy(() => import("./notAuthorized"));
 
 import { Options } from "../interfaces";
 
@@ -41,9 +41,7 @@ class Screens extends React.Component<Options, State> {
     return (
       <React.Fragment>
         <React.Suspense fallback={<></>}>
-          {this.props?.user?.isLoggedIn === false && (
-            <Login onClose={this.onClose} />
-          )}
+          <Login onClose={this.onClose} />
 
           {(this.props?.user?.isLoggedIn === null ||
             this.state?.loading === true) && <Loading onClose={this.onClose} />}
@@ -59,10 +57,10 @@ class Screens extends React.Component<Options, State> {
               />
             )}
 
-          {this.props?.user?.isLoggedIn === true &&
+          {/* {this.props?.user?.isLoggedIn === true &&
             !this.props?.user?.authorizedProject && (
               <NotAuthorized onClose={this.onClose} />
-            )}
+            )} */}
         </React.Suspense>
       </React.Fragment>
     );

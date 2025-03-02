@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 //Firebase
 import firebase from "src/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 const auth = getAuth(firebase);
 
 class Authentication extends React.Component {
@@ -16,7 +16,11 @@ class Authentication extends React.Component {
 
   componentDidMount = () => {
     onAuthStateChanged(auth, async (user) => {
-      this.loadUser(user);
+      if (user) {
+        this.loadUser(user);
+      } else {
+        await signInAnonymously(auth);
+      }
     });
     if (auth?.currentUser) {
       this.loadUser(auth.currentUser);
@@ -38,6 +42,19 @@ class Authentication extends React.Component {
         )
       ) {
         userData.authorizedProject = true;
+      } else if (
+        customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
+      ) {
+        const userPermissionTimeStamp = new Date(
+          customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
+        ).toISOString();
+        const now = new Date().toISOString();
+
+        if (now < userPermissionTimeStamp) {
+          userData.authorizedProject = true;
+        } else {
+          userData.authorizedProject = false;
+        }
       } else {
         userData.authorizedProject = false;
       }

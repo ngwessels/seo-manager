@@ -8,18 +8,21 @@ import {
   DialogContent,
   IconButton,
   Typography,
-  TextField,
+  // TextField,
   Grid
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LoadingButton from "@mui/lab/LoadingButton";
-
-import { BootstrapDialog } from "./BootstrapDialog";
+// import LoadingButton from "@mui/lab/LoadingButton";
 
 //Firebase
 import firebase from "src/firebase";
-import { getAuth, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 const auth = getAuth(firebase);
+
+import { BootstrapDialog } from "./BootstrapDialog";
+
+//Server Call
+import { serverCall } from "src/utilities/serverCall";
 
 //Components
 import { DialogScreens } from "../interfaces";
@@ -27,8 +30,9 @@ import { DialogScreens } from "../interfaces";
 interface State {
   loading: boolean;
   loginError: string;
-  email: string;
-  password: string;
+  userSetup: boolean;
+  userAuthorized: boolean;
+  userLoaded: boolean;
 }
 
 class Login extends React.Component<DialogScreens, State> {
@@ -37,31 +41,65 @@ class Login extends React.Component<DialogScreens, State> {
     this.state = {
       loading: false,
       loginError: "",
-      email: "",
-      password: ""
+      userAuthorized: props?.user?.authorizedProject,
+      userLoaded: props?.user?.isLoggedIn,
+      userSetup: false
     };
   }
 
-  signIn = async (e: any) => {
-    //Sign in User
-    e.preventDefault();
-    this.setState({ loading: true });
-    signInWithEmailAndPassword(auth, this.state.email, this.state.password)
-      .then(() => {
-        this.setState({ loading: false });
-      })
-      .catch((error: any) => {
-        // const errorMessage = error.message;
-        this.setState({ loginError: error.code, loading: false });
-      });
+  componentDidMount = () => {
+    const userLoaded = this.props?.user?.isLoggedIn;
+    const userAuthorized = this.props?.user?.authorizedProject;
+
+    this.setState({
+      userAuthorized,
+      userLoaded,
+      userSetup: false
+    });
   };
 
-  signOut = async () => {
-    //Signs out user
-    await signOut(auth);
+  componentDidUpdate = (prevProps: any) => {
+    if (
+      prevProps?.user?.isLoggedIn !== this.props?.user?.isLoggedIn ||
+      prevProps?.user?.authorizedProject !== this.props?.user?.authorizedProject
+    ) {
+      this.setState({
+        userAuthorized: this.props?.user?.authorizedProject,
+        userLoaded: this.props?.user?.isLoggedIn
+      });
+      this.userLoginSetup();
+    }
+  };
+
+  userLoginSetup = () => {
+    const userLoaded = this.props?.user?.isLoggedIn;
+    const userAuthorized = this.props?.user?.authorizedProject;
+
+    if (
+      userLoaded === true &&
+      userAuthorized === false &&
+      this.state.userSetup === false
+    ) {
+      this.setState({ userSetup: true });
+
+      auth?.currentUser?.getIdToken().then(async (token) => {
+        console.log(this.props);
+        const response = await serverCall(
+          "/seo/setup_authorization",
+          "post",
+          { pageId: this.props?.seoData?.initial?.page?.pageId },
+          undefined,
+          { X_Authorization: token, AuthorizationId: auth?.currentUser?.uid }
+        );
+        console.log("Authorization Setup Response: ", response);
+      });
+    }
   };
 
   render() {
+    if (this.state.userAuthorized || !this.state.userLoaded) {
+      return null;
+    }
     return (
       <>
         <BootstrapDialog
@@ -91,11 +129,16 @@ class Login extends React.Component<DialogScreens, State> {
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={this.signIn}>
+            <Grid item mb={1}>
               <Typography className={"nextjs-seo-manager__p"}>
-                Please login to your SEO Manager Account to continue
+                Please login to your SEO Manager Account to continue. To Login
+                either scan the QR Code or Click the redirect link below.
               </Typography>
-              <Grid item mb={1}>
+            </Grid>
+
+            {/* <form onSubmit={this.signIn}>
+              
+              
                 <TextField
                   id="email"
                   label="Email address"
@@ -151,7 +194,7 @@ class Login extends React.Component<DialogScreens, State> {
                   Login
                 </LoadingButton>
               </div>
-            </form>
+            </form> */}
           </DialogContent>
         </BootstrapDialog>
       </>
@@ -160,7 +203,8 @@ class Login extends React.Component<DialogScreens, State> {
 }
 
 const mapStateToProps = (state: any) => ({
-  user: state?.user
+  user: state?.user,
+  seoData: state?.seoData
 });
 
 export default connect(mapStateToProps)(Login);

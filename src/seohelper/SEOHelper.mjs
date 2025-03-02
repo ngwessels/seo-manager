@@ -46,8 +46,6 @@ export class SEOHelper extends React.Component {
   componentDidMount = async () => {
     this.setState({ loading: false, loaded: true, componentLoaded: true });
 
-    console.log({ data: this.props.data });
-
     try {
       const response = await serverCall("/seo/ping", "put", {
         projectId: this.props?.data?.global?.projectId || "",
@@ -56,7 +54,6 @@ export class SEOHelper extends React.Component {
         path: this.props?.data?.page?.path || "",
         userAgent: navigator.userAgent
       });
-      console.log("PING RESPONSE:", response);
     } catch (err) {
       console.error("PING API ERROR");
     }

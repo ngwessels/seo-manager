@@ -3,19 +3,21 @@ import { DialogScreens } from "../interfaces";
 interface State {
     loading: boolean;
     loginError: string;
-    email: string;
-    password: string;
+    userSetup: boolean;
+    userAuthorized: boolean;
+    userLoaded: boolean;
 }
 declare class Login extends React.Component<DialogScreens, State> {
     constructor(props: DialogScreens);
-    signIn: (e: any) => Promise<void>;
-    signOut: () => Promise<void>;
-    render(): React.JSX.Element;
+    componentDidMount: () => void;
+    componentDidUpdate: (prevProps: any) => void;
+    userLoginSetup: () => void;
+    render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Login, {
+    onClose: any;
     ref?: React.Ref<Login> | undefined;
     key?: React.Key | null | undefined;
-    onClose: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

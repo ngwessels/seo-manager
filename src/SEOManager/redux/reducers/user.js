@@ -4,7 +4,7 @@ const user = (state = { isLoggedIn: null }, action) => {
       return {
         ...state,
         ...action.results, // Spread the new user data
-        isLoggedIn: action?.results?.email ? true : false
+        isLoggedIn: action?.results?.uid ? true : false
       };
     default:
       return state; // Return the current state if no action matches

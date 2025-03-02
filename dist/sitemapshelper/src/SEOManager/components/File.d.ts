@@ -14,8 +14,8 @@ declare const _default: import("react-redux").ConnectedComponent<typeof File, {
     ref?: React.Ref<File> | undefined;
     key: string;
     onClick: any;
-    isClicked: any;
     item: any;
+    isClicked: any;
     idx: number;
     onDelete: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;

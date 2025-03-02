@@ -11,6 +11,8 @@ export interface Options {
 
 export interface DialogScreens {
   onClose: any;
+  user?: any;
+  seoData?: any;
 }
 
 export interface ManagerOptions {

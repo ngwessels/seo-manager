@@ -16,6 +16,7 @@ declare const _default: import("react-redux").ConnectedComponent<typeof NotAutho
     ref?: React.Ref<NotAuthorized> | undefined;
     key?: React.Key | null | undefined;
     onClose: any;
+    seoData?: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;
