@@ -45,18 +45,34 @@ class Authentication extends React.Component {
       } else if (
         customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
       ) {
-        const userPermissionTimeStamp = new Date(
+        const { timeStamp } = JSON.parse(
           customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
-        ).toISOString();
+        );
+        const userPermissionTimeStamp = new Date(timeStamp).toISOString();
         const now = new Date().toISOString();
 
         if (now < userPermissionTimeStamp) {
-          userData.authorizedProject = true;
+          userData.authorizedProject = timeStamp;
         } else {
           userData.authorizedProject = false;
         }
       } else {
-        userData.authorizedProject = false;
+        let hasAuthorizedPages = false;
+        let authorizedPages = {};
+        Object.keys(customClaims?.claims).forEach((key) => {
+          if (key.includes(`${this.props?.seoData?.initial?.projectId}-`)) {
+            const { timeStamp } = JSON.parse(customClaims?.claims?.[key]);
+            hasAuthorizedPages = true;
+            const pageId = key.split("-")[1];
+            authorizedPages[pageId] = timeStamp;
+          }
+        });
+
+        if (hasAuthorizedPages) {
+          userData.authorizedPages = authorizedPages;
+        } else {
+          userData.authorizedProject = false;
+        }
       }
     }
 
