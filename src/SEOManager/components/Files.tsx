@@ -12,12 +12,10 @@ import {
   DialogActions,
   IconButton,
   Typography,
-  Grid,
   CircularProgress,
   Box
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
-import LoadingButton from "@mui/lab/LoadingButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 //Firebase
@@ -370,14 +368,14 @@ class Files extends React.Component<FilesOptions, State> {
               >
                 <div style={{}} className={"top"}>
                   {this.props.accept && (
-                    <Grid item xs={12} mb={2}>
+                    <Box mb={2}>
                       <Typography
                         textAlign={"center"}
                         className={"nextjs-seo-manager__p"}
                       >
                         Only accepting {this.props.accept}
                       </Typography>
-                    </Grid>
+                    </Box>
                   )}
                 </div>
                 <div className={"fileViewer"}>
@@ -519,15 +517,16 @@ class Files extends React.Component<FilesOptions, State> {
                   ).toFixed(2)}
                   MB
                 </Typography>
-                <LoadingButton
+                <Button
                   variant="text"
                   onClick={this.save}
                   type="button"
-                  loading={false}
+                  disabled={false}
                   className="nextjs-seo-manager__button"
+                  startIcon={false ? <CircularProgress size={16} /> : null}
                 >
                   Save
-                </LoadingButton>
+                </Button>
               </div>
             </div>
           </DialogActions>

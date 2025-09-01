@@ -11,15 +11,14 @@ import {
   IconButton,
   TextField,
   Grid,
+  Box,
   MenuItem,
   FormControl,
   InputLabel,
   Select,
   Typography
 } from "@mui/material";
-import { DateTimePicker, LocalizationProvider } from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { CircularProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -127,7 +126,7 @@ class Form extends React.Component {
                 }
                 if (modelItem.type === "select") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       <FormControl
                         variant="standard"
                         sx={{ minWidth: "100%" }}
@@ -164,11 +163,11 @@ class Form extends React.Component {
                           )}
                         </Select>
                       </FormControl>
-                    </Grid>
+                    </Box>
                   );
                 } else if (modelItem.type === "input") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       <TextField
                         id={`Field-${idx}`}
                         label={modelItem.label}
@@ -183,31 +182,34 @@ class Form extends React.Component {
                         style={{ width: "100%" }}
                         required={modelItem?.required || false}
                       />
-                    </Grid>
+                    </Box>
                   );
                 } else if (modelItem.type === "date-time") {
                   return (
-                    <Grid item mb={2}>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DateTimePicker
-                          renderInput={(props) => (
-                            <TextField {...props} style={{ width: "100%" }} />
-                          )}
-                          label={modelItem?.label}
-                          value={dataItem}
-                          // required={modelItem?.required || false}
-                          onChange={(e) => {
-                            let data = this.state.data;
-                            data[modelItem.index] = e;
-                            this.setState({ data });
-                          }}
-                        />
-                      </LocalizationProvider>
-                    </Grid>
+                    <Box mb={2}>
+                      <TextField
+                        id={`Field-${idx}`}
+                        label={modelItem.label}
+                        variant="standard"
+                        type="datetime-local"
+                        placeholder=""
+                        onChange={(e) => {
+                          let data = this.state.data;
+                          data[modelItem.index] = e.target.value;
+                          this.setState({ data });
+                        }}
+                        value={dataItem || ""}
+                        style={{ width: "100%" }}
+                        required={modelItem?.required || false}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    </Box>
                   );
                 } else if (modelItem.type === "textfield") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       <TextField
                         id={`Field-${idx}`}
                         label={modelItem.label}
@@ -228,11 +230,11 @@ class Form extends React.Component {
                             : ""
                         }
                       />
-                    </Grid>
+                    </Box>
                   );
                 } else if (modelItem.type === "location") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       <TextField
                         id={`Field-${idx}-location-name`}
                         label={"Location Name"}
@@ -315,7 +317,7 @@ class Form extends React.Component {
                           required={modelItem?.required || false}
                           style={{ width: "48%" }}
                         />
-                      </Grid>
+                      </Box>
                       <Grid
                         item
                         display={"flex"}
@@ -361,12 +363,12 @@ class Form extends React.Component {
                           required={modelItem?.required || false}
                           style={{ width: "48%" }}
                         />
-                      </Grid>
-                    </Grid>
+                      </Box>
+                    </Box>
                   );
                 } else if (modelItem.type === "images") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       <PhotosViewer
                         files={dataItem}
                         onChangeComplete={(e) => {
@@ -378,11 +380,11 @@ class Form extends React.Component {
                         accept={"image/png, image/jpeg, image/jpg, image/webp"}
                         data={this.props.data}
                       />
-                    </Grid>
+                    </Box>
                   );
                 } else if (modelItem.type === "performer") {
                   return (
-                    <Grid item mb={2}>
+                    <Box mb={2}>
                       {/* <Typography variant="h6">Performing Group</Typography> */}
                       <TextField
                         id={`performing-group`}
@@ -404,12 +406,12 @@ class Form extends React.Component {
                         value={dataItem?.name || ""}
                         style={{ width: "100%" }}
                       />
-                    </Grid>
+                    </Box>
                   );
                 } else if (modelItem.type === "organizer") {
                   return (
                     <>
-                      <Grid item mb={2}>
+                      <Box mb={2}>
                         <TextField
                           id={`organizer`}
                           label={"Organizer Name"}
@@ -430,8 +432,8 @@ class Form extends React.Component {
                           value={dataItem?.name || ""}
                           style={{ width: "100%" }}
                         />
-                      </Grid>
-                      <Grid item mb={2}>
+                      </Box>
+                      <Box mb={2}>
                         <TextField
                           id={`organizer`}
                           label={"Organizer Website"}
@@ -452,7 +454,7 @@ class Form extends React.Component {
                           value={dataItem?.url || ""}
                           style={{ width: "100%" }}
                         />
-                      </Grid>
+                      </Box>
                     </>
                   );
                 }
@@ -502,15 +504,17 @@ class Form extends React.Component {
                     Delete
                   </Button>
                 )}
-                <LoadingButton
+                <Button
                   variant="text"
                   onClick={() => {
                     document.getElementById("form-submit")?.click();
                   }}
-                  loading={false}
+                  type="button"
+                  disabled={false}
+                  startIcon={false ? <CircularProgress size={16} /> : null}
                 >
                   Complete
-                </LoadingButton>
+                </Button>
               </div>
             </div>
           </DialogActions>

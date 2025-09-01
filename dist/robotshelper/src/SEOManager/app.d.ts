@@ -14,10 +14,10 @@ declare class App extends React.Component<Options, State> {
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof App, {
-    onClose?: any;
     ref?: React.Ref<App> | undefined;
     key?: React.Key | null | undefined;
     data?: any;
+    onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
     isNewPage?: boolean | undefined;

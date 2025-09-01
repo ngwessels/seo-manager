@@ -221,5 +221,67 @@ export default [
       analyze({ onAnalysis, skipFormatted: true })
     ],
     external: ["react", "react-dom"]
+  },
+  {
+    input: "./src/robotsbasichelper/index.ts",
+    output: [
+      {
+        file: "dist/robotsbasichelper/index.cjs",
+        format: "cjs",
+        sourcemap: false
+      },
+      {
+        file: "dist/robotsbasichelper/index.es.js",
+        format: "esm",
+        sourcemap: false
+      }
+    ],
+    plugins: [
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      json(),
+      commonjs(),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      terser({ compress: true })
+    ]
+  },
+  {
+    input: "./src/sitemapbasichelper/index.ts",
+    output: [
+      {
+        file: "dist/sitemapbasichelper/index.cjs",
+        format: "cjs",
+        sourcemap: false
+      },
+      {
+        file: "dist/sitemapbasichelper/index.es.js",
+        format: "esm",
+        sourcemap: false
+      }
+    ],
+    plugins: [
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      json(),
+      commonjs(),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      terser({ compress: true })
+    ]
   }
 ];

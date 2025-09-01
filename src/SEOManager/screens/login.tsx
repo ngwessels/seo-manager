@@ -9,10 +9,10 @@ import {
   IconButton,
   Typography,
   // TextField,
-  Grid
+  Box
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-// import LoadingButton from "@mui/lab/LoadingButton";
+
 
 //Firebase
 import firebase from "src/firebase";
@@ -129,12 +129,12 @@ class Login extends React.Component<DialogScreens, State> {
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            <Grid item mb={1}>
+            <Box mb={1}>
               <Typography className={"nextjs-seo-manager__p"}>
                 Please login to your SEO Manager Account to continue. To Login
                 either scan the QR Code or Click the redirect link below.
               </Typography>
-            </Grid>
+            </Box>
 
             {/* <form onSubmit={this.signIn}>
               
@@ -151,7 +151,7 @@ class Login extends React.Component<DialogScreens, State> {
                   style={{ width: "100%" }}
                 />
               </Grid>
-              <Grid item mb={1}>
+              <Box mb={1}>
                 <TextField
                   id="password"
                   label="Password"
@@ -163,7 +163,7 @@ class Login extends React.Component<DialogScreens, State> {
                   type={"password"}
                   style={{ width: "100%" }}
                 />
-              </Grid>
+              </Box>
               {this.state.loginError && (
                 <div
                   className="alert alert-danger d-flex align-items-center"

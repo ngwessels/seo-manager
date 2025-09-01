@@ -11,10 +11,10 @@ declare class Screens extends React.Component<Options, State> {
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Screens, {
-    onClose?: any;
     ref?: React.Ref<Screens> | undefined;
     key?: React.Key | null | undefined;
     data?: any;
+    onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
     isNewPage?: boolean | undefined;

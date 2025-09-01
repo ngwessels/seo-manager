@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "2.0.0-rc.31",
+  "version": "2.0.0-rc.34",
   "description": "",
   "main": "dist/index.es.js",
   "type": "module",
@@ -18,9 +18,17 @@
       "import": "./dist/robotshelper/index.es.js",
       "require": "./dist/robotshelper/index.cjs"
     },
+    "./robotsbasichelper": {
+      "import": "./dist/robotsbasichelper/index.es.js",
+      "require": "./dist/robotsbasichelper/index.cjs"
+    },
     "./sitemapshelper": {
       "import": "./dist/sitemapshelper/index.es.js",
       "require": "./dist/sitemapshelper/index.cjs"
+    },
+    "./sitemapbasichelper": {
+      "import": "./dist/sitemapbasichelper/index.es.js",
+      "require": "./dist/sitemapbasichelper/index.cjs"
     },
     "./seohelper": {
       "import": "./dist/seohelper/default.js",
@@ -60,16 +68,15 @@
     "typescript": "^4.0.2"
   },
   "peerDependencies": {
-    "firebase": ">=9.5.0",
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
-  },
-  "dependencies": {
     "@emotion/react": ">=11.8.0",
     "@emotion/styled": ">=11.8.0",
     "@mui/icons-material": ">=6.4.4",
-    "@mui/lab": "^6.0.0-beta.27",
     "@mui/material": ">=6.4.4",
+    "firebase": ">=9.5.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.8.1",
     "encoding": "^0.1.13",
@@ -77,10 +84,6 @@
     "prop-types": "^15.8.1",
     "react-draggable": "^4.4.5",
     "react-icons": "^4.7.1"
-  },
-  "resolutions": {
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
   },
   "scripts": {
     "build": "rollup -c --watch",

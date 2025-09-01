@@ -9,9 +9,10 @@ import {
   DialogActions,
   IconButton,
   TextField,
-  Grid
+  Grid,
+  Box
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { CircularProgress } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 //Firebase
@@ -83,9 +84,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
           </DialogTitle>
 
           <DialogContent>
-            <Grid
-              item
-              xs={12}
+            <Box
               display={"flex"}
               flexDirection={"row"}
               flexWrap={"wrap"}
@@ -108,7 +107,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                 </Grid>
               )}
               <Grid className={"file-details-section"} mt={2}>
-                <Grid item mb={1}>
+                <Grid mb={1}>
                   <TextField
                     id="fileId"
                     label="File Id"
@@ -119,7 +118,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                     disabled={true}
                   />
                 </Grid>
-                <Grid item mb={1}>
+                <Grid mb={1}>
                   <TextField
                     id="fileName"
                     label="File Name"
@@ -130,7 +129,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                     disabled={true}
                   />
                 </Grid>
-                <Grid item mb={1}>
+                <Grid mb={1}>
                   <TextField
                     id="contentType"
                     label="Content Type"
@@ -141,7 +140,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                     disabled={true}
                   />
                 </Grid>
-                <Grid item mb={1}>
+                <Grid mb={1}>
                   <TextField
                     id="fileSize"
                     label="File Size"
@@ -152,7 +151,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                     disabled={true}
                   />
                 </Grid>
-                <Grid item mb={1}>
+                <Grid mb={1}>
                   <TextField
                     id="url"
                     label="File Url"
@@ -165,7 +164,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                 </Grid>
                 {this.props.file.dimensions && (
                   <>
-                    <Grid item mb={1}>
+                    <Grid mb={1}>
                       <TextField
                         id="fileWidth"
                         label="Image Width"
@@ -176,7 +175,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                         disabled={true}
                       />
                     </Grid>
-                    <Grid item mb={1}>
+                    <Grid mb={1}>
                       <TextField
                         id="fileHeight"
                         label="Image Height"
@@ -190,7 +189,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                   </>
                 )}
                 {this.props.file.timeStamp && (
-                  <Grid item mb={1}>
+                  <Grid mb={1}>
                     <TextField
                       id="date"
                       label="File Uploaded on"
@@ -203,7 +202,7 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                   </Grid>
                 )}
               </Grid>
-            </Grid>
+            </Box>
           </DialogContent>
           <DialogActions>
             <div
@@ -232,14 +231,15 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
                   Close
                 </Button>
 
-                <LoadingButton
+                <Button
                   variant="text"
                   onClick={this.deleteFile}
                   type="button"
-                  loading={this.state.deleteLoading}
+                  disabled={this.state.deleteLoading}
+                  startIcon={this.state.deleteLoading ? <CircularProgress size={16} /> : null}
                 >
                   Delete
-                </LoadingButton>
+                </Button>
               </div>
             </div>
           </DialogActions>

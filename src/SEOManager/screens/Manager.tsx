@@ -32,7 +32,7 @@ import {
   Tab
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { CircularProgress } from "@mui/material";
 
 //Server Call
 import { serverCall } from "src/utilities/serverCall";
@@ -258,7 +258,7 @@ class Manager extends React.Component<ManagerOptions, State> {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-          <Grid item xs={12}>
+          <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
                 value={this.state.tabIndex}
@@ -285,12 +285,12 @@ class Manager extends React.Component<ManagerOptions, State> {
                 />
               </Tabs>
             </Box>
-          </Grid>
-          <Grid item xs={12} mt={2} display={"flex"} justifyContent={"center"}>
+          </Box>
+          <Box mt={2} display={"flex"} justifyContent={"center"}>
             <OpenDashboard />
-          </Grid>
+          </Box>
           <TabPanel value={this.state.tabIndex} index={0}>
-            <Grid item xs={12}>
+            <Box sx={{ width: '100%' }}>
               <div className="form-floating mb-3">
                 <PhotosViewer
                   files={
@@ -306,8 +306,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   accept={"image/png, image/jpeg, image/jpg, image/webp"}
                 />
               </div>
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <TextField
                 id="page-path"
                 label="Page Path"
@@ -323,8 +323,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   this.onPageChange(string, "path");
                 }}
               />
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <TextField
                 id="title"
                 label="Title"
@@ -339,8 +339,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   this.props?.seoData?.manager?.page?.title?.length || 0
                 } of 60 (recommended)`}
               />
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <TextField
                 id="description"
                 label="Description"
@@ -356,9 +356,9 @@ class Manager extends React.Component<ManagerOptions, State> {
                   this.props?.seoData?.manager?.page?.description?.length || 0
                 } of 160 (recommended)`}
               />
-            </Grid>
+            </Box>
 
-            <Grid item mb={1}>
+            <Box mb={1}>
               <Autocomplete
                 multiple
                 id="tags-keywords"
@@ -386,8 +386,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   />
                 )}
               />
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <FormControl variant="standard" sx={{ minWidth: "100%" }}>
                 <InputLabel id="follow">
                   Should search engines follow the page?
@@ -407,9 +407,9 @@ class Manager extends React.Component<ManagerOptions, State> {
                   <MenuItem value={"nofollow"}>No Follow</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Box>
 
-            <Grid item mb={1}>
+            <Box mb={1}>
               <FormControl variant="standard" sx={{ minWidth: "100%" }}>
                 <InputLabel id="index">
                   Should search engines index the page?
@@ -428,9 +428,9 @@ class Manager extends React.Component<ManagerOptions, State> {
                   <MenuItem value={"noindex"}>No Index</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Box>
 
-            <Grid item mb={1}>
+            <Box mb={1}>
               <FormControl variant="standard" sx={{ minWidth: "100%" }}>
                 <InputLabel id="changeFreq">
                   How often will the content change?
@@ -453,9 +453,9 @@ class Manager extends React.Component<ManagerOptions, State> {
                   <MenuItem value="never">Never</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Box>
 
-            <Grid item mb={1}>
+            <Box mb={1}>
               <FormControl variant="standard" sx={{ minWidth: "100%" }}>
                 <InputLabel id="priority">Page Prority (10 Highest)</InputLabel>
                 <Select
@@ -480,9 +480,9 @@ class Manager extends React.Component<ManagerOptions, State> {
                   <MenuItem value={1.0}>10</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Box>
 
-            <Grid item mb={1}>
+            <Box mb={1}>
               <TextField
                 id="ldJson"
                 label="Structured Data"
@@ -495,7 +495,7 @@ class Manager extends React.Component<ManagerOptions, State> {
                 style={{ width: "100%" }}
                 multiline
               />
-            </Grid>
+            </Box>
             {/* <Events
                   events={this.props?.seoData?.manager?.page?.events}
                   data={this.props?.seoData?.manager?.page || []}
@@ -503,7 +503,7 @@ class Manager extends React.Component<ManagerOptions, State> {
                 /> */}
           </TabPanel>
           <TabPanel value={this.state.tabIndex} index={1}>
-            <Grid item mb={1}>
+            <Box mb={1}>
               <TextField
                 id="default-title"
                 label="Default Title"
@@ -519,8 +519,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   this.props?.seoData?.manager?.global?.defaultTitle.length || 0
                 } of 60 (recommended)`}
               />
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <TextField
                 id="default-description"
                 label="Default Description"
@@ -537,8 +537,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                     .length || 0
                 } of 160 (recommended)`}
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+            <Box sx={{ width: '100%' }}>
               <div className="form-floating mb-3">
                 <PhotosViewer
                   files={
@@ -554,8 +554,8 @@ class Manager extends React.Component<ManagerOptions, State> {
                   accept={"image/png, image/jpeg, image/jpg, image/webp"}
                 />
               </div>
-            </Grid>
-            <Grid item mb={1}>
+            </Box>
+            <Box mb={1}>
               <TextField
                 id="navbar-color"
                 label="Pick a Navigation Theme Color"
@@ -569,15 +569,14 @@ class Manager extends React.Component<ManagerOptions, State> {
                   this.onGlobalChange(e.target.value, "themeColor");
                 }}
               />
-            </Grid>
+            </Box>
           </TabPanel>
           {/* <TabPanel value={this.state.tabIndex} index={2}>
                 Forms
               </TabPanel> */}
           <TabPanel value={this.state.tabIndex} index={2}>
             <Grid container>
-              <Grid
-                item
+              <Box
                 mb={1}
                 style={{
                   width: "100%",
@@ -595,7 +594,7 @@ class Manager extends React.Component<ManagerOptions, State> {
                 >
                   Sign Out
                 </Button>
-              </Grid>
+              </Box>
             </Grid>
           </TabPanel>
         </DialogContent>
@@ -620,15 +619,16 @@ class Manager extends React.Component<ManagerOptions, State> {
                 Close
               </Button>
 
-              <LoadingButton
+              <Button
                 variant="text"
                 onClick={this.saveData}
                 type="button"
-                loading={this.state.saving}
+                disabled={this.state.saving}
                 className="nextjs-seo-manager__button"
+                startIcon={this.state.saving ? <CircularProgress size={16} /> : null}
               >
                 Save
-              </LoadingButton>
+              </Button>
             </div>
           </div>
         </DialogActions>
