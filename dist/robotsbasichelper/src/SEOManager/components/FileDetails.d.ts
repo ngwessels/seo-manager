@@ -8,6 +8,7 @@ declare class FileDetails extends React.Component<FileDetailsInterface, State> {
     constructor(props: FileDetailsInterface);
     componentDidMount: () => void;
     deleteFile: () => Promise<void>;
+    renderDetailRow: (label: string, value: string) => React.JSX.Element;
     render(): React.JSX.Element;
 }
 export default FileDetails;

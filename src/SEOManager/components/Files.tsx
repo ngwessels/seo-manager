@@ -13,10 +13,12 @@ import {
   IconButton,
   Typography,
   CircularProgress,
-  Box
+  Box,
+  Chip
 } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import CloseIcon from "@mui/icons-material/Close";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
 //Firebase
 import firebase from "src/firebase";
@@ -66,14 +68,10 @@ class Files extends React.Component<FilesOptions, State> {
       selectedArray: multiple === true && selected ? [...selected] : [],
       fileError: "",
       uploadProgress: {}
-      // plan: {}
     };
   }
 
-  componentDidMount = () => {
-    // const plan = returnProjectPlan();
-    // this.setState({ plan });
-  };
+  componentDidMount = () => {};
 
   componentDidUpdate = (prevProps: FilesOptions) => {
     if (this.props.open === true && prevProps.open === false) {
@@ -184,8 +182,6 @@ class Files extends React.Component<FilesOptions, State> {
     } else if (files.error) {
       this.setState({ fileError: files.error });
     }
-    // const plan = returnProjectPlan();
-    // this.setState({ plan });
   };
 
   uploadNewFile = (newFiles: any) => {
@@ -304,8 +300,16 @@ class Files extends React.Component<FilesOptions, State> {
         this.props.onChangeComplete({ url: "", fileId: "" });
       }
     }
-    // const plan = returnProjectPlan();
-    // this.setState({ plan });
+  };
+
+  formatStorageDisplay = () => {
+    const plan = this.props?.seoData?.plan;
+    if (!plan?.usageReport?.storage_used || !plan?.mb || !plan?.limitations?.storage_used) {
+      return null;
+    }
+    const used = (plan.usageReport.storage_used / plan.mb).toFixed(1);
+    const total = (plan.limitations.storage_used / plan.mb).toFixed(1);
+    return `${used} / ${total} MB`;
   };
 
   render() {
@@ -317,6 +321,8 @@ class Files extends React.Component<FilesOptions, State> {
       progress = item;
     });
     const totalProgress = (progress / total) * 100;
+    const storageDisplay = this.formatStorageDisplay();
+
     return (
       <React.Fragment>
         <BootstrapDialog
@@ -325,210 +331,229 @@ class Files extends React.Component<FilesOptions, State> {
           open={this.props.open}
           maxWidth={false}
         >
-          <DialogTitle
-            sx={{ m: 0, p: 2 }}
-            className={"nextjs-seo-manager__title"}
-          >
+          <DialogTitle sx={{ m: 0, p: 2 }}>
             File Manager
             <IconButton
               aria-label="close"
               onClick={this.props.onClose}
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500]
+                right: 12,
+                top: 10,
+                color: "#94a3b8",
+                "&:hover": { color: "#f8fafc", backgroundColor: "rgba(255,255,255,0.1)" }
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </DialogTitle>
 
           <DialogContent>
             {this.state.loading && (
-              <div
-                style={{
+              <Box
+                sx={{
                   width: "100%",
-                  height: 400,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <CircularProgress />
-              </div>
-            )}
-            {this.state.loading === false && this.state?.files?.length > 0 && (
-              <div
-                style={{
+                  height: 350,
                   display: "flex",
                   flexDirection: "column",
-                  minHeight: 150
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 2
                 }}
               >
-                <div style={{}} className={"top"}>
-                  {this.props.accept && (
-                    <Box mb={2}>
-                      <Typography
-                        textAlign={"center"}
-                        className={"nextjs-seo-manager__p"}
-                      >
-                        Only accepting {this.props.accept}
-                      </Typography>
-                    </Box>
-                  )}
-                </div>
-                <div className={"fileViewer"}>
-                  {this.state.files.map((item: any, idx: any) => {
-                    let isClicked = false;
-                    if (this.props.multiple === true) {
-                      const found = this.state.selectedArray.find((a: any) => {
-                        if (a.fileId === item.fileId) {
-                          return true;
-                        }
-                        return false;
-                      });
-                      if (found) {
-                        isClicked = true;
-                      }
-                    } else if (this.state.selected.fileId === item.fileId) {
-                      isClicked = true;
-                    }
-                    return (
-                      <File
-                        isClicked={isClicked}
-                        key={`Photo-${idx}`}
-                        onClick={() => this.imageClicked(item)}
-                        item={item}
-                        idx={idx}
-                        onDelete={this.fileDeleted}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
+                <CircularProgress size={36} sx={{ color: "#1e293b" }} />
+                <Typography sx={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                  Loading files...
+                </Typography>
+              </Box>
             )}
-            {this.state.loading === false &&
-              this.state?.files?.length === 0 && (
-                <div
-                  style={{
-                    width: "100%",
-                    height: 400,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <Typography>Add your first files</Typography>
-                </div>
-              )}
-          </DialogContent>
-          <DialogActions>
-            <div
-              className="modal-footer"
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
-              {this.state.loading === false && (
-                <div
-                  className="file-upload carousel-frame-design"
-                  style={{ width: "100%", height: 140, marginBottom: 10 }}
-                >
-                  <input
-                    className="file-input"
-                    type="file"
-                    onChange={this.addFile}
-                    multiple={true}
-                    style={{ zIndex: 2 }}
-                  />
-                  <iframe
-                    src="https://embed.lottiefiles.com/animation/27938"
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      zIndex: 0,
-                      position: "absolute"
-                    }}
-                  />
+
+            {this.state.loading === false && (
+              <>
+                {/* Upload Zone */}
+                <Box sx={{ mb: 2 }}>
                   <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "flex-end",
-                      paddingBottom: 5
-                    }}
+                    className="file-upload seo-upload-zone"
                   >
-                    <Typography component={"p"} style={{ opacity: 0.5 }}>
-                      <i>Click or Drag-n-Drop</i>
+                    <input
+                      className="file-input"
+                      type="file"
+                      onChange={this.addFile}
+                      multiple={true}
+                      style={{ zIndex: 2, position: "absolute", top: 0, left: 0, width: "100%", height: "100%", opacity: 0, cursor: "pointer" }}
+                    />
+                    <CloudUploadOutlinedIcon sx={{ fontSize: 40, color: "#94a3b8" }} />
+                    <Typography sx={{ color: "#64748b", fontSize: "0.9rem", fontWeight: 500 }}>
+                      Click or drag files to upload
+                    </Typography>
+                    <Typography sx={{ color: "#94a3b8", fontSize: "0.75rem" }}>
+                      PNG, JPG, JPEG up to 10MB
                     </Typography>
                   </div>
-                </div>
-              )}
-              {totalProgress < 100 && (
-                <Box sx={{ width: "100%" }}>
-                  <LinearProgress variant="determinate" value={totalProgress} />
                 </Box>
-              )}
 
-              {this.state.fileError && (
-                <div
-                  className="alert alert-danger d-flex align-items-center mb-3"
-                  role="alert"
-                  style={{ width: "100%" }}
-                >
-                  <Typography>{this.state.fileError}</Typography>
-                </div>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "100%"
+                {totalProgress > 0 && totalProgress < 100 && (
+                  <Box sx={{ width: "100%", mb: 2 }}>
+                    <LinearProgress
+                      variant="determinate"
+                      value={totalProgress}
+                      sx={{
+                        height: 6,
+                        borderRadius: 3,
+                        backgroundColor: "#e2e8f0",
+                        "& .MuiLinearProgress-bar": {
+                          borderRadius: 3,
+                          backgroundColor: "#1e293b"
+                        }
+                      }}
+                    />
+                  </Box>
+                )}
+
+                {this.state.fileError && (
+                  <Box
+                    sx={{
+                      mb: 2,
+                      p: 1.5,
+                      backgroundColor: "#fef2f2",
+                      border: "1px solid #fecaca",
+                      borderRadius: "8px"
+                    }}
+                  >
+                    <Typography sx={{ color: "#dc2626", fontSize: "0.85rem" }}>
+                      {this.state.fileError}
+                    </Typography>
+                  </Box>
+                )}
+
+                {this.props.accept && (
+                  <Box sx={{ mb: 2 }}>
+                    <Chip
+                      label={`Accepted: ${this.props.accept}`}
+                      size="small"
+                      sx={{
+                        backgroundColor: "#f1f5f9",
+                        color: "#475569",
+                        fontSize: "0.75rem",
+                        fontWeight: 500,
+                        borderRadius: "6px"
+                      }}
+                    />
+                  </Box>
+                )}
+
+                {/* File Grid */}
+                {this.state?.files?.length > 0 && (
+                  <div className={"fileViewer"}>
+                    {this.state.files.map((item: any, idx: any) => {
+                      let isClicked = false;
+                      if (this.props.multiple === true) {
+                        const found = this.state.selectedArray.find((a: any) => {
+                          if (a.fileId === item.fileId) {
+                            return true;
+                          }
+                          return false;
+                        });
+                        if (found) {
+                          isClicked = true;
+                        }
+                      } else if (this.state.selected.fileId === item.fileId) {
+                        isClicked = true;
+                      }
+                      return (
+                        <File
+                          isClicked={isClicked}
+                          key={`Photo-${idx}`}
+                          onClick={() => this.imageClicked(item)}
+                          item={item}
+                          idx={idx}
+                          onDelete={this.fileDeleted}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+
+                {this.state?.files?.length === 0 && (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      py: 6,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 1
+                    }}
+                  >
+                    <Typography sx={{ color: "#94a3b8", fontSize: "0.9rem" }}>
+                      No files yet
+                    </Typography>
+                    <Typography sx={{ color: "#cbd5e1", fontSize: "0.8rem" }}>
+                      Upload your first file using the area above
+                    </Typography>
+                  </Box>
+                )}
+              </>
+            )}
+          </DialogContent>
+
+          <DialogActions>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%"
+              }}
+            >
+              <Button
+                variant="text"
+                id={"close-seo-manager"}
+                onClick={this.props.onClose}
+                type="button"
+                sx={{
+                  color: "#64748b",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  "&:hover": { backgroundColor: "#f1f5f9" }
                 }}
               >
-                <Button
-                  variant="text"
-                  id={"close-seo-manager"}
-                  onClick={this.props.onClose}
-                  type="button"
-                  className="nextjs-seo-manager__button"
-                >
-                  Close
-                </Button>
-                <Typography
-                  align={"center"}
-                  className={"nextjs-seo-manager__p "}
-                >
-                  {(
-                    this.props?.seoData?.plan?.usageReport?.storage_used /
-                    this.props?.seoData?.plan?.mb
-                  ).toFixed(2)}
-                  MB/
-                  {(
-                    this.props?.seoData?.plan?.limitations?.storage_used /
-                    this.props?.seoData?.plan?.mb
-                  ).toFixed(2)}
-                  MB
-                </Typography>
-                <Button
-                  variant="text"
-                  onClick={this.save}
-                  type="button"
-                  disabled={false}
-                  className="nextjs-seo-manager__button"
-                  startIcon={false ? <CircularProgress size={16} /> : null}
-                >
-                  Save
-                </Button>
-              </div>
-            </div>
+                Close
+              </Button>
+
+              {storageDisplay && (
+                <Chip
+                  label={storageDisplay}
+                  size="small"
+                  sx={{
+                    backgroundColor: "#f1f5f9",
+                    color: "#475569",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    borderRadius: "6px",
+                    letterSpacing: "0.02em"
+                  }}
+                />
+              )}
+
+              <Button
+                variant="contained"
+                onClick={this.save}
+                type="button"
+                disabled={false}
+                sx={{
+                  backgroundColor: "#1e293b",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  px: 4,
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.12)",
+                  "&:hover": { backgroundColor: "#334155" }
+                }}
+              >
+                Save
+              </Button>
+            </Box>
           </DialogActions>
         </BootstrapDialog>
       </React.Fragment>

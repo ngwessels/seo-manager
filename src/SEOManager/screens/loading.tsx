@@ -5,7 +5,9 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  CircularProgress
+  CircularProgress,
+  Typography,
+  Box
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { BootstrapDialog } from "./BootstrapDialog";
@@ -44,36 +46,39 @@ class Loading extends React.Component<DialogScreens, State> {
           maxWidth={false}
           style={{ zIndex: 100 }}
         >
-          <DialogTitle
-            sx={{ m: 0, p: 2 }}
-            className={"nextjs-seo-manager__title"}
-          >
-            Loading ...
+          <DialogTitle sx={{ m: 0, p: 2 }}>
+            SEO Manager
             <IconButton
               aria-label="close"
               onClick={this.props.onClose}
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500]
+                right: 12,
+                top: 10,
+                color: "#94a3b8",
+                "&:hover": { color: "#f8fafc", backgroundColor: "rgba(255,255,255,0.1)" }
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </DialogTitle>
-          <DialogContent dividers>
-            <div
-              style={{
+          <DialogContent dividers sx={{ borderColor: "#e2e8f0" }}>
+            <Box
+              sx={{
                 width: "100%",
-                height: 400,
+                height: 300,
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                gap: 2.5
               }}
             >
-              <CircularProgress />
-            </div>
+              <CircularProgress size={36} sx={{ color: "#1e293b" }} />
+              <Typography sx={{ color: "#64748b", fontSize: "0.9rem" }}>
+                Loading your SEO data...
+              </Typography>
+            </Box>
           </DialogContent>
         </BootstrapDialog>
       </>

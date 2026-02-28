@@ -12,6 +12,10 @@ interface State {
     isNewPage: boolean;
     data?: any;
     isMobile: boolean;
+    aiEnabled: boolean;
+    aiAutonomousAll: boolean;
+    aiPageAutonomous: boolean;
+    aiSaving: boolean;
 }
 declare class Manager extends React.Component<ManagerOptions, State> {
     constructor(props: ManagerOptions);
@@ -21,6 +25,10 @@ declare class Manager extends React.Component<ManagerOptions, State> {
     addPerformAction: (e: any, type: any) => void;
     saveData: () => void;
     authSignOut: () => Promise<void>;
+    updatePageAiInRedux: (ai: any) => void;
+    updateGlobalAiInRedux: (ai: any) => void;
+    toggleProjectAI: (field: "aiEnabled" | "aiAutonomousAll", value: boolean) => Promise<void>;
+    togglePageAutonomous: (value: boolean) => Promise<void>;
     render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Manager, {

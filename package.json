@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "2.0.0-rc.34",
+  "version": "3.0.0-rc.1",
   "description": "",
   "main": "dist/index.es.js",
   "type": "module",
@@ -73,8 +73,14 @@
     "@mui/icons-material": ">=6.4.4",
     "@mui/material": ">=6.4.4",
     "firebase": ">=9.5.0",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/react": { "optional": true },
+    "@emotion/styled": { "optional": true },
+    "@mui/icons-material": { "optional": true },
+    "@mui/material": { "optional": true }
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",

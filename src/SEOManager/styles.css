@@ -1,14 +1,15 @@
-/* Photos */
+/* ===== File Upload ===== */
 
 .file-upload .file-input {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 140px;
+  height: 100%;
   opacity: 0;
   outline: none;
   cursor: pointer;
+  z-index: 2;
 }
 
 .file-upload .overlay {
@@ -31,80 +32,29 @@
   }
 }
 
-.delete-btn-container {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0px;
-}
-
-.delete-btn {
-  background: #2d3039;
-  margin: 20px auto;
-  width: 200px;
-  height: 50px;
-  overflow: hidden;
-  text-align: center;
-  transition: 0.4s;
-  cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-  z-index: 20;
-}
-
-.delete-btnText {
-  color: white;
-  transition: 0.3s;
-}
-.delete-btn:hover .delete-hoverBtn {
-  left: 0px;
-}
-.delete-btn:hover a {
-  margin-left: 65px;
-}
-.delete-hoverBtn {
-  position: relative;
-  width: 200px;
-  height: 100px;
-  margin-top: -100px;
-  padding-top: 2px;
-  background: #ed5565;
-  left: -250px;
-  transition: 0.3s;
-}
-.delete-hoverText {
-  margin-top: 55px;
-  margin-right: 0px;
-  text-align: center;
-  color: #fafafa;
-}
-.delete-hoverBtn:active {
-  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.3);
-  background-color: #da4453;
-}
+/* ===== File Viewer Grid ===== */
 
 .fileViewer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  max-height: 500;
-  padding-top: 20;
-  padding-bottom: 20;
-  border-top: #e3e3e3 solid 1px;
-  border-bottom: #e3e3e3 solid 1px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 16px 0;
 }
 
 .image-container {
-  width: 150px;
-  height: 150px;
-  margin: 10px;
-  border-radius: 2;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.image-container:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .file-details-section {
@@ -113,25 +63,18 @@
 
 @media only screen and (max-width: 600px) {
   .fileViewer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    max-height: 500;
-    padding-top: 20;
-    padding-bottom: 20;
-    border-top: 1px solid #e3e3e3;
-    border-bottom: 1px solid #e3e3e3;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
   }
   .image-container {
-    width: 120px;
-    height: 120px;
+    min-height: 100px;
   }
   .file-details-section {
     width: 100%;
   }
 }
+
+/* ===== Image Carousel / Upload Zone ===== */
 
 .carousel-frame-design {
   display: flex;
@@ -139,20 +82,19 @@
   align-items: center;
   position: relative;
   width: 100%;
-  height: min(calc(90vh - 10px), 350px);
+  height: min(calc(90vh - 10px), 300px);
   overflow: hidden;
-  background-color: white;
+  background-color: #ffffff;
   cursor: pointer;
-  box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0.1);
-  -webkit-box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0.1);
-  -moz-box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0.1);
-  transition: box-shadow 0.3s ease-in-out;
-  border: 1px #22211f dashed;
+  border-radius: 10px;
+  border: 2px dashed #cbd5e1;
+  transition: all 0.25s ease;
 }
+
 .carousel-frame-design:hover {
-  box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0.3);
-  -webkit-box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0.3);
-  -moz-box-shadow: 1px 2px 13px 1px rgba(34, 33, 31, 0);
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .carousel-frame-design .carousel-slide {
@@ -169,28 +111,39 @@
   height: auto;
   max-width: 100%;
   max-height: 100%;
+  border-radius: 6px;
 }
 
-.carousel-prev {
-  position: absolute;
-  top: 50%;
-  left: 30px;
-  margin-top: -15px;
-  z-index: 10;
-  font-size: 30px;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-}
-
+.carousel-prev,
 .carousel-next {
   position: absolute;
   top: 50%;
-  right: 30px;
-  margin-top: -15px;
+  margin-top: -18px;
   z-index: 10;
-  font-size: 30px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  color: #ffffff;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.carousel-prev {
+  left: 12px;
+}
+
+.carousel-next {
+  right: 12px;
 }
 
 .carousel-addPhotos {
@@ -211,28 +164,92 @@
   right: 0;
   bottom: 5%;
   margin: 0 auto;
+  padding: 0;
   width: max(100px, 15%);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 6px;
 }
 
 .carousel-dots li {
   width: 8px;
   height: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s ease;
 }
 
 .carousel-dots .active-dot {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
+/* ===== Upload Drop Zone ===== */
+
+.seo-upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 160px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  gap: 8px;
+}
+
+.seo-upload-zone:hover {
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+}
+
+/* ===== Typography ===== */
+
+.nextjs-seo-manager__title {
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.nextjs-seo-manager__p {
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.nextjs-seo-manager__button {
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.nextjs-seo-manager__label {
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.nextjs-seo-manager__input {
+  font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* ===== Events ===== */
+
 .event-box {
-  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.27);
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.27);
-  transition: box-shadow 0.4s ease-in;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
   width: 48%;
   height: 50px;
@@ -240,41 +257,64 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
 }
 
 .event-box:hover {
-  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.55);
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
-/* Basic Styles for entire component */
+/* ===== Delete Button ===== */
 
-.nextjs-seo-manager__title {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 20px;
+.delete-btn-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
 }
 
-.nextjs-seo-manager__p {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
+.delete-btn {
+  background: #dc2626;
+  margin: 20px auto;
+  width: 200px;
+  height: 44px;
+  overflow: hidden;
+  text-align: center;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+  z-index: 20;
 }
 
-.nextjs-seo-manager__button {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  text-transform: uppercase;
+.delete-btn:hover {
+  background: #b91c1c;
 }
 
-.nextjs-seo-manager__label {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 10rem;
+.delete-btnText {
+  color: white;
+  transition: 0.3s;
 }
 
-.nextjs-seo-manager__input {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
+.delete-hoverBtn {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  margin-top: -100px;
+  padding-top: 2px;
+  background: #ef4444;
+  left: -250px;
+  transition: 0.3s;
+}
+
+.delete-hoverText {
+  margin-top: 55px;
+  margin-right: 0px;
+  text-align: center;
+  color: #fafafa;
 }

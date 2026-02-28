@@ -8,8 +8,7 @@ import {
   DialogContent,
   DialogActions,
   IconButton,
-  TextField,
-  Grid,
+  Typography,
   Box
 } from "@mui/material";
 import { CircularProgress } from "@mui/material";
@@ -58,6 +57,17 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
     this.setState({ deleteLoading: false });
   };
 
+  renderDetailRow = (label: string, value: string) => (
+    <Box sx={{ mb: 2 }}>
+      <Typography sx={{ fontSize: "0.7rem", color: "#94a3b8", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", mb: 0.3 }}>
+        {label}
+      </Typography>
+      <Typography sx={{ fontSize: "0.85rem", color: "#1e293b", wordBreak: "break-all", lineHeight: 1.5 }}>
+        {value}
+      </Typography>
+    </Box>
+  );
+
   render() {
     return (
       <React.Fragment>
@@ -74,174 +84,114 @@ class FileDetails extends React.Component<FileDetailsInterface, State> {
               onClick={this.props.onClose}
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500]
+                right: 12,
+                top: 10,
+                color: "#94a3b8",
+                "&:hover": { color: "#f8fafc", backgroundColor: "rgba(255,255,255,0.1)" }
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </DialogTitle>
 
           <DialogContent>
             <Box
-              display={"flex"}
-              flexDirection={"row"}
-              flexWrap={"wrap"}
-              justifyContent={"space-around"}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 3,
+                pt: 1
+              }}
             >
               {this.props.isImage && (
-                <Grid className={"file-details-section"} mt={2}>
+                <Box
+                  sx={{
+                    flex: "0 0 45%",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    backgroundColor: "#f8fafc",
+                    borderRadius: "10px",
+                    border: "1px solid #e2e8f0",
+                    overflow: "hidden",
+                    p: 2
+                  }}
+                >
                   <img
                     src={this.props.file.url}
                     width={this.props.file?.dimensions?.width || "100%"}
                     height={this.props.file?.dimensions?.height || "auto"}
                     style={{
                       width: "100%",
-                      height: "100%",
+                      height: "auto",
                       objectFit: "contain",
-                      cursor: "pointer",
-                      zIndex: 0
+                      borderRadius: 6
                     }}
                   />
-                </Grid>
+                </Box>
               )}
-              <Grid className={"file-details-section"} mt={2}>
-                <Grid mb={1}>
-                  <TextField
-                    id="fileId"
-                    label="File Id"
-                    variant="standard"
-                    placeholder=""
-                    value={this.props.file.fileId}
-                    style={{ width: "100%" }}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid mb={1}>
-                  <TextField
-                    id="fileName"
-                    label="File Name"
-                    variant="standard"
-                    placeholder=""
-                    value={this.props.file.fileName}
-                    style={{ width: "100%" }}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid mb={1}>
-                  <TextField
-                    id="contentType"
-                    label="Content Type"
-                    variant="standard"
-                    placeholder=""
-                    value={this.props.file.contentType}
-                    style={{ width: "100%" }}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid mb={1}>
-                  <TextField
-                    id="fileSize"
-                    label="File Size"
-                    variant="standard"
-                    placeholder=""
-                    value={`${this.props.file.size} bytes`}
-                    style={{ width: "100%" }}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid mb={1}>
-                  <TextField
-                    id="url"
-                    label="File Url"
-                    variant="standard"
-                    placeholder=""
-                    value={this.props.file.url}
-                    style={{ width: "100%" }}
-                    disabled={true}
-                  />
-                </Grid>
+              <Box sx={{ flex: 1 }}>
+                {this.renderDetailRow("File ID", this.props.file.fileId)}
+                {this.renderDetailRow("File Name", this.props.file.fileName)}
+                {this.renderDetailRow("Content Type", this.props.file.contentType)}
+                {this.renderDetailRow("File Size", `${this.props.file.size} bytes`)}
+                {this.renderDetailRow("URL", this.props.file.url)}
                 {this.props.file.dimensions && (
                   <>
-                    <Grid mb={1}>
-                      <TextField
-                        id="fileWidth"
-                        label="Image Width"
-                        variant="standard"
-                        placeholder=""
-                        value={`${this.props.file.dimensions.width}px`}
-                        style={{ width: "100%" }}
-                        disabled={true}
-                      />
-                    </Grid>
-                    <Grid mb={1}>
-                      <TextField
-                        id="fileHeight"
-                        label="Image Height"
-                        variant="standard"
-                        placeholder=""
-                        value={`${this.props.file.dimensions.height}px`}
-                        style={{ width: "100%" }}
-                        disabled={true}
-                      />
-                    </Grid>
+                    {this.renderDetailRow("Width", `${this.props.file.dimensions.width}px`)}
+                    {this.renderDetailRow("Height", `${this.props.file.dimensions.height}px`)}
                   </>
                 )}
                 {this.props.file.timeStamp && (
-                  <Grid mb={1}>
-                    <TextField
-                      id="date"
-                      label="File Uploaded on"
-                      variant="standard"
-                      placeholder=""
-                      value={new Date(this.props.file.timeStamp).toString()}
-                      style={{ width: "100%" }}
-                      disabled={true}
-                    />
-                  </Grid>
+                  this.renderDetailRow("Uploaded", new Date(this.props.file.timeStamp).toLocaleDateString(undefined, {
+                    year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"
+                  }))
                 )}
-              </Grid>
+              </Box>
             </Box>
           </DialogContent>
           <DialogActions>
-            <div
-              className="modal-footer"
-              style={{
-                width: "100%",
+            <Box
+              sx={{
                 display: "flex",
-                flexDirection: "column"
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%"
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "100%"
+              <Button
+                variant="text"
+                id={"close-seo-manager"}
+                onClick={this.props.onClose}
+                type="button"
+                sx={{
+                  color: "#64748b",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  "&:hover": { backgroundColor: "#f1f5f9" }
                 }}
               >
-                <Button
-                  variant="text"
-                  id={"close-seo-manager"}
-                  onClick={this.props.onClose}
-                  type="button"
-                >
-                  Close
-                </Button>
+                Close
+              </Button>
 
-                <Button
-                  variant="text"
-                  onClick={this.deleteFile}
-                  type="button"
-                  disabled={this.state.deleteLoading}
-                  startIcon={this.state.deleteLoading ? <CircularProgress size={16} /> : null}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
+              <Button
+                variant="outlined"
+                onClick={this.deleteFile}
+                type="button"
+                disabled={this.state.deleteLoading}
+                startIcon={this.state.deleteLoading ? <CircularProgress size={16} /> : null}
+                sx={{
+                  borderColor: "#fecaca",
+                  color: "#dc2626",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  borderRadius: "8px",
+                  "&:hover": { borderColor: "#dc2626", backgroundColor: "#fef2f2" }
+                }}
+              >
+                Delete File
+              </Button>
+            </Box>
           </DialogActions>
         </BootstrapDialog>
       </React.Fragment>

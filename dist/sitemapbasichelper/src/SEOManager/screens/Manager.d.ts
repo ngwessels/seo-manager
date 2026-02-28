@@ -12,6 +12,10 @@ interface State {
     isNewPage: boolean;
     data?: any;
     isMobile: boolean;
+    aiEnabled: boolean;
+    aiAutonomousAll: boolean;
+    aiPageAutonomous: boolean;
+    aiSaving: boolean;
 }
 declare class Manager extends React.Component<ManagerOptions, State> {
     constructor(props: ManagerOptions);
@@ -21,19 +25,23 @@ declare class Manager extends React.Component<ManagerOptions, State> {
     addPerformAction: (e: any, type: any) => void;
     saveData: () => void;
     authSignOut: () => Promise<void>;
+    updatePageAiInRedux: (ai: any) => void;
+    updateGlobalAiInRedux: (ai: any) => void;
+    toggleProjectAI: (field: "aiEnabled" | "aiAutonomousAll", value: boolean) => Promise<void>;
+    togglePageAutonomous: (value: boolean) => Promise<void>;
     render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Manager, {
-    ref?: React.Ref<Manager> | undefined;
-    key?: React.Key | null | undefined;
+    isNewPage?: boolean | undefined;
     data?: any;
     onClose?: any;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
-    isNewPage?: boolean | undefined;
-    onChangeComplete: any;
     isLoading: boolean;
     onIsLoading: any;
+    onChangeComplete: any;
+    ref?: React.Ref<Manager> | undefined;
+    key?: React.Key | null | undefined;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

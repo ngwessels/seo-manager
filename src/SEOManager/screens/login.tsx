@@ -8,10 +8,10 @@ import {
   DialogContent,
   IconButton,
   Typography,
-  // TextField,
   Box
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 
 //Firebase
@@ -109,92 +109,61 @@ class Login extends React.Component<DialogScreens, State> {
           maxWidth={false}
           style={{ zIndex: 100 }}
         >
-          <DialogTitle
-            sx={{ m: 0, p: 2 }}
-            className={"nextjs-seo-manager__title"}
-          >
+          <DialogTitle sx={{ m: 0, p: 2 }}>
             Login
             <IconButton
               aria-label="close"
-              // onClick={this.resetData}
               onClick={this.props.onClose}
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500]
+                right: 12,
+                top: 10,
+                color: "#94a3b8",
+                "&:hover": { color: "#f8fafc", backgroundColor: "rgba(255,255,255,0.1)" }
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            <Box mb={1}>
-              <Typography className={"nextjs-seo-manager__p"}>
-                Please login to your SEO Manager Account to continue. To Login
-                either scan the QR Code or Click the redirect link below.
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                py: 4,
+                gap: 2
+              }}
+            >
+              <Box
+                sx={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: "50%",
+                  backgroundColor: "#f1f5f9",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 1
+                }}
+              >
+                <LockOutlinedIcon sx={{ color: "#475569", fontSize: 28 }} />
+              </Box>
+              <Typography sx={{ color: "#1e293b", fontSize: "1rem", fontWeight: 600 }}>
+                Authentication Required
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#64748b",
+                  fontSize: "0.9rem",
+                  textAlign: "center",
+                  maxWidth: 400,
+                  lineHeight: 1.6
+                }}
+              >
+                Please login to your SEO Manager account to continue. Scan the QR Code or use the redirect link to authenticate.
               </Typography>
             </Box>
-
-            {/* <form onSubmit={this.signIn}>
-              
-              
-                <TextField
-                  id="email"
-                  label="Email address"
-                  variant="standard"
-                  placeholder="name@example.com"
-                  onChange={(e) => {
-                    this.setState({ email: e.target.value });
-                  }}
-                  required={true}
-                  style={{ width: "100%" }}
-                />
-              </Grid>
-              <Box mb={1}>
-                <TextField
-                  id="password"
-                  label="Password"
-                  variant="standard"
-                  onChange={(e) => {
-                    this.setState({ password: e.target.value });
-                  }}
-                  required={true}
-                  type={"password"}
-                  style={{ width: "100%" }}
-                />
-              </Box>
-              {this.state.loginError && (
-                <div
-                  className="alert alert-danger d-flex align-items-center"
-                  role="alert"
-                  style={{ marginTop: 15 }}
-                >
-                  <svg
-                    className="bi flex-shrink-0 me-2"
-                    width="24"
-                    height="24"
-                    role="img"
-                    aria-label="Danger:"
-                  >
-                    <use xlinkHref="#exclamation-triangle-fill" />
-                  </svg>
-                  <div>{this.state.loginError}</div>
-                </div>
-              )}
-              <div className="d-grid gap-2">
-                <LoadingButton
-                  loading={this.state.loading}
-                  variant="contained"
-                  type={"submit"}
-                  style={{ marginTop: 15 }}
-                  fullWidth
-                  className={"nextjs-seo-manager__button"}
-                >
-                  Login
-                </LoadingButton>
-              </div>
-            </form> */}
           </DialogContent>
         </BootstrapDialog>
       </>

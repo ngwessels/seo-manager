@@ -7,15 +7,18 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  Typography
+  Typography,
+  Button,
+  Box
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
 import { BootstrapDialog } from "./BootstrapDialog";
 
 //Firebase
 import firebase from "src/firebase";
-import { getAuth, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth(firebase);
 
 //Components
@@ -39,22 +42,7 @@ class NotAuthorized extends React.Component<DialogScreens, State> {
     };
   }
 
-  signIn = async (e: any) => {
-    //Sign in User
-    e.preventDefault();
-    this.setState({ loading: true });
-    signInWithEmailAndPassword(auth, this.state.email, this.state.password)
-      .then(() => {
-        this.setState({ loading: false });
-      })
-      .catch((error: any) => {
-        // const errorMessage = error.message;
-        this.setState({ loginError: error.code, loading: false });
-      });
-  };
-
   signOut = async () => {
-    //Signs out user
     await signOut(auth);
   };
 
@@ -68,33 +56,78 @@ class NotAuthorized extends React.Component<DialogScreens, State> {
           maxWidth={false}
           style={{ zIndex: 100 }}
         >
-          <DialogTitle
-            sx={{ m: 0, p: 2 }}
-            className={"nextjs-seo-manager__title"}
-          >
-            Not Authorized
+          <DialogTitle sx={{ m: 0, p: 2 }}>
+            Access Denied
             <IconButton
               aria-label="close"
               onClick={this.props.onClose}
               sx={{
                 position: "absolute",
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500]
+                right: 12,
+                top: 10,
+                color: "#94a3b8",
+                "&:hover": { color: "#f8fafc", backgroundColor: "rgba(255,255,255,0.1)" }
               }}
             >
-              <CloseIcon />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </DialogTitle>
 
           <DialogContent>
-            <Typography>
-              Unfortunately it appears you are not authorized to make changes to
-              this website! Is it possible your signed in on the wrong account?{" "}
-              <a onClick={this.signOut} style={{ cursor: "pointer" }}>
-                <strong>Click Here to Sign Out</strong>
-              </a>
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                py: 4,
+                gap: 2
+              }}
+            >
+              <Box
+                sx={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: "50%",
+                  backgroundColor: "#fef2f2",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 1
+                }}
+              >
+                <BlockOutlinedIcon sx={{ color: "#dc2626", fontSize: 28 }} />
+              </Box>
+              <Typography sx={{ color: "#1e293b", fontSize: "1rem", fontWeight: 600 }}>
+                Not Authorized
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#64748b",
+                  fontSize: "0.9rem",
+                  textAlign: "center",
+                  maxWidth: 400,
+                  lineHeight: 1.6
+                }}
+              >
+                You don't have permission to make changes to this website. If you're signed in on the wrong account, try signing out below.
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={this.signOut}
+                sx={{
+                  mt: 1,
+                  borderColor: "#e2e8f0",
+                  color: "#dc2626",
+                  textTransform: "none",
+                  fontWeight: 500,
+                  borderRadius: "8px",
+                  px: 4,
+                  "&:hover": { borderColor: "#dc2626", backgroundColor: "#fef2f2" }
+                }}
+              >
+                Sign Out
+              </Button>
+            </Box>
           </DialogContent>
         </BootstrapDialog>
       </>

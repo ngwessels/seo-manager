@@ -5,6 +5,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { Button } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { getUserToken } from "src/utilities/fetch";
 
 interface State {
@@ -69,16 +70,25 @@ class OpenDashboard extends React.Component<Props, State> {
       return null;
     }
     return (
-      <>
-        <Button
-          variant="text"
-          onClick={this.openWindow}
-          type="button"
-          className="nextjs-seo-manager__button"
-        >
-          Open Dashboard
-        </Button>
-      </>
+      <Button
+        variant="outlined"
+        onClick={this.openWindow}
+        type="button"
+        size="small"
+        endIcon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
+        sx={{
+          borderColor: "#e2e8f0",
+          color: "#475569",
+          textTransform: "none",
+          fontWeight: 500,
+          fontSize: "0.8rem",
+          borderRadius: "8px",
+          px: 2,
+          "&:hover": { borderColor: "#94a3b8", backgroundColor: "#f8fafc" }
+        }}
+      >
+        Open Dashboard
+      </Button>
     );
   }
 }

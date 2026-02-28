@@ -1,0 +1,1 @@
+import{a as r}from"./default-9918d477.js";import t from"react";import{f as e}from"./firebase-f83deced.js";import{getAnalytics as o}from"firebase/analytics";import"axios";import"firebase/app";class s extends t.Component{constructor(t){super(t),r(this,"componentDidMount",()=>{o(e)}),this.state={}}render(){return null}}export{s as default};

@@ -8,7 +8,6 @@ interface State {
 }
 declare class NotAuthorized extends React.Component<DialogScreens, State> {
     constructor(props: DialogScreens);
-    signIn: (e: any) => Promise<void>;
     signOut: () => Promise<void>;
     render(): React.JSX.Element;
 }

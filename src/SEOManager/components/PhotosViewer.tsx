@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Typography } from "@mui/material";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
 //Components
 import Files from "./Files";
@@ -19,7 +20,6 @@ interface State {
   files: any;
   openPhotoManager: boolean;
   autoAdvancedInterval: any;
-  // buttonListeners:
   started: boolean;
 }
 
@@ -36,7 +36,6 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
           : [],
       openPhotoManager: false,
       autoAdvancedInterval: null,
-      // buttonListeners: false,
       started: false
     };
   }
@@ -92,11 +91,6 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
           firstClone.className = "first-clone";
           lastClone.className = "last-clone";
 
-          // we need clones to make an infinite loop effect
-          // carouselSlide.append(firstClone);
-          // carouselSlide.prepend(lastClone);
-
-          // must reassign images to include the newly cloned images
           images = frame.querySelectorAll(".carousel-slide img");
 
           return images;
@@ -106,12 +100,9 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
           if (navDots.length) navDots[0].classList.add("active-dot");
         }
 
-        function initializeCarousel() {
-          // carouselSlide.style.transform = "translateX(-100%)";
-        }
+        function initializeCarousel() {}
 
         function slideForward() {
-          // first limit counter to prevent fast-change bugs
           if (imageCounter >= carouselImages.length - 1) return;
           carouselSlide.style.transition = "transform 400ms";
           imageCounter++;
@@ -121,7 +112,6 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
         }
 
         function slideBack() {
-          // first limit counter to prevent fast-change bugs
           if (imageCounter <= 0) return;
           carouselSlide.style.transition = "transform 400ms";
           imageCounter--;
@@ -129,7 +119,6 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
         }
 
         function makeLoop() {
-          // instantly move from clones to originals to produce 'infinite-loop' effect
           if (carouselImages[imageCounter].classList.contains("last-clone")) {
             carouselSlide.style.transition = "none";
             imageCounter = carouselImages.length - 2;
@@ -192,48 +181,12 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
           carouselSlide.addEventListener("transitionend", call);
         };
 
-        // const autoAdvance = () => {
-        //   if (this.state.autoAdvancedInterval) {
-        //     clearInterval(this.state.autoAdvancedInterval);
-        //   }
-        //   let play = setInterval(slideForward, 5000);
-        //   this.setState({ autoAdvancedInterval: play });
-
-        //   const mouseOver = () => {
-        //     clearInterval(play);
-        //   };
-
-        //   const mouseOut = () => {
-        //     play = setInterval(slideForward, 5000);
-        //   };
-
-        //   const visibilitychange = () => {
-        //     if (document.hidden) {
-        //       clearInterval(play); // pause when user leaves page
-        //     } else {
-        //       play = setInterval(slideForward, 5000); // resume when user returns to page
-        //     }
-        //   };
-
-        //   if (this.state.started === true) {
-        //     frame.addEventListener("mouseover", mouseOver);
-        //     frame.addEventListener("mouseout", mouseOut);
-        //     document.addEventListener("visibilitychange", visibilitychange);
-        //   }
-        //   frame.addEventListener("mouseover", mouseOver);
-
-        //   frame.addEventListener("mouseout", mouseOut);
-
-        //   document.addEventListener("visibilitychange", visibilitychange);
-        // };
-
         function buildCarousel() {
           initializeCarousel();
           initializeNavDots();
           addNavDotListeners();
           addBtnListeners();
           addTransitionListener();
-          // autoAdvance();
         }
         buildCarousel();
         this.setState({ started: true });
@@ -277,10 +230,10 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
             {this.state.files.length > 1 && (
               <>
                 <div className={"carousel-prev"}>
-                  <ArrowBackIcon />
+                  <ArrowBackIcon sx={{ fontSize: 20, color: "#ffffff" }} />
                 </div>
                 <div className={"carousel-next"}>
-                  <ArrowForwardIcon />
+                  <ArrowForwardIcon sx={{ fontSize: 20, color: "#ffffff" }} />
                 </div>
                 <ol className="carousel-dots">
                   {Object.keys(this.state.files || []).map((idx) => {
@@ -292,46 +245,32 @@ class PhotosViewer extends React.Component<PhotosViewerOptions, State> {
           </div>
         )}
         {this.state.files.length === 0 && (
-          <>
+          <div
+            className="carousel-frame-design"
+            style={{ height: 220, cursor: "pointer" }}
+            onClick={() => {
+              this.setState({ openPhotoManager: true });
+            }}
+          >
             <div
-              className="carousel-frame-design"
-              style={{ height: 300, cursor: "pointer" }}
-              onClick={() => {
-                this.setState({ openPhotoManager: true });
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                padding: 20
               }}
             >
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  paddingBottom: 20,
-                  position: "absolute",
-                  zIndex: 1
-                }}
-              >
-                <Typography component={"p"} style={{ opacity: 0.5 }}>
-                  <i>Click to Select or Upload File</i>
-                </Typography>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <iframe
-                  src="https://embed.lottiefiles.com/animation/27938"
-                  style={{ height: "100%", width: "100%" }}
-                />
-              </div>
+              <CloudUploadOutlinedIcon sx={{ fontSize: 36, color: "#94a3b8" }} />
+              <Typography sx={{ color: "#64748b", fontSize: "0.85rem", fontWeight: 500 }}>
+                Click to select or upload file
+              </Typography>
+              <Typography sx={{ color: "#cbd5e1", fontSize: "0.75rem" }}>
+                Supports PNG, JPG, JPEG, WebP
+              </Typography>
             </div>
-          </>
+          </div>
         )}
       </>
     );

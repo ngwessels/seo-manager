@@ -8,15 +8,14 @@ interface State {
 }
 declare class NotAuthorized extends React.Component<DialogScreens, State> {
     constructor(props: DialogScreens);
-    signIn: (e: any) => Promise<void>;
     signOut: () => Promise<void>;
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof NotAuthorized, {
+    onClose: any;
+    seoData?: any;
     ref?: React.Ref<NotAuthorized> | undefined;
     key?: React.Key | null | undefined;
-    seoData?: any;
-    onClose: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

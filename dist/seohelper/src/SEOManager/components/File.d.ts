@@ -11,13 +11,13 @@ declare class File extends React.Component<FileOptions, State> {
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof File, {
-    ref?: React.Ref<File> | undefined;
-    key: string;
     isClicked: any;
+    key: string;
     onClick: any;
     item: any;
     idx: number;
     onDelete: any;
+    ref?: React.Ref<File> | undefined;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

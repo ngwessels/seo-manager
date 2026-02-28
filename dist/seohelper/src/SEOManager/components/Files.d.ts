@@ -19,6 +19,7 @@ declare class Files extends React.Component<FilesOptions, State> {
     uploadNewFile: (newFiles: any) => Promise<unknown>;
     save: () => void;
     fileDeleted: (item: any, idx: any) => void;
+    formatStorageDisplay: () => string | null;
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Files, {
