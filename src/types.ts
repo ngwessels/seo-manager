@@ -76,3 +76,17 @@ export interface BackendValidationResponse {
 export interface FetchSEOHeaders {
   request?: { headers?: object };
 }
+
+export interface SEODefaults {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  canonical?: string;
+  path?: string;
+}
+
+export interface SEOMetadataOptions {
+  structuredData?: any;
+  robotsOverride?: { index: boolean; follow: boolean };
+}

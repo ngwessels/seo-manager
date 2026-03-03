@@ -283,5 +283,70 @@ export default [
       cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
       terser({ compress: true })
     ]
+  },
+  {
+    input: "./src/metadata/index.tsx",
+    output: [
+      {
+        dir: "dist/metadata",
+        format: "esm",
+        sourcemap: false
+      }
+    ],
+    plugins: [
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      json(),
+      commonjs(),
+      cleanup({ include: [".js", ".mjs", ".jsx", ".ts", ".tsx"] }),
+      babel({
+        exclude: "node_modules/**"
+      }),
+      terser({ compress: true })
+    ],
+    external: (id) => {
+      if (id === "react" || id === "react-dom") return true;
+      if (id.includes("AppSEOHelper")) return true;
+      return false;
+    }
+  },
+  {
+    input: "./src/metadata/AppSEOHelper.tsx",
+    output: [
+      {
+        file: "dist/metadata/AppSEOHelper.js",
+        format: "esm",
+        sourcemap: false,
+        banner: '"use client";'
+      }
+    ],
+    plugins: [
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production"),
+        preventAssignment: true
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        tsconfigDefaults: {
+          declaration: true,
+          declarationDir: "./dist"
+        }
+      }),
+      json(),
+      commonjs(),
+      babel({
+        exclude: "node_modules/**"
+      })
+    ],
+    external: ["react", "react-dom"]
   }
 ];

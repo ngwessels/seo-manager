@@ -6,18 +6,25 @@ interface State {
     userSetup: boolean;
     userAuthorized: boolean;
     userLoaded: boolean;
+    qrCode: string;
+    redirectUrl: string;
+    authLoading: boolean;
+    authError: string;
+    pollInterval: ReturnType<typeof setInterval> | null;
 }
 declare class Login extends React.Component<DialogScreens, State> {
     constructor(props: DialogScreens);
+    componentWillUnmount: () => void;
     componentDidMount: () => void;
     componentDidUpdate: (prevProps: any) => void;
     userLoginSetup: () => void;
+    startAuthPolling: () => void;
     render(): React.JSX.Element | null;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Login, {
-    onClose: any;
     ref?: React.Ref<Login> | undefined;
     key?: React.Key | null | undefined;
+    onClose: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

@@ -1,6 +1,6 @@
 {
   "name": "nextjs-seo-manager",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.7",
   "description": "",
   "main": "dist/index.es.js",
   "type": "module",
@@ -37,6 +37,10 @@
     "./seomanager": {
       "import": "./dist/seo-manager/index.js",
       "require": "./dist/seo-manager/index.js"
+    },
+    "./metadata": {
+      "import": "./dist/metadata/index.js",
+      "require": "./dist/metadata/index.js"
     }
   },
   "devDependencies": {

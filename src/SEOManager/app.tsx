@@ -4,7 +4,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 //Components
-const Analytics = React.lazy(() => import("./firebase-services/analytics")); //Sets Analytics
 const Authentication = React.lazy(
   () => import("./firebase-services/authentication")
 ); //Sets Authentication
@@ -84,7 +83,6 @@ class App extends React.Component<Options, State> {
           onClick={this.clickToOpenManager}
         />
         <React.Suspense fallback={<></>}>
-          <Analytics />
           {this.state?.authentication && <Authentication />}
           {this.state.isManagerOpen === true && (
             <Screens

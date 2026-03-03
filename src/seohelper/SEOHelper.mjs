@@ -48,11 +48,11 @@ export class SEOHelper extends React.Component {
 
     try {
       const response = await serverCall("/seo/ping", "put", {
-        projectId: this.props?.data?.global?.projectId || "",
         pageId: this.props?.data?.page?.pageId || "",
         clientTime: new Date().toISOString(),
         path: this.props?.data?.page?.path || "",
-        userAgent: navigator.userAgent
+        userAgent: navigator.userAgent,
+        referrer: document.referrer || ""
       });
     } catch (err) {
       console.error("PING API ERROR");

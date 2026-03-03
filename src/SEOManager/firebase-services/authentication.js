@@ -45,14 +45,14 @@ class Authentication extends React.Component {
       } else if (
         customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
       ) {
-        const { timeStamp } = JSON.parse(
+        const parsed = JSON.parse(
           customClaims?.claims?.[this.props?.seoData?.initial?.projectId]
         );
-        const userPermissionTimeStamp = new Date(timeStamp).toISOString();
+        const userPermissionTimeStamp = new Date(parsed.timeStamp).toISOString();
         const now = new Date().toISOString();
 
         if (now < userPermissionTimeStamp) {
-          userData.authorizedProject = timeStamp;
+          userData.authorizedProject = true;
         } else {
           userData.authorizedProject = false;
         }

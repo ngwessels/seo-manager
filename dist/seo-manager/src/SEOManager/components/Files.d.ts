@@ -23,14 +23,14 @@ declare class Files extends React.Component<FilesOptions, State> {
     render(): React.JSX.Element;
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Files, {
-    onClose: any;
-    onChangeComplete: any;
     ref?: React.Ref<Files> | undefined;
     key?: React.Key | null | undefined;
+    onClose: any;
+    onChangeComplete: any;
     open: boolean;
     multiple: boolean;
-    accept: string;
     selected: any;
+    accept: string;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;
