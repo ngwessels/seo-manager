@@ -23,8 +23,8 @@ declare class Login extends React.Component<DialogScreens, State> {
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Login, {
     ref?: React.Ref<Login> | undefined;
-    key?: React.Key | null | undefined;
     onClose: any;
+    key?: React.Key | null | undefined;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

@@ -13,8 +13,8 @@ declare class NotAuthorized extends React.Component<DialogScreens, State> {
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof NotAuthorized, {
     ref?: React.Ref<NotAuthorized> | undefined;
-    key?: React.Key | null | undefined;
     onClose: any;
+    key?: React.Key | null | undefined;
     seoData?: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;

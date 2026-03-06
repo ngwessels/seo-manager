@@ -34,6 +34,70 @@ You can change your plan at any time. You can view our plans [here](https://www.
    ```
 5. Follow the [Next Step](https://docs.seomanager.dev/?path=/docs/get-setup-seoinit--page)
 
+## withSEO (Pages Router)
+
+Use `withSEO` to wrap `getServerSideProps` (or `withSEOStatic` for `getStaticProps`) and automatically fetch SEO for each page. Add `SEOHelper` once in `_app.js` for centralized SEO rendering.
+
+### Setup
+
+1. Add `SEOHelper` and `SEOInit` to `_app.js`:
+
+```jsx
+// pages/_app.js
+import Head from "next/head";
+import SEOHelper from "nextjs-seo-manager/seohelper";
+import SEOInit from "nextjs-seo-manager/init";
+
+SEOInit({
+  projectId: process.env.NEXT_PUBLIC_SEO_PROJECT_ID,
+  secretKey: process.env.NEXT_PUBLIC_SEO_PROJECT_SECRET_KEY,
+  projectKey: process.env.NEXT_PUBLIC_SEO_PROJECT_KEY
+});
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <SEOHelper data={pageProps.seo ?? {}} head={(data) => <Head>{data}</Head>} />
+      <Component {...pageProps} />
+    </>
+  );
+}
+```
+
+2. Wrap your page's data fetcher with `withSEO`:
+
+```jsx
+// pages/pricing.js
+import { withSEO } from "nextjs-seo-manager";
+
+export const getServerSideProps = withSEO(async () => ({ props: {} }));
+```
+
+### Path options
+
+- **Default**: Path is inferred from the request URL (`resolvedUrl` or `pathname`).
+- **Static path**: `withSEO(handler, { path: '/pricing' })`
+- **Dynamic path**: `withSEO(handler, { path: (ctx) => \`/blog/\${ctx.params.slug}\` })`
+
+### getStaticProps
+
+Use `withSEOStatic` for static pages. Pass `path` in options (required for static pages, since the URL is not available at build time):
+
+```jsx
+export const getStaticProps = withSEOStatic(async () => ({ props: {} }), {
+  path: "/pricing"
+});
+```
+
+For dynamic routes with `getStaticPaths`, use a path function:
+
+```jsx
+export const getStaticProps = withSEOStatic(
+  async (ctx) => ({ props: { post: await getPost(ctx.params.slug) } }),
+  { path: (ctx) => `/blog/${ctx.params.slug}` }
+);
+```
+
 ## Documentation
 
 You can view the documentation [Here](https://docs.seomanager.dev)
