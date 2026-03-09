@@ -15,9 +15,9 @@ declare class App extends React.Component<Options, State> {
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof App, {
     ref?: React.Ref<App> | undefined;
+    key?: React.Key | null | undefined;
     data?: any;
     onClose?: any;
-    key?: React.Key | null | undefined;
     onOpen?: any;
     isManagerOpen?: boolean | undefined;
     isNewPage?: boolean | undefined;

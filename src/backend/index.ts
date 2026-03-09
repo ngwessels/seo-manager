@@ -14,9 +14,9 @@ import {
  * @param {string} path - Path to SEO page
  * @param {FetchSEOHeaders} [meta] - {request: context?.req}
  */
-export const fetchSEO = (path: string, meta: FetchSEOHeaders = {}) => {
+export const fetchSEO = (path: string, _meta: FetchSEOHeaders = {}) => {
   return new Promise(async (resolve) => {
-    const data = await fetch(path, meta?.request?.headers || {});
+    const data = await fetch(path);
     return resolve(data?.results || {});
   });
 };

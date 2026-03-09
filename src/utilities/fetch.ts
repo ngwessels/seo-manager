@@ -3,10 +3,10 @@ import { getAuth, getIdToken } from "firebase/auth";
 const auth: any = getAuth(firebase);
 
 import { serverSecretCall } from "./serverCall";
+import { returnKey } from "./setupInit";
 
 export const fetch = (
-  path: string,
-  headers: any = {}
+  path: string
 ): Promise<{ results: boolean; error: string; message: string }> => {
   return new Promise(async (resolve) => {
     try {
@@ -20,12 +20,13 @@ export const fetch = (
       if (!path) {
         throw { error: "You must pass page path!" };
       }
+      const initData = returnKey();
       const { results, error } = await serverSecretCall(
         "/seo/server_get",
-        "put",
+        "get",
         {
-          path,
-          headers: headers || {}
+          projectId: initData?.projectId,
+          pagePath: path
         }
       );
       if (!results) {

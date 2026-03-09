@@ -1,4 +1,4 @@
-export declare const fetch: (path: string, headers?: any) => Promise<{
+export declare const fetch: (path: string) => Promise<{
     results: boolean;
     error: string;
     message: string;

@@ -48,7 +48,7 @@ export const serverCall = (
         ...(err?.response?.data || {}),
         results: false,
         data: err?.response?.data,
-        statusCode: err.response.status
+        statusCode: err?.response?.status
       });
     }
   });
@@ -56,7 +56,7 @@ export const serverCall = (
 
 export const serverSecretCall = (
   path: string,
-  method: "put" | "post" = "put",
+  method: "put" | "post" | "get" = "put",
   data: any,
   url?: string,
   headers?: any
@@ -92,12 +92,17 @@ export const serverSecretCall = (
       if (headers) {
         callHeaders = { ...callHeaders, ...headers };
       }
-      const response = await axios(urlPath, {
+      const axiosConfig: any = {
         method: method as Method,
         url: urlPath,
-        data: data || {},
         headers: callHeaders
-      });
+      };
+      if (method === "get") {
+        axiosConfig.params = data || {};
+      } else {
+        axiosConfig.data = data || {};
+      }
+      const response = await axios(axiosConfig);
       return resolve({
         ...(response?.data || {}),
         results: response?.data?.results,
@@ -115,7 +120,7 @@ export const serverSecretCall = (
           err?.response?.data?.message ||
           err?.response?.data ||
           "There was an error on our end! Please try again in a few minutes!",
-        statusCode: err.response.status
+        statusCode: err?.response?.status
       });
     }
   });

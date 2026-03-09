@@ -5,7 +5,7 @@ import { PageIdentifiers, PageSEO, FetchSEOHeaders, PageOptions } from "../types
  * @param {string} path - Path to SEO page
  * @param {FetchSEOHeaders} [meta] - {request: context?.req}
  */
-export declare const fetchSEO: (path: string, meta?: FetchSEOHeaders) => Promise<unknown>;
+export declare const fetchSEO: (path: string, _meta?: FetchSEOHeaders) => Promise<unknown>;
 /**
 @name backendValidation
 @function

@@ -24,11 +24,11 @@ declare class Files extends React.Component<FilesOptions, State> {
 }
 declare const _default: import("react-redux").ConnectedComponent<typeof Files, {
     ref?: React.Ref<Files> | undefined;
-    onClose: any;
-    open: boolean;
     key?: React.Key | null | undefined;
-    multiple: boolean;
+    onClose: any;
     onChangeComplete: any;
+    open: boolean;
+    multiple: boolean;
     selected: any;
     accept: string;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;

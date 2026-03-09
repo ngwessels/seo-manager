@@ -46,7 +46,7 @@ export function withSEO<T extends (context: any) => any>(
   return (async (context: any) => {
     const result = (await handler?.(context)) ?? { props: {} };
     const path = resolvePath(context, options);
-    const seo = await fetchSEO(path, { request: context.req });
+    const seo = await fetchSEO(path);
     return {
       ...result,
       props: {
@@ -81,7 +81,7 @@ export function withSEOStatic<T extends (context: any) => any>(
   return (async (context: any) => {
     const result = (await handler?.(context)) ?? { props: {} };
     const path = resolvePath(context, options);
-    const seo = await fetchSEO(path, { request: context.req });
+    const seo = await fetchSEO(path);
     return {
       ...result,
       props: {
