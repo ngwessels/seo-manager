@@ -14,10 +14,10 @@ declare const _default: import("react-redux").ConnectedComponent<typeof File, {
     ref?: React.Ref<File> | undefined;
     key: string;
     onClick: any;
+    onDelete: any;
     isClicked: any;
     item: any;
     idx: number;
-    onDelete: any;
     context?: React.Context<import("react-redux").ReactReduxContextValue<any, import("redux").UnknownAction> | null> | undefined;
     store?: import("redux").Store<any, import("redux").UnknownAction, unknown> | undefined;
 }>;

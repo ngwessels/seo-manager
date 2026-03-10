@@ -70,11 +70,14 @@ class Login extends React.Component<DialogScreens, State> {
     const userLoaded = this.props?.user?.isLoggedIn;
     const userAuthorized = this.props?.user?.authorizedProject;
 
-    this.setState({
-      userAuthorized,
-      userLoaded,
-      userSetup: false
-    });
+    this.setState(
+      {
+        userAuthorized,
+        userLoaded,
+        userSetup: false
+      },
+      () => this.userLoginSetup()
+    );
   };
 
   componentDidUpdate = (prevProps: any) => {

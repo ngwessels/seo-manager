@@ -303,12 +303,16 @@ class Files extends React.Component<FilesOptions, State> {
   };
 
   formatStorageDisplay = () => {
-    const plan = this.props?.seoData?.plan;
-    if (!plan?.usageReport?.storage_used || !plan?.mb || !plan?.limitations?.storage_used) {
+    const usage = this.props?.seoData?.plan;
+    if (!usage?.usageReport?.storage_used || !usage?.mb) {
       return null;
     }
-    const used = (plan.usageReport.storage_used / plan.mb).toFixed(1);
-    const total = (plan.limitations.storage_used / plan.mb).toFixed(1);
+    const used = (usage.usageReport.storage_used / usage.mb).toFixed(1);
+    const limit = usage?.limitations?.storage_used;
+    if (limit === true || limit == null) {
+      return `${used} MB used`;
+    }
+    const total = (limit / usage.mb).toFixed(1);
     return `${used} / ${total} MB`;
   };
 

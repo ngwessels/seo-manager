@@ -402,7 +402,42 @@ class Manager extends React.Component<ManagerOptions, State> {
             </Tabs>
           </Box>
 
-          <Box mt={1.5} display={"flex"} justifyContent={"center"}>
+          <Box mt={1.5} display={"flex"} flexDirection={"column"} alignItems={"center"} gap={1}>
+            {(() => {
+              const usage = this.props?.seoData?.plan;
+              if (!usage) return null;
+              if (usage?.isTrialActive && typeof usage?.trialDaysRemaining === "number") {
+                return (
+                  <Chip
+                    size="small"
+                    label={`Free trial: ${usage.trialDaysRemaining} day${usage.trialDaysRemaining !== 1 ? "s" : ""} left`}
+                    sx={{
+                      borderRadius: "6px",
+                      backgroundColor: "#ecfdf5",
+                      color: "#059669",
+                      fontWeight: 500,
+                      fontSize: "0.75rem"
+                    }}
+                  />
+                );
+              }
+              if (typeof usage?.creditsBalance === "number") {
+                return (
+                  <Chip
+                    size="small"
+                    label={`${usage.creditsBalance.toLocaleString()} credits`}
+                    sx={{
+                      borderRadius: "6px",
+                      backgroundColor: "#eff6ff",
+                      color: "#2563eb",
+                      fontWeight: 500,
+                      fontSize: "0.75rem"
+                    }}
+                  />
+                );
+              }
+              return null;
+            })()}
             <OpenDashboard />
           </Box>
 

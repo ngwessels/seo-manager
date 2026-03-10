@@ -34,10 +34,9 @@ export const formattedFileName = (data) => {
   return path;
 };
 
-export const addFiles = (e, validContentType, projectPlan) => {
-  const payAsYouGo = projectPlan?.payAsYouGo;
-  const currentStorageUsage = projectPlan?.usageReport?.storage_used || 0;
-  const currentStorageLimit = projectPlan?.limitations?.storage_used;
+export const addFiles = (e, validContentType, projectUsage) => {
+  const currentStorageUsage = projectUsage?.usageReport?.storage_used || 0;
+  const storageLimit = projectUsage?.limitations?.storage_used;
   let additionalStorage = 0;
 
   let photos = [];
@@ -54,24 +53,20 @@ export const addFiles = (e, validContentType, projectPlan) => {
     }
   }
   const newStorageUsed = currentStorageUsage + additionalStorage;
-  if (
-    !payAsYouGo &&
-    newStorageUsed > currentStorageLimit &&
-    currentStorageLimit !== true
-  ) {
+  if (typeof storageLimit === "number" && newStorageUsed > storageLimit) {
     return {
       error:
-        "You cannot add these files as you have hit your storage limit. Consider upgrading your account!"
+        "You cannot add these files as you have hit your storage limit. Add credits to continue."
     };
   }
-  if (!projectPlan?.usageReport) {
-    projectPlan.usageReport = {};
+  if (!projectUsage?.usageReport) {
+    projectUsage.usageReport = {};
   }
-  if (!projectPlan?.usageReport?.storage_used) {
-    projectPlan.usageReport.storage_used = 0;
+  if (!projectUsage?.usageReport?.storage_used) {
+    projectUsage.usageReport.storage_used = 0;
   }
-  projectPlan.usageReport.storage_used += additionalStorage;
-  setProjectPlan(projectPlan);
+  projectUsage.usageReport.storage_used += additionalStorage;
+  setProjectPlan(projectUsage);
   return { results: photos };
 };
 
